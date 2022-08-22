@@ -1,0 +1,21 @@
+{
+"usuarios": [
+{ "nick": "Kev1", "password": "1", "monedas": "400", "edad": "10" },
+{ "nick": "Kev2", "password": "2", "monedas": "200", "edad": "11" },
+{ "nick": "Kev3", "password": "3", "monedas": "400", "edad": "12" }
+],
+"articulos": [
+{ "id": "1", "categoria": "Epico", "precio": "4003", "nombre": "Naval III", "src": "image1" },
+{ "id": "2", "categoria": "Legendario", "precio": "1000", "nombre": "OVNI-SS", "src": "image2" },
+{ "id": "3", "categoria": "Raro", "precio": "1222", "nombre": "Naval E3", "src": "image3" }
+],
+"tutorial": {
+"ancho":"10",
+"alto":"30",
+"movimientos":[
+{ "x": "1", "y": "4" },
+{ "x": "5", "y": "10" },
+{ "x": "3", "y": "1" }
+]
+}
+}

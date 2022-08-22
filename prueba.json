@@ -1,0 +1,24 @@
+{
+    "usuarios": [
+      { "nick": "user1", "password": "A123", "monedas": "5", "edad": "12" },
+      { "nick": "user2", "password": "B123", "monedas": "6", "edad": "5" },
+      { "nick": "user3", "password": "C123", "monedas": "7", "edad": "23" },
+      { "nick": "user4", "password": "D123", "monedas": "50", "edad": "10" },
+      { "nick": "user5", "password": "E123", "monedas": "730", "edad": "22" }
+    ],
+    "articulos": [
+      { "id": "1", "categoria": "Epico", "precio": "2", "nombre": "Martillo", "src": "" },
+      { "id": "2", "categoria": "Epico", "precio": "3", "nombre": "Espada", "src": "" },
+      { "id": "3", "categoria": "Normal", "precio": "4", "nombre": "Escudo", "src": "" }
+    ],
+    "tutorial": {
+      "ancho": "10",
+      "alto": "20",
+      "movimientos": [
+        { "x": "1", "y": "6" },
+        { "x": "3", "y": "9" },
+        { "x": "5", "y": "1" }
+      ]
+    }
+  }
+  

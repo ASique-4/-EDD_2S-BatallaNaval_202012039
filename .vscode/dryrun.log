@@ -1,0 +1,38 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
+if [ ! -f nbproject/Makefile-Debug.mk ]; \
+then \
+    echo ""; \
+    echo "Error: can not find the makefile for configuration 'Debug' in project Fase 1"; \
+    echo "See 'make help' for details."; \
+    echo "Current directory: " `pwd`; \
+    echo ""; \
+fi
+if [ ! -f nbproject/Makefile-Debug.mk ]; \
+then \
+    exit 1; \
+fi
+echo "# This code depends on make tool being used" >.dep.inc
+if [ -n "4.3" ]; then \
+    echo "DEPFILES=\$(wildcard \$(addsuffix .d, \${OBJECTFILES} \${TESTOBJECTFILES}))" >>.dep.inc; \
+    echo "ifneq (\${DEPFILES},)" >>.dep.inc; \
+    echo "include \${DEPFILES}" >>.dep.inc; \
+    echo "endif" >>.dep.inc; \
+else \
+    echo ".KEEP_STATE:" >>.dep.inc; \
+    echo ".KEEP_STATE_FILE:.make.state.\${CONF}" >>.dep.inc; \
+fi
+#echo "=> Running .build-impl... Configuration=Debug"
+"make" -f nbproject/Makefile-Debug.mk QMAKE= SUBPROJECTS= .build-conf
+make[1]: Entering directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
+"make"  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-Linux/fase_1
+make[2]: Entering directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
+mkdir -p build/Debug/GNU-Linux
+rm -f "build/Debug/GNU-Linux/main.o.d"
+g++    -c -g -MMD -MP -MF "build/Debug/GNU-Linux/main.o.d" -o build/Debug/GNU-Linux/main.o main.cpp
+mkdir -p dist/Debug/GNU-Linux
+g++     -o dist/Debug/GNU-Linux/fase_1 build/Debug/GNU-Linux/main.o 
+make[2]: Leaving directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
+make[1]: Leaving directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
+make: Leaving directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
+ 

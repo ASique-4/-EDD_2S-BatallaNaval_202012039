@@ -1,0 +1,15 @@
+digraph Tutorial {
+graph [rankdir = LR ]
+node [shape = box]
+0 [label="X: 10
+Y: 20"];
+0 -> 1
+1 [label="X: 1
+Y: 6"];
+1 -> 2
+2 [label="X: 3
+Y: 9"];
+2 -> 3
+3 [label="X: 5
+Y: 1"];
+}
