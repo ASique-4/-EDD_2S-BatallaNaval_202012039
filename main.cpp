@@ -13,6 +13,7 @@
 #include "ListaArticulos.cpp"
 #include "ListaCircularUsuarios.cpp"
 #include "ColaTutorial.cpp"
+#include "CabeceraArticulos.cpp"
 #include "sha256.cpp"
 #include <cstdlib>
 #include <iostream>
@@ -58,7 +59,7 @@ void menuEditar(nodoUsuarios *usuarioActivo)
     string nick;
     int edad;
     string password;
-    system("clear");
+    
     cout << "Editar usuario" << endl;
     cout << "Nick: " << usuarioActivo->nick << endl;
     cout << "Edad: " << usuarioActivo->edad << endl;
@@ -106,7 +107,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
 
     do
     {
-        system("clear");
+        
         cout << "       ==> Bienvenido " << usuarioActivo->nick << " <==" << endl;
         cout << "=======================================" << endl;
         cout << "1. Editar usuario" << endl;
@@ -195,7 +196,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
 
 void login(ListaUsuarios usuarios, ColaTutorial tutorial, ListaArticulos articulos)
 {
-    system("clear");
+    
     cout << "=======================================" << endl;
     cout << "               LOGIN" << endl;
 
@@ -226,6 +227,7 @@ void menu()
     ListaUsuarios usuarios;
     ListaArticulos articulos;
     ColaTutorial tutorial;
+    Cabecera cabecera;
     int opcion;
     string archivo;
     bool repetir = true;
@@ -234,7 +236,7 @@ void menu()
     {
 
         // Texto del menú que se verá cada vez
-        system("clear");
+        
         cout << "=======================================" << endl;
         cout << "           Menu de Opciones" << endl;
         cout << "1. Carga Masiva" << endl;
@@ -274,9 +276,21 @@ void menu()
                 const Json::Value &articulosJson = articulosObj["articulos"];
                 for (int i = 0; i < articulosJson.size(); i++)
                 {
+
+                    if (cabecera.Buscar(articulosJson[i]["categoria"].asString()) != true)
+                    {
+                        cabecera.InsertarFinal(articulosJson[i]["categoria"].asString());
+                    }
+                }
+                cabecera.Imprimir();
+                for (int i = 0; i < articulosJson.size(); i++)
+                {
                     articulos.InsertarFinal(stringtoint(articulosJson[i]["id"].asString()), articulosJson[i]["categoria"].asString(),
                                             stringtoint(articulosJson[i]["precio"].asString()), articulosJson[i]["nombre"].asString(), articulosJson[i]["src"].asString());
                 }
+                articulos.Imprimir();
+                cabecera.InsertarArticulos(articulos);
+                
 
                 ifstream ifs3(archivo);
                 Json::Value tutorialObj;
@@ -308,7 +322,7 @@ void menu()
             // Lista de instrucciones de la opción 2
 
             {
-                system("clear");
+                
                 string nick;
                 string password;
                 int monedas;
@@ -395,7 +409,7 @@ void menu()
                         break;
                     case 2:
                         // Lista de instrucciones de la opción 2
-                        articulos.CrearGraphviz();
+                        cabecera.CrearGraphviz();
                         break;
                     case 3:
                         // Lista de instrucciones de la opción 3

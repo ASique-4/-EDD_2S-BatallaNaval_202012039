@@ -1,22 +1,136 @@
 digraph G {
 graph [rankdir = TB ]
 node [shape = box]
-Kev3 [label="Nick: Kev3
-Password: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+user3 [label="Nick: user3
+
+Edad: 23
+Monedas: 7"];
+user3->user10
+user10 [label="Nick: user10
+
+Edad: 23
+Monedas: 7"];
+user10->user17
+user10->user3
+user17 [label="Nick: user17
+
+Edad: 23
+Monedas: 7"];
+user17->user12
+user17->user10
+user12 [label="Nick: user12
+
+Edad: 22
+Monedas: 730"];
+user12->user5
+user12->user17
+user5 [label="Nick: user5
+
+Edad: 22
+Monedas: 730"];
+user5->user19
+user5->user12
+user19 [label="Nick: user19
+
+Edad: 22
+Monedas: 730"];
+user19->user1
+user19->user5
+user1 [label="Nick: user1
+
 Edad: 12
-Monedas: 400"];
-Kev3->Kev2
-Kev2 [label="Nick: Kev2
-Password: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
-Edad: 11
-Monedas: 200"];
-Kev2->Kev1
-Kev2->Kev3
-Kev1 [label="Nick: Kev1
-Password: 6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d
+Monedas: 5"];
+user1->user8
+user1->user19
+user8 [label="Nick: user8
+
 Edad: 10
-Monedas: 400"];
-Kev1->Kev2
-Kev1:e->Kev3:e
-Kev3:w->Kev1:w
+Monedas: 1000"];
+user8->user15
+user8->user1
+user15 [label="Nick: user15
+
+Edad: 10
+Monedas: 1000"];
+user15->user4
+user15->user8
+user4 [label="Nick: user4
+
+Edad: 10
+Monedas: 50"];
+user4->user18
+user4->user15
+user18 [label="Nick: user18
+
+Edad: 10
+Monedas: 50"];
+user18->user11
+user18->user4
+user11 [label="Nick: user11
+
+Edad: 10
+Monedas: 50"];
+user11->user22
+user11->user18
+user22 [label="Nick: user22
+
+Edad: 10
+Monedas: 1000"];
+user22->user14
+user22->user11
+user14 [label="Nick: user14
+
+Edad: 5
+Monedas: 700"];
+user14->user9
+user14->user22
+user9 [label="Nick: user9
+
+Edad: 5
+Monedas: 6"];
+user9->user16
+user9->user14
+user16 [label="Nick: user16
+
+Edad: 5
+Monedas: 6"];
+user16->user6
+user16->user9
+user6 [label="Nick: user6
+
+Edad: 5
+Monedas: 600"];
+user6->user7
+user6->user16
+user7 [label="Nick: user7
+
+Edad: 5
+Monedas: 700"];
+user7->user2
+user7->user6
+user2 [label="Nick: user2
+
+Edad: 5
+Monedas: 6"];
+user2->user20
+user2->user7
+user20 [label="Nick: user20
+
+Edad: 5
+Monedas: 600"];
+user20->user21
+user20->user2
+user21 [label="Nick: user21
+
+Edad: 5
+Monedas: 700"];
+user21->user13
+user21->user20
+user13 [label="Nick: user13
+
+Edad: 5
+Monedas: 600"];
+user13->user21
+user13:e->user3:e
+user3:w->user13:w
 }

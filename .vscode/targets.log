@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Sun Aug 21 22:08:18 2022
+# Make data base, printed on Mon Aug 22 18:12:49 2022
 
 # Variables
 
@@ -85,7 +86,7 @@ CND_PACKAGE_DIR_Debug = dist/Debug/GNU-Linux/package
 # makefile
 CURDIR := /home/angel/Desktop/Dev/Github/EDD/Proyecto1
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -93,7 +94,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXaLKd3W/agent.2669
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXr1yVRR/agent.2675
 # default
 .SHELLFLAGS := -c
 # environment
@@ -113,7 +114,7 @@ SNAP_REEXEC =
 # makefile (from 'nbproject/Makefile-variables.mk', line 23)
 CND_PACKAGE_NAME_Release = fase1.tar
 # environment
-VSCODE_PID = 3959
+VSCODE_PID = 3427
 # makefile (from 'Makefile', line 50)
 CCADMIN = CCadmin
 # environment
@@ -125,7 +126,7 @@ BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # makefile (from 'Makefile', line 49)
 CP = cp
 # environment
-SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/2572,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/2572
+SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/2578,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/2578
 # automatic
 *F = $(notdir $*)
 # environment
@@ -163,7 +164,7 @@ MAKE = $(MAKE_COMMAND)
 # environment
 SNAP_COOKIE = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # environment
-PATH = /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+PATH = /home/angel/.local/bin:/home/angel/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 # default
 MAKEFILES := 
 # environment
@@ -237,9 +238,9 @@ SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # makefile (from 'nbproject/Makefile-variables.mk', line 7)
 CND_BUILDDIR = build
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3917
+GIO_LAUNCHED_DESKTOP_FILE_PID = 3383
 # environment
-SSH_AGENT_PID = 2670
+SSH_AGENT_PID = 2676
 # environment
 _ = /snap/code/105/usr/share/code/code
 # makefile (from 'nbproject/Makefile-impl.mk', line 31)
@@ -299,7 +300,6 @@ XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/angel
 # environment
 SNAP_USER_DATA = /home/angel/snap/code/105
 # environment
- 
 XDG_MENU_PREFIX = xfce-
 # makefile (from 'nbproject/Makefile-variables.mk', line 10)
 CND_PLATFORM_Debug = GNU-Linux
@@ -309,6 +309,7 @@ GDMSESSION = xfce
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # makefile (from 'nbproject/Makefile-impl.mk', line 21)
 CLEAN_SUBPROJECTS_ = .clean-subprojects
+ 
 # variable set hash-table stats:
 # Load=149/1024=15%, Rehash=0, Collisions=13/193=7%
 
@@ -318,9 +319,9 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 
 # Directories
 
-# . (device 66312, inode 191357): 37 files, no impossibilities.
+# . (device 66312, inode 191357): 38 files, no impossibilities.
 
-# 37 files, no impossibilities in 1 directories.
+# 38 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -562,6 +563,7 @@ test: .test-post
 #  File has not been updated.
 #  recipe to execute (from 'nbproject/Makefile-impl.mk', line 67):
 	@#echo "=> Running $@... Configuration=$(CONF)"
+ 
 	"${MAKE}" -f nbproject/Makefile-${CONF}.mk SUBPROJECTS=${SUBPROJECTS} .build-tests-conf
 
 .clobber-pre:
@@ -627,7 +629,6 @@ nbproject/Makefile-impl.mk:
 
 build-tests: .build-tests-post
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 
@@ -649,12 +650,12 @@ build-tests: .build-tests-post
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 75 / storage = 962 B / avg = 12 B
-# current buf: size = 8162 B / used = 962 B / count = 75 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 76 / storage = 969 B / avg = 12 B
+# current buf: size = 8162 B / used = 969 B / count = 76 / avg = 12 B
 
-# strcache performance: lookups = 147 / hit rate = 48%
+# strcache performance: lookups = 148 / hit rate = 48%
 # hash-table stats:
-# Load=75/8192=1%, Rehash=0, Collisions=0/147=0%
-# Finished Make data base on Sun Aug 21 22:08:18 2022
+# Load=76/8192=1%, Rehash=0, Collisions=0/148=0%
+# Finished Make data base on Mon Aug 22 18:12:49 2022
 
  

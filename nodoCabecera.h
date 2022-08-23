@@ -9,11 +9,11 @@ class nodoCabecera {
 public:
     string categoria;
     nodoCabecera*abajo;
-    nodoCabecera*derecha;
+    ListaArticulos*derecha;
 
     nodoCabecera() {
         abajo = NULL;
-        derecha = NULL;
+        derecha = new ListaArticulos();
         categoria = ' ';
 
     }

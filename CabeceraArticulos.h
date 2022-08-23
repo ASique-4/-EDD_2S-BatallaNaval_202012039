@@ -19,6 +19,9 @@ public:
     }
     void InsertarFinal(string categoria);
     void InsertarArticulos(ListaArticulos listaArticulos);
+    void Imprimir();
+    void CrearGraphviz();
+    bool Buscar(string categoria);
     private:
 };
 

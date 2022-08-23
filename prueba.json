@@ -4,12 +4,43 @@
       { "nick": "user2", "password": "B123", "monedas": "6", "edad": "5" },
       { "nick": "user3", "password": "C123", "monedas": "7", "edad": "23" },
       { "nick": "user4", "password": "D123", "monedas": "50", "edad": "10" },
-      { "nick": "user5", "password": "E123", "monedas": "730", "edad": "22" }
+      { "nick": "user5", "password": "E123", "monedas": "730", "edad": "22" },
+      { "nick": "user6", "password": "F123", "monedas": "600", "edad": "5"},
+      { "nick": "user7", "password": "G123", "monedas": "700", "edad": "5"},
+      { "nick": "user8", "password": "H123", "monedas": "1000", "edad": "10"},
+      { "nick": "user9", "password": "B123", "monedas": "6", "edad": "5" },
+      { "nick": "user10", "password": "C123", "monedas": "7", "edad": "23" },
+      { "nick": "user11", "password": "D123", "monedas": "50", "edad": "10" },
+      { "nick": "user12", "password": "E123", "monedas": "730", "edad": "22" },
+      { "nick": "user13", "password": "F123", "monedas": "600", "edad": "5"},
+      { "nick": "user14", "password": "G123", "monedas": "700", "edad": "5"},
+      { "nick": "user15", "password": "H123", "monedas": "1000", "edad": "10"},
+      { "nick": "user16", "password": "B123", "monedas": "6", "edad": "5" },
+      { "nick": "user17", "password": "C123", "monedas": "7", "edad": "23" },
+      { "nick": "user18", "password": "D123", "monedas": "50", "edad": "10" },
+      { "nick": "user19", "password": "E123", "monedas": "730", "edad": "22" },
+      { "nick": "user20", "password": "F123", "monedas": "600", "edad": "5"},
+      { "nick": "user21", "password": "G123", "monedas": "700", "edad": "5"},
+      { "nick": "user22", "password": "H123", "monedas": "1000", "edad": "10"}
     ],
     "articulos": [
       { "id": "1", "categoria": "Epico", "precio": "2", "nombre": "Martillo", "src": "" },
       { "id": "2", "categoria": "Epico", "precio": "3", "nombre": "Espada", "src": "" },
-      { "id": "3", "categoria": "Normal", "precio": "4", "nombre": "Escudo", "src": "" }
+      { "id": "3", "categoria": "Normal", "precio": "4", "nombre": "Escudo", "src": "" },
+      { "id": "4", "categoria": "Epico", "precio": "3", "nombre": "Cuchillo", "src": "" },
+      { "id": "4", "categoria": "Normal", "precio": "4", "nombre": "Pan", "src": "" },
+      { "id": "2", "categoria": "Epico", "precio": "3", "nombre": "Carne", "src": "" },
+      { "id": "3", "categoria": "Normal", "precio": "4", "nombre": "Diamante", "src": "" },
+      { "id": "4", "categoria": "Epico", "precio": "3", "nombre": "Bebida", "src": "" },
+      { "id": "4", "categoria": "Normal", "precio": "4", "nombre": "Pistola", "src": "" },
+      { "id": "2", "categoria": "Epico", "precio": "3", "nombre": "Mascara", "src": "" },
+      { "id": "3", "categoria": "Normal", "precio": "4", "nombre": "Dulce", "src": "" },
+      { "id": "4", "categoria": "Epico", "precio": "3", "nombre": "Gorra", "src": "" },
+      { "id": "4", "categoria": "Normal", "precio": "4", "nombre": "Lapiz", "src": "" },
+      { "id": "2", "categoria": "Epico", "precio": "3", "nombre": "Libro Encantado", "src": "" },
+      { "id": "3", "categoria": "Normal", "precio": "4", "nombre": "Guantes", "src": "" },
+      { "id": "4", "categoria": "Epico", "precio": "3", "nombre": "Zapatos", "src": "" },
+      { "id": "4", "categoria": "Normal", "precio": "4", "nombre": "Capa", "src": "" }
     ],
     "tutorial": {
       "ancho": "10",
@@ -17,7 +48,11 @@
       "movimientos": [
         { "x": "1", "y": "6" },
         { "x": "3", "y": "9" },
-        { "x": "5", "y": "1" }
+        { "x": "5", "y": "1" },
+        { "x": "5", "y": "3" },
+        { "x": "5", "y": "5" },
+        { "x": "6", "y": "9" },
+        { "x": "7", "y": "1" }
       ]
     }
   }

@@ -1,0 +1,10 @@
+digraph G {
+graph [rankdir = LR ]
+node [shape = box]
+{rank = same "Epico""Normal"}
+Epico-> "Normal"
+Epico [label="Epico"];
+"Epico"->Martillo->"Espada"->"Cuchillo"->"Carne"->"Bebida"->"Mascara"->"Gorra"->"Libro Encantado"->"Zapatos"
+Normal [label="Normal"];
+"Normal"->Escudo->"Pan"->"Diamante"->"Pistola"->"Dulce"->"Lapiz"->"Guantes"->"Capa"
+}
