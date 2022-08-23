@@ -24,12 +24,16 @@ void ListaUsuarios::InsertarFinal(string nick, string password, int monedas, int
     }
 }
 
+void ListaUsuarios::InsertarMovimientos(ListaMovimientos listaMovimientos,nodoUsuarios* usuario) {
+    usuario->listaMovimientos = listaMovimientos;
+}
 
 void ListaUsuarios::Imprimir() {
     nodoUsuarios*aux = primero;
     while (aux != NULL) {
         cout << "====================" << endl;
         cout << "Nick: " << aux->nick << endl;
+        cout << "Password: " << aux->password << endl;
         cout << "Monedas: " << aux->monedas << endl;
         cout << "Edad: " << aux->edad << endl;
         cout << "====================" << endl;
@@ -91,16 +95,21 @@ void ListaUsuarios::swap(nodoUsuarios* a, nodoUsuarios* b)
     string temp_nick = a->nick;
     string temp_password = a->password;
     int temp_monedas = a->monedas;
+    ListaMovimientos temp_listaMovimientos = a->listaMovimientos;
 
 	a->edad = b -> edad;
     a->nick = b -> nick;
     a->password = b -> password;
     a->monedas = b -> monedas;
+    a->listaMovimientos = b -> listaMovimientos;
 
 	b -> edad = temp_edad;
     b -> nick = temp_nick;
     b -> password = temp_password;
     b -> monedas = temp_monedas;
+    b -> listaMovimientos = temp_listaMovimientos;
+
+    
 }
 
 void ListaUsuarios::OrdenamientoAscendente(){
@@ -151,34 +160,34 @@ void ListaUsuarios::CrearGraphviz()
             if (aux->sig==primero)
             {
                 
-                archivo << aux->nick << " [label=\"" << "Nick: " << aux->nick << "\n" 
-                << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
+                archivo << "\"" << aux->nick  << "\"" << " [label=\"" << "Nick: " << "\'" << aux->nick << "\'" << "\n" 
+                << "Password" << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
                 << aux->monedas << "\"];" << endl;
-                archivo << aux->nick << ":n->" << aux->sig->nick << ":s" << endl;
-                archivo << aux->nick << ":s->" << aux->sig->nick<< ":n" << endl;
+                archivo << "\"" << aux->nick << "\"" << ":n->" << "\"" << aux->sig->nick << "\"" << ":s" << endl;
+                archivo << "\"" << aux->nick  << "\"" << ":s->" << aux->sig->nick << "\"" << ":n" << endl;
                 break;
             }else{
-                archivo << aux->nick << " [label=\"" << "Nick: " << aux->nick << "\n" 
-                << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
+                archivo << "\"" << aux->nick << "\"" << "[label=\"" << "Nick: " << "\'" << aux->nick << "\'"<< "\n" 
+                << "Password" << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
                 << aux->monedas << "\"];" << endl;
                 archivo << aux->nick << "->" << aux->sig->nick << endl;
             }
 
         }else if (aux == ultimo)
         {
-            archivo << aux->nick << " [label=\"" << "Nick: " << aux->nick << "\n" 
-                << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
+            archivo << "\"" << aux->nick  << "\"" <<"[label=\"" << "Nick: " << "\'"<< aux->nick<< "\'" << "\n" 
+                << "Password" << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
                 << aux->monedas << "\"];" << endl;
-            archivo << aux->nick << "->" << aux->ant->nick << endl;
-            archivo << aux->nick << ":e->" << aux->sig->nick << ":e" << endl;
-            archivo << aux->sig->nick << ":w->" << aux->nick << ":w" << endl;
+            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->ant->nick << "\"" << endl;
+            archivo << "\"" << aux->nick << "\"" << ":e->" << "\"" << aux->sig->nick << "\"" << ":e" << endl;
+            archivo << "\"" << aux->sig->nick << "\"" << ":w->" << "\"" << aux->nick << "\"" << ":w" << endl;
             break;
         }else{
-            archivo << aux->nick << " [label=\"" << "Nick: " << aux->nick << "\n" 
-                 << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
+            archivo << "\"" << aux->nick << "\"" << " [label=\"" << "Nick: " << "\'" << aux->nick << "\'" << "\n" 
+                << "Password" << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
                 << aux->monedas << "\"];" << endl;
-            archivo << aux->nick << "->" << aux->sig->nick << endl;
-            archivo << aux->nick << "->" << aux->ant->nick << endl;
+            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->sig->nick << "\"" << endl;
+            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->ant->nick << "\"" << endl;
         }
         aux = aux->sig;
         

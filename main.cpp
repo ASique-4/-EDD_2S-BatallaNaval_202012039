@@ -14,6 +14,7 @@
 #include "ListaCircularUsuarios.cpp"
 #include "ColaTutorial.cpp"
 #include "CabeceraArticulos.cpp"
+#include "ListaMovimientos.cpp"
 #include "sha256.cpp"
 #include <cstdlib>
 #include <iostream>
@@ -168,9 +169,10 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
             cout << "Realizar movimientos" << endl;
             {
 
-                ColaTutorial tmpTutorial;
+                
+                ListaMovimientos colaMovimientos;
                 bool repetir = true;
-                int i = 0;
+                int i = 1;
                 do
                 {
                     cout << "Movimiento numero: " << i << endl;
@@ -180,9 +182,24 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
                     cout << "Coordenad en y: ";
                     int y;
                     cin >> y;
-                    tmpTutorial.InsertarFinal(x, y);
+                    colaMovimientos.InsertarFinal(x, y);
                     i += 1;
+                    cout << "Desea agregar otro movimiento? (s/n): ";
+                    char respuesta;
+                    cin >> respuesta;
+                    if (respuesta == 'n')
+                    {
+                        cout << "Se han agregado " << i - 1 << " movimientos" << endl;
+                        cout << "¿Qué nombre desea ponerle a su movimiento? ";
+                        string nombre;
+                        cin >> nombre;
+                        usuarioActivo->listaMovimientos.nombre = nombre;
+                        cout << "Movimientos agregados exitosamente" << endl;
+                        cin.get();
+                        repetir = false;
+                    }
                 } while (repetir);
+                usuarioActivo->listaMovimientos = colaMovimientos;
             }
             break;
         case 6:
@@ -211,7 +228,7 @@ void login(ListaUsuarios usuarios, ColaTutorial tutorial, ListaArticulos articul
     nodoUsuarios *usuarioActivo = usuarios.BuscarUsuario(nick, encriptarSHA256(password));
     if (usuarioActivo != NULL)
     {
-        
+
         menuLogin(usuarioActivo, usuarios, tutorial, articulos);
     }
     else
@@ -222,12 +239,9 @@ void login(ListaUsuarios usuarios, ColaTutorial tutorial, ListaArticulos articul
     }
 }
 
-void menu()
+void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutorial, Cabecera cabecera)
 {
-    ListaUsuarios usuarios;
-    ListaArticulos articulos;
-    ColaTutorial tutorial;
-    Cabecera cabecera;
+    
     int opcion;
     string archivo;
     bool repetir = true;
@@ -282,13 +296,11 @@ void menu()
                         cabecera.InsertarFinal(articulosJson[i]["categoria"].asString());
                     }
                 }
-                cabecera.Imprimir();
                 for (int i = 0; i < articulosJson.size(); i++)
                 {
                     articulos.InsertarFinal(stringtoint(articulosJson[i]["id"].asString()), articulosJson[i]["categoria"].asString(),
                                             stringtoint(articulosJson[i]["precio"].asString()), articulosJson[i]["nombre"].asString(), articulosJson[i]["src"].asString());
                 }
-                articulos.Imprimir();
                 cabecera.InsertarArticulos(articulos);
                 
 
@@ -409,7 +421,41 @@ void menu()
                         break;
                     case 2:
                         // Lista de instrucciones de la opción 2
-                        cabecera.CrearGraphviz();
+                        {
+                            int i;
+                            bool repetir2 = false;
+                            cout << "=======================================" << endl;
+                            cout << "1. Ordenar de maenra descendente" << endl;
+                            cout << "2. Ordenar de manera ascendente" << endl;
+                            cout << "0. Salir" << endl;
+                            cout << "=======================================" << endl;
+                            cin >> i;
+                            do {
+                                switch (i)
+                                {
+                                case 1:
+                                    articulos.OrdenamientoDescendente();
+                                    articulos.Imprimir();
+                                    articulos.CrearGraphviz();
+                                    cout << endl;
+                                    cout << endl;
+                                    break;
+                                case 2:
+                                    articulos.OrdenamientoAscendente();
+                                    articulos.Imprimir();
+                                    articulos.CrearGraphviz();
+                                    cout << endl;
+                                    cout << endl;
+                                    break;
+                                case 0:
+                                    repetir2 = false;
+                                    break;
+                                default:
+                                    cout << "Opcion no valida" << endl;
+                                    break;
+                                }
+                            } while (repetir2);
+                        }
                         break;
                     case 3:
                         // Lista de instrucciones de la opción 3
@@ -417,6 +463,7 @@ void menu()
                         break;
                     case 4:
                         // Lista de instrucciones de la opción 4
+
                         break;
                     case 0:
                         // Lista de instrucciones de la opción 0
@@ -437,7 +484,10 @@ void menu()
 
 int main(int argc, char **argv)
 {
-
-    menu();
+    ListaUsuarios usuarios;
+    ListaArticulos articulos;
+    ColaTutorial tutorial;
+    Cabecera cabecera;
+    menu(usuarios, articulos, tutorial, cabecera);
     return 0;
 }

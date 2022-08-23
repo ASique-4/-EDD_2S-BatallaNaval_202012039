@@ -91,10 +91,8 @@ void Cabecera::CrearGraphviz() {
 
 bool Cabecera::Buscar(string categoria) {
     nodoCabecera*aux = Inicio;
-    cout << "Buscar: " << categoria << endl;
     while (aux != NULL) {
         if (aux->categoria == categoria) {
-            cout << "Categoria: " << aux->categoria << endl;
             return true;
             break;
         }

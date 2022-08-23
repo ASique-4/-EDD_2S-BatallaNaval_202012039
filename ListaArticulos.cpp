@@ -28,6 +28,59 @@ void ListaArticulos::InsertarFinal(int id, string categoria, int precio, string 
 
 }
 
+void ListaArticulos::swap(nodoArticulos* a, nodoArticulos* b)
+{
+    int tmp_id = a->id;
+    string tmp_categoria = a->categoria;
+    int tmp_precio = a->precio;
+    string tmp_nombre = a->nombre;
+    string tmp_src = a->src;
+
+    a->id = b->id;
+    a->categoria = b->categoria;
+    a->precio = b->precio;
+    a->nombre = b->nombre;
+    a->src = b->src;
+
+    b->id = tmp_id;
+    b->categoria = tmp_categoria;
+    b->precio = tmp_precio;
+    b->nombre = tmp_nombre;
+    b->src = tmp_src;
+}
+
+void ListaArticulos::OrdenamientoAscendente(){
+    nodoArticulos*aux = Inicio;
+    nodoArticulos*aux2 = Inicio->sig;
+    while (aux != NULL) {
+        while (aux2 != Inicio) {
+            if (aux->id > aux2->id)
+            {
+                swap(aux, aux2);
+            }
+            aux2 = aux2->sig;
+        }
+        aux = aux->sig;
+        aux2 = aux->sig;
+    }
+}
+
+void ListaArticulos::OrdenamientoDescendente(){
+    nodoArticulos*aux = Inicio;
+    nodoArticulos*aux2 = Inicio->sig;
+    while (aux != NULL) {
+        while (aux2 != Inicio) {
+            if (aux->id < aux2->id)
+            {
+                swap(aux, aux2);
+            }
+            aux2 = aux2->sig;
+        }
+        aux = aux->sig;
+        aux2 = aux->sig;
+    }
+}
+
 
 void ListaArticulos::Imprimir() {
     nodoArticulos*aux = Inicio;

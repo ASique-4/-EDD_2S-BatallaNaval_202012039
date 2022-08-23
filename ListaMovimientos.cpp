@@ -2,26 +2,22 @@
 using namespace std;
 
 void ListaMovimientos::InsertarFinal(int x, int y) {
-    nodoMovimientos*nuevo = new nodoMovimientos();
+   nodoMovimientos*nuevo = new nodoMovimientos();
     nuevo->x = x;
     nuevo->y = y;
-
+    nuevo->sig = NULL;
     if (Inicio == NULL) {
         Inicio = nuevo;
+        Ultimo = nuevo;
     } else {
-        nodoMovimientos*auxActual = Inicio;
-
-        while (auxActual != NULL) {
-            if (auxActual->sig == NULL) {
-                auxActual->sig = nuevo;
-                break;
-            }
-            auxActual = auxActual->sig;
-        }
+        Ultimo->sig = nuevo;
+        Ultimo = nuevo;
     }
 
 
 }
+
+
 
 
 void ListaMovimientos::Imprimir() {

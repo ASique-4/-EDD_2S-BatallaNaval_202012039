@@ -3,6 +3,7 @@
 #include "nodoCabecera.h"
 #include "ListaArticulos.h"
 
+
 #include <iostream>
 using namespace std;
 
@@ -11,6 +12,7 @@ public:
     nodoCabecera*Inicio;
     nodoCabecera*Ultimo;
     ListaArticulos listaArticulos;
+
 
     Cabecera() {
         Inicio = NULL;

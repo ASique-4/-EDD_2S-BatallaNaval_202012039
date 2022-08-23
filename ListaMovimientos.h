@@ -9,9 +9,12 @@ using namespace std;
 class ListaMovimientos {
 public:
     nodoMovimientos*Inicio;
+    nodoMovimientos*Ultimo;
+    string nombre;
 
     ListaMovimientos() {
         Inicio = NULL;
+        nombre = " ";
     }
     void InsertarFinal(int x, int y);
     void Imprimir();

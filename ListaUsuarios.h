@@ -2,6 +2,7 @@
 #define LISTASUSUARIOS_H
 
 #include "nodoUsuarios.h"
+#include "ListaMovimientos.h"
 
 #include <iostream>
 using namespace std;
@@ -25,6 +26,7 @@ public:
     void OrdenamientoAscendente();
     void OrdenamientoDescendente();
     void swap(nodoUsuarios* a, nodoUsuarios* b);
+    void InsertarMovimientos(ListaMovimientos listaMovimientos, nodoUsuarios* usuario);
 private:
 };
 

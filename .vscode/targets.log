@@ -5,9 +5,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Mon Aug 22 18:12:49 2022
+# Make data base, printed on Tue Aug 23 00:31:08 2022
 
 # Variables
 
@@ -94,7 +93,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXr1yVRR/agent.2675
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXrNNWj1/agent.2673
 # default
 .SHELLFLAGS := -c
 # environment
@@ -114,7 +113,7 @@ SNAP_REEXEC =
 # makefile (from 'nbproject/Makefile-variables.mk', line 23)
 CND_PACKAGE_NAME_Release = fase1.tar
 # environment
-VSCODE_PID = 3427
+VSCODE_PID = 11378
 # makefile (from 'Makefile', line 50)
 CCADMIN = CCadmin
 # environment
@@ -126,7 +125,7 @@ BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # makefile (from 'Makefile', line 49)
 CP = cp
 # environment
-SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/2578,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/2578
+SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/2577,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/2577
 # automatic
 *F = $(notdir $*)
 # environment
@@ -238,9 +237,9 @@ SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # makefile (from 'nbproject/Makefile-variables.mk', line 7)
 CND_BUILDDIR = build
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 3383
+GIO_LAUNCHED_DESKTOP_FILE_PID = 11335
 # environment
-SSH_AGENT_PID = 2676
+SSH_AGENT_PID = 2674
 # environment
 _ = /snap/code/105/usr/share/code/code
 # makefile (from 'nbproject/Makefile-impl.mk', line 31)
@@ -309,7 +308,6 @@ GDMSESSION = xfce
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # makefile (from 'nbproject/Makefile-impl.mk', line 21)
 CLEAN_SUBPROJECTS_ = .clean-subprojects
- 
 # variable set hash-table stats:
 # Load=149/1024=15%, Rehash=0, Collisions=13/193=7%
 
@@ -319,9 +317,9 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 
 # Directories
 
-# . (device 66312, inode 191357): 38 files, no impossibilities.
+# . (device 66312, inode 191357): 39 files, no impossibilities.
 
-# 38 files, no impossibilities in 1 directories.
+# 39 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -346,6 +344,7 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'nbproject/Makefile-impl.mk', line 90):
 	@if [ ! -f nbproject/Makefile-${CONF}.mk ]; \
 	then \
@@ -563,7 +562,6 @@ test: .test-post
 #  File has not been updated.
 #  recipe to execute (from 'nbproject/Makefile-impl.mk', line 67):
 	@#echo "=> Running $@... Configuration=$(CONF)"
- 
 	"${MAKE}" -f nbproject/Makefile-${CONF}.mk SUBPROJECTS=${SUBPROJECTS} .build-tests-conf
 
 .clobber-pre:
@@ -650,12 +648,12 @@ build-tests: .build-tests-post
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 76 / storage = 969 B / avg = 12 B
-# current buf: size = 8162 B / used = 969 B / count = 76 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 77 / storage = 980 B / avg = 12 B
+# current buf: size = 8162 B / used = 980 B / count = 77 / avg = 12 B
 
-# strcache performance: lookups = 148 / hit rate = 48%
+# strcache performance: lookups = 149 / hit rate = 48%
 # hash-table stats:
-# Load=76/8192=1%, Rehash=0, Collisions=0/148=0%
-# Finished Make data base on Mon Aug 22 18:12:49 2022
+# Load=77/8192=1%, Rehash=0, Collisions=0/149=0%
+# Finished Make data base on Tue Aug 23 00:31:08 2022
 
  

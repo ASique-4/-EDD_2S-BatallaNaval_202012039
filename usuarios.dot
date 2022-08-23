@@ -1,136 +1,130 @@
 digraph G {
 graph [rankdir = TB ]
 node [shape = box]
-user3 [label="Nick: user3
-
-Edad: 23
-Monedas: 7"];
-user3->user10
-user10 [label="Nick: user10
-
-Edad: 23
-Monedas: 7"];
-user10->user17
-user10->user3
-user17 [label="Nick: user17
-
-Edad: 23
-Monedas: 7"];
-user17->user12
-user17->user10
-user12 [label="Nick: user12
-
-Edad: 22
-Monedas: 730"];
-user12->user5
-user12->user17
-user5 [label="Nick: user5
-
-Edad: 22
-Monedas: 730"];
-user5->user19
-user5->user12
-user19 [label="Nick: user19
-
-Edad: 22
-Monedas: 730"];
-user19->user1
-user19->user5
-user1 [label="Nick: user1
-
-Edad: 12
-Monedas: 5"];
-user1->user8
-user1->user19
-user8 [label="Nick: user8
-
-Edad: 10
-Monedas: 1000"];
-user8->user15
-user8->user1
-user15 [label="Nick: user15
-
-Edad: 10
-Monedas: 1000"];
-user15->user4
-user15->user8
-user4 [label="Nick: user4
-
-Edad: 10
-Monedas: 50"];
-user4->user18
-user4->user15
-user18 [label="Nick: user18
-
-Edad: 10
-Monedas: 50"];
-user18->user11
-user18->user4
-user11 [label="Nick: user11
-
-Edad: 10
-Monedas: 50"];
-user11->user22
-user11->user18
-user22 [label="Nick: user22
-
-Edad: 10
-Monedas: 1000"];
-user22->user14
-user22->user11
-user14 [label="Nick: user14
-
-Edad: 5
-Monedas: 700"];
-user14->user9
-user14->user22
-user9 [label="Nick: user9
-
+"user9"[label="Nick: 'user9'
+Password92bc214a3172d696bfea4bb97f5989b440a6595f06b5c181266b95755afcc66c
 Edad: 5
 Monedas: 6"];
-user9->user16
-user9->user14
-user16 [label="Nick: user16
-
-Edad: 5
-Monedas: 6"];
-user16->user6
-user16->user9
-user6 [label="Nick: user6
-
+user9->user13
+"user13" [label="Nick: 'user13'
+Password32d21dd3c180894d5817365554f995fc042f26fe36956ced738473cb8e908362
 Edad: 5
 Monedas: 600"];
-user6->user7
-user6->user16
-user7 [label="Nick: user7
-
+"user13"->"user14"
+"user13"->"user9"
+"user14" [label="Nick: 'user14'
+Password7e588393c06a9c1962547b44bfa98efae7cae63827ba972b2869e3291c117311
 Edad: 5
 Monedas: 700"];
-user7->user2
-user7->user6
-user2 [label="Nick: user2
-
+"user14"->"user16"
+"user14"->"user13"
+"user16" [label="Nick: 'user16'
+Password92bc214a3172d696bfea4bb97f5989b440a6595f06b5c181266b95755afcc66c
 Edad: 5
 Monedas: 6"];
-user2->user20
-user2->user7
-user20 [label="Nick: user20
-
+"user16"->"user20"
+"user16"->"user14"
+"user20" [label="Nick: 'user20'
+Password32d21dd3c180894d5817365554f995fc042f26fe36956ced738473cb8e908362
 Edad: 5
 Monedas: 600"];
-user20->user21
-user20->user2
-user21 [label="Nick: user21
-
+"user20"->"user21"
+"user20"->"user16"
+"user21" [label="Nick: 'user21'
+Password7e588393c06a9c1962547b44bfa98efae7cae63827ba972b2869e3291c117311
 Edad: 5
 Monedas: 700"];
-user21->user13
-user21->user20
-user13 [label="Nick: user13
-
+"user21"->"user2"
+"user21"->"user20"
+"user2" [label="Nick: 'user2'
+Password92bc214a3172d696bfea4bb97f5989b440a6595f06b5c181266b95755afcc66c
+Edad: 5
+Monedas: 6"];
+"user2"->"user6"
+"user2"->"user21"
+"user6" [label="Nick: 'user6'
+Password32d21dd3c180894d5817365554f995fc042f26fe36956ced738473cb8e908362
 Edad: 5
 Monedas: 600"];
-user13->user21
-user13:e->user3:e
-user3:w->user13:w
+"user6"->"user7"
+"user6"->"user2"
+"user7" [label="Nick: 'user7'
+Password7e588393c06a9c1962547b44bfa98efae7cae63827ba972b2869e3291c117311
+Edad: 5
+Monedas: 700"];
+"user7"->"user8"
+"user7"->"user6"
+"user8" [label="Nick: 'user8'
+Passworddd0e5c288c1062d8abb0b28f1dfd35129c576a28ee7ba1603c43e696cbe6a8cb
+Edad: 10
+Monedas: 1000"];
+"user8"->"user4"
+"user8"->"user7"
+"user4" [label="Nick: 'user4'
+Passworde8232a52fb67da187a493c90e6d8005b8f01ff40c310bf1b87f1cd1b61e5fab8
+Edad: 10
+Monedas: 50"];
+"user4"->"user22"
+"user4"->"user8"
+"user22" [label="Nick: 'user22'
+Passworddd0e5c288c1062d8abb0b28f1dfd35129c576a28ee7ba1603c43e696cbe6a8cb
+Edad: 10
+Monedas: 1000"];
+"user22"->"user15"
+"user22"->"user4"
+"user15" [label="Nick: 'user15'
+Passworddd0e5c288c1062d8abb0b28f1dfd35129c576a28ee7ba1603c43e696cbe6a8cb
+Edad: 10
+Monedas: 1000"];
+"user15"->"user11"
+"user15"->"user22"
+"user11" [label="Nick: 'user11'
+Passworde8232a52fb67da187a493c90e6d8005b8f01ff40c310bf1b87f1cd1b61e5fab8
+Edad: 10
+Monedas: 50"];
+"user11"->"user18"
+"user11"->"user15"
+"user18" [label="Nick: 'user18'
+Passworde8232a52fb67da187a493c90e6d8005b8f01ff40c310bf1b87f1cd1b61e5fab8
+Edad: 10
+Monedas: 50"];
+"user18"->"user12"
+"user18"->"user11"
+"user12" [label="Nick: 'user12'
+Password77c4ac78fcde840a979c0c02d96fa29ab0e7cc0a39151fd262a9b558d7c01b34
+Edad: 22
+Monedas: 730"];
+"user12"->"user5"
+"user12"->"user18"
+"user5" [label="Nick: 'user5'
+Password77c4ac78fcde840a979c0c02d96fa29ab0e7cc0a39151fd262a9b558d7c01b34
+Edad: 22
+Monedas: 730"];
+"user5"->"user19"
+"user5"->"user12"
+"user19" [label="Nick: 'user19'
+Password77c4ac78fcde840a979c0c02d96fa29ab0e7cc0a39151fd262a9b558d7c01b34
+Edad: 22
+Monedas: 730"];
+"user19"->"user17"
+"user19"->"user5"
+"user17" [label="Nick: 'user17'
+Passwordabefcf257b5d2ff2816a68ec7c84ec8c11e0e0dc4f3425dfe08b29e9b9e5e3b9
+Edad: 23
+Monedas: 7"];
+"user17"->"user3"
+"user17"->"user19"
+"user3" [label="Nick: 'user3'
+Passwordabefcf257b5d2ff2816a68ec7c84ec8c11e0e0dc4f3425dfe08b29e9b9e5e3b9
+Edad: 23
+Monedas: 7"];
+"user3"->"user10"
+"user3"->"user17"
+"user10"[label="Nick: 'user10'
+Passwordabefcf257b5d2ff2816a68ec7c84ec8c11e0e0dc4f3425dfe08b29e9b9e5e3b9
+Edad: 23
+Monedas: 7"];
+"user10"->"user3"
+"user10":e->"user9":e
+"user9":w->"user10":w
 }

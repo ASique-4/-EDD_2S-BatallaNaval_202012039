@@ -19,6 +19,10 @@ public:
     void Imprimir();
     void CrearGraphviz();
     void InsertarCabecera(string categoria);
+    void Ordenar();
+    void swap(nodoArticulos* a, nodoArticulos* b);
+    void OrdenamientoAscendente();
+    void OrdenamientoDescendente();
 private:
 };
 

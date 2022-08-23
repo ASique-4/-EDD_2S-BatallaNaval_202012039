@@ -1,6 +1,5 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
- 
 if [ ! -f nbproject/Makefile-Debug.mk ]; \
 then \
     echo ""; \
@@ -25,11 +24,8 @@ else \
 fi
 #echo "=> Running .build-impl... Configuration=Debug"
 "make" -f nbproject/Makefile-Debug.mk QMAKE= SUBPROJECTS= .build-conf
- 
 make[1]: Entering directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
- 
 "make"  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-Linux/fase_1
- 
 make[2]: Entering directory '/home/angel/Desktop/Dev/Github/EDD/Proyecto1'
  
 mkdir -p build/Debug/GNU-Linux

@@ -1,1 +1,1 @@
-ListaSimple lista;
+Imprimir
