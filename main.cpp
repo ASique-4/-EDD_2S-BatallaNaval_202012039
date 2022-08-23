@@ -11,6 +11,7 @@
  */
 
 #include "ListaArticulos.cpp"
+#include "ListaDeListasMov.cpp"
 #include "ListaCircularUsuarios.cpp"
 #include "ColaTutorial.cpp"
 #include "CabeceraArticulos.cpp"
@@ -24,7 +25,6 @@
 
 #include <iostream>
 
-
 using namespace std;
 
 int stringtoint(string cadena)
@@ -37,10 +37,10 @@ int stringtoint(string cadena)
     return numero;
 }
 
-char* stringtochar(string s)
+char *stringtochar(string s)
 {
 
-    char* char_arr;
+    char *char_arr;
     string str_obj(s);
     char_arr = &str_obj[0];
     return char_arr;
@@ -60,7 +60,7 @@ void menuEditar(nodoUsuarios *usuarioActivo)
     string nick;
     int edad;
     string password;
-    
+
     cout << "Editar usuario" << endl;
     cout << "Nick: " << usuarioActivo->nick << endl;
     cout << "Edad: " << usuarioActivo->edad << endl;
@@ -108,7 +108,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
 
     do
     {
-        
+
         cout << "       ==> Bienvenido " << usuarioActivo->nick << " <==" << endl;
         cout << "=======================================" << endl;
         cout << "1. Editar usuario" << endl;
@@ -116,7 +116,8 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
         cout << "3. Ver tutorial" << endl;
         cout << "4. Ver articulos de la tienda" << endl;
         cout << "5. Realizar movimientos" << endl;
-        cout << "6. Salir al menu principal" << endl;
+        cout << "6. Mostrar movimientos" << endl;
+        cout << "7. Cerrar sesion" << endl;
         cout << "=======================================" << endl;
         cout << endl;
         cout << endl;
@@ -127,7 +128,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
         switch (opcion)
         {
         case 1:
-            
+
             menuEditar(usuarioActivo);
             break;
         case 2:
@@ -168,9 +169,8 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
         case 5:
             cout << "Realizar movimientos" << endl;
             {
-
-                
-                ListaMovimientos colaMovimientos;
+                ListaMovimientos *colaMovimientos;
+                colaMovimientos = new ListaMovimientos();
                 bool repetir = true;
                 int i = 1;
                 do
@@ -182,7 +182,8 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
                     cout << "Coordenad en y: ";
                     int y;
                     cin >> y;
-                    colaMovimientos.InsertarFinal(x, y);
+                    cout << x << " " << y << endl;
+                    colaMovimientos->InsertarFinal(x, y);
                     i += 1;
                     cout << "Desea agregar otro movimiento? (s/n): ";
                     char respuesta;
@@ -193,16 +194,25 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
                         cout << "¿Qué nombre desea ponerle a su movimiento? ";
                         string nombre;
                         cin >> nombre;
-                        usuarioActivo->listaMovimientos.nombre = nombre;
-                        cout << "Movimientos agregados exitosamente" << endl;
+                        colaMovimientos->nombre = nombre;
+
                         cin.get();
                         repetir = false;
                     }
                 } while (repetir);
-                usuarioActivo->listaMovimientos = colaMovimientos;
+
+                usuarioActivo->lista.InsertarFinal(colaMovimientos);
+                cout << usuarioActivo->lista.primero->lista->nombre << endl;
+                cout << "Movimientos agregados exitosamente" << endl;
             }
             break;
         case 6:
+            cout << "Mostrar movimientos" << endl;
+            {
+                usuarios.MostrarMovimientos(usuarioActivo);
+            }
+            break;
+        case 7:
             cout << "Salir al menu principal" << endl;
             repetir = false;
             break;
@@ -213,7 +223,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
 
 void login(ListaUsuarios usuarios, ColaTutorial tutorial, ListaArticulos articulos)
 {
-    
+
     cout << "=======================================" << endl;
     cout << "               LOGIN" << endl;
 
@@ -241,7 +251,7 @@ void login(ListaUsuarios usuarios, ColaTutorial tutorial, ListaArticulos articul
 
 void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutorial, Cabecera cabecera)
 {
-    
+
     int opcion;
     string archivo;
     bool repetir = true;
@@ -250,7 +260,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
     {
 
         // Texto del menú que se verá cada vez
-        
+
         cout << "=======================================" << endl;
         cout << "           Menu de Opciones" << endl;
         cout << "1. Carga Masiva" << endl;
@@ -279,8 +289,11 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 const Json::Value &usuariosJson = usuariosObj["usuarios"];
                 for (int i = 0; i < usuariosJson.size(); i++)
                 {
-                    usuarios.InsertarFinal(usuariosJson[i]["nick"].asString(), encriptarSHA256(usuariosJson[i]["password"].asString()) ,
-                                           stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
+                    if (usuarios.BuscarUsuario(usuariosJson[i]["nick"].asString(), usuariosJson[i]["password"].asString()) == false)
+                    {
+                        usuarios.InsertarFinal(usuariosJson[i]["nick"].asString(), encriptarSHA256(usuariosJson[i]["password"].asString()),
+                                               stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
+                    }
                 }
 
                 ifstream ifs2(archivo);
@@ -302,7 +315,6 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                             stringtoint(articulosJson[i]["precio"].asString()), articulosJson[i]["nombre"].asString(), articulosJson[i]["src"].asString());
                 }
                 cabecera.InsertarArticulos(articulos);
-                
 
                 ifstream ifs3(archivo);
                 Json::Value tutorialObj;
@@ -311,14 +323,12 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 const Json::Value &movimientosJson = tutorialJson["movimientos"];
 
                 tutorial.InsertarFinal(stringtoint(tutorialJson["ancho"].asString()),
-                                        stringtoint(tutorialJson["alto"].asString()));
+                                       stringtoint(tutorialJson["alto"].asString()));
                 for (int i = 0; i < movimientosJson.size(); i++)
                 {
                     tutorial.InsertarFinal(stringtoint(movimientosJson[i]["x"].asString()),
-                                            stringtoint(movimientosJson[i]["y"].asString()));
+                                           stringtoint(movimientosJson[i]["y"].asString()));
                 }
-
-                
 
                 ifs.close();
                 ifs2.close();
@@ -334,7 +344,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
             // Lista de instrucciones de la opción 2
 
             {
-                
+
                 string nick;
                 string password;
                 int monedas;
@@ -384,39 +394,40 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                     case 1:
                         // Lista de instrucciones de la opción 1
                         {
-                        int i;
-                        bool repetir2 = false;
-                        cout << "=======================================" << endl;
-                        cout << "1. Ordenar de maenra descendente" << endl;
-                        cout << "2. Ordenar de manera ascendente" << endl;
-                        cout << "0. Salir" << endl;
-                        cout << "=======================================" << endl;
-                        cin >> i;
-                        do {
-                            switch (i)
+                            int i;
+                            bool repetir2 = false;
+                            cout << "=======================================" << endl;
+                            cout << "1. Ordenar de maenra descendente" << endl;
+                            cout << "2. Ordenar de manera ascendente" << endl;
+                            cout << "0. Salir" << endl;
+                            cout << "=======================================" << endl;
+                            cin >> i;
+                            do
                             {
-                            case 1:
-                                usuarios.OrdenamientoDescendente();
-                                usuarios.Imprimir();
-                                usuarios.CrearGraphviz();
-                                cout << endl;
-                                cout << endl;
-                                break;
-                            case 2:
-                                usuarios.OrdenamientoAscendente();
-                                usuarios.Imprimir();
-                                usuarios.CrearGraphviz();
-                                cout << endl;
-                                cout << endl;
-                                break;
-                            case 0:
-                                repetir2 = false;
-                                break;
-                            default:
-                                cout << "Opcion no valida" << endl;
-                                break;
-                            }
-                        } while (repetir2);
+                                switch (i)
+                                {
+                                case 1:
+                                    usuarios.OrdenamientoDescendente();
+                                    usuarios.Imprimir();
+                                    usuarios.CrearGraphviz();
+                                    cout << endl;
+                                    cout << endl;
+                                    break;
+                                case 2:
+                                    usuarios.OrdenamientoAscendente();
+                                    usuarios.Imprimir();
+                                    usuarios.CrearGraphviz();
+                                    cout << endl;
+                                    cout << endl;
+                                    break;
+                                case 0:
+                                    repetir2 = false;
+                                    break;
+                                default:
+                                    cout << "Opcion no valida" << endl;
+                                    break;
+                                }
+                            } while (repetir2);
                         }
                         break;
                     case 2:
@@ -430,7 +441,8 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                             cout << "0. Salir" << endl;
                             cout << "=======================================" << endl;
                             cin >> i;
-                            do {
+                            do
+                            {
                                 switch (i)
                                 {
                                 case 1:
@@ -471,7 +483,6 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                         break;
                     }
                 } while (repetir1);
-                
             }
             break;
 

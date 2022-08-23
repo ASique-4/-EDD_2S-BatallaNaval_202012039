@@ -1,4 +1,5 @@
 #include "ListaUsuarios.h"
+#include "ListaDeListasMov.h"
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -24,8 +25,8 @@ void ListaUsuarios::InsertarFinal(string nick, string password, int monedas, int
     }
 }
 
-void ListaUsuarios::InsertarMovimientos(ListaMovimientos listaMovimientos,nodoUsuarios* usuario) {
-    usuario->listaMovimientos = listaMovimientos;
+void ListaUsuarios::InsertarLista(ListaMovimientos*movimientos, nodoUsuarios*usuario){
+    usuario->lista.InsertarFinal(movimientos);
 }
 
 void ListaUsuarios::Imprimir() {
@@ -45,6 +46,8 @@ void ListaUsuarios::Imprimir() {
     }
 
 }
+
+
 
 nodoUsuarios* ListaUsuarios::BuscarUsuario(string nick, string password) {
     nodoUsuarios*aux = primero;
@@ -95,19 +98,19 @@ void ListaUsuarios::swap(nodoUsuarios* a, nodoUsuarios* b)
     string temp_nick = a->nick;
     string temp_password = a->password;
     int temp_monedas = a->monedas;
-    ListaMovimientos temp_listaMovimientos = a->listaMovimientos;
+    ListaDeListas temp_listaMovimientos = a->lista;
 
 	a->edad = b -> edad;
     a->nick = b -> nick;
     a->password = b -> password;
     a->monedas = b -> monedas;
-    a->listaMovimientos = b -> listaMovimientos;
+    a->lista = b -> lista;
 
 	b -> edad = temp_edad;
     b -> nick = temp_nick;
     b -> password = temp_password;
     b -> monedas = temp_monedas;
-    b -> listaMovimientos = temp_listaMovimientos;
+    b -> lista = temp_listaMovimientos;
 
     
 }
@@ -198,3 +201,11 @@ void ListaUsuarios::CrearGraphviz()
 
 }
 
+void ListaUsuarios::MostrarMovimientos(nodoUsuarios *usuario){
+    ListaMovimientos*movimientos = new ListaMovimientos();
+    movimientos = usuario->lista.primero->lista;
+    while(movimientos != NULL){
+        movimientos->Imprimir();
+        movimientos = movimientos->sig;
+    }
+}

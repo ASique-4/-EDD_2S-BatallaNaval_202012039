@@ -19,14 +19,16 @@ void ListaMovimientos::InsertarFinal(int x, int y) {
 
 
 
-
 void ListaMovimientos::Imprimir() {
     nodoMovimientos*aux = Inicio;
+    int i = 1;
+    cout << "======" << nombre << "======" << endl;
     while (aux != NULL) {
-        cout <<"[" << aux->x << "]--";
+        cout << i <<  ". [" << aux->x << "]--";
         cout <<"[" << aux->y << "]";
         cout << endl;
         aux = aux->sig;
+        i++;
     }
 
 }

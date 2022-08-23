@@ -3,6 +3,8 @@
 
 #include "nodoUsuarios.h"
 #include "ListaMovimientos.h"
+#include "ListaDeListasMov.h"
+
 
 #include <iostream>
 using namespace std;
@@ -11,6 +13,8 @@ class ListaUsuarios {
 public:
     nodoUsuarios*primero;
     nodoUsuarios*ultimo;
+    ListaMovimientos lista;
+    
     int tamanio;
 
     ListaUsuarios() {
@@ -26,7 +30,8 @@ public:
     void OrdenamientoAscendente();
     void OrdenamientoDescendente();
     void swap(nodoUsuarios* a, nodoUsuarios* b);
-    void InsertarMovimientos(ListaMovimientos listaMovimientos, nodoUsuarios* usuario);
+    void InsertarLista(ListaMovimientos*lista, nodoUsuarios* usuario);
+    void MostrarMovimientos(nodoUsuarios* usuario);
 private:
 };
 

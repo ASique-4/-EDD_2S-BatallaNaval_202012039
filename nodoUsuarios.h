@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <string>
 #include "ListaMovimientos.h"
+#include "ListaDeListasMov.h"
 
 using namespace std;
 class nodoUsuarios {
@@ -11,12 +12,13 @@ public:
     std::string password;
     int monedas;
     int edad;
-    ListaMovimientos listaMovimientos;
+    ListaDeListas lista;
+
 
     nodoUsuarios*ant;
     nodoUsuarios*sig;
     nodoUsuarios() {
-        listaMovimientos = ListaMovimientos();
+   
         ant = NULL;
         sig = NULL;
         nick = ' ';
