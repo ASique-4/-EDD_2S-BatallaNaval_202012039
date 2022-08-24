@@ -50,7 +50,8 @@ void Cabecera::CrearGraphviz() {
     archivo.open("tienda.dot");
     archivo << "digraph G {" << endl;
     archivo << "graph [rankdir = LR ]" << endl;
-    archivo << "node [shape = box]" << endl;
+    archivo << "bgcolor=\"lavender\"" << endl;
+    archivo << "node [ style=filled,shape = box, fillcolor=\"lavenderblush:lavenderblush1\"]" << endl;
 
     while (aux != NULL){
         rank += "\"" + aux->categoria + "\"";
@@ -61,16 +62,16 @@ void Cabecera::CrearGraphviz() {
     }
     archivo << "{rank = same " << rank << "}" << endl;
     aux = Inicio;
-    archivo << aux->categoria << nodos << endl;
+    archivo << "\"" << aux->categoria << "\"" << nodos << "[color = indianred1];" << endl;
 
     while (aux != NULL)
     {
-        archivo << aux->categoria << " [label=\"" << aux->categoria << "\"];" << endl;
+        archivo << "\"" << aux->categoria << "\"" << " [label=\"" << aux->categoria << "\"];" << endl;
         aux2 = aux->derecha->Inicio;
         while (aux2 != NULL)
         {
             if (aux2 == aux->derecha->Inicio){
-                archivo << "\"" << aux->categoria << "\"" << "->" << aux2->nombre;
+                archivo << "\"" << aux->categoria << "\"" << "->" << "\"" << aux2->nombre << "\"";
             }else{
                 archivo << "->" << "\"" << aux2->nombre << "\"";
             }
@@ -78,7 +79,7 @@ void Cabecera::CrearGraphviz() {
             
             aux2 = aux2->sig;
         }
-        archivo << endl;
+        archivo << "[color = limegreen];" << endl;
 
         aux = aux->abajo;
         

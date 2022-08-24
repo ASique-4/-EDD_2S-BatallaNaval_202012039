@@ -171,6 +171,8 @@ void ListaUsuarios::CrearGraphviz()
     archivo << "digraph G {" << endl;
     archivo << "graph [rankdir = TB ]" << endl;
     archivo << "node [shape = box]" << endl;
+    archivo << "bgcolor=\"lavender\"" << endl;
+    archivo << "node [ style=filled,shape = box, fillcolor=\"lavenderblush:lavenderblush1\"]" << endl;
 
     while (aux != NULL)
     {
@@ -189,24 +191,30 @@ void ListaUsuarios::CrearGraphviz()
                 archivo << "\"" << aux->nick << "\"" << "[label=\"" << "Nick: " << "\'" << aux->nick << "\'"<< "\n" 
                 << "Password" << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
                 << aux->monedas << "\"];" << endl;
-                archivo << aux->nick << "->" << aux->sig->nick << endl;
+                archivo << aux->nick << "->" << aux->sig->nick;
+                archivo << "[color = limegreen];" << endl;
             }
 
         }else if (aux == ultimo)
         {
             archivo << "\"" << aux->nick  << "\"" <<"[label=\"" << "Nick: " << "\'"<< aux->nick<< "\'" << "\n" 
-                << "Password" << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
+                << "Password: " << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
                 << aux->monedas << "\"];" << endl;
-            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->ant->nick << "\"" << endl;
-            archivo << "\"" << aux->nick << "\"" << ":e->" << "\"" << aux->sig->nick << "\"" << ":e" << endl;
-            archivo << "\"" << aux->sig->nick << "\"" << ":w->" << "\"" << aux->nick << "\"" << ":w" << endl;
+            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->ant->nick << "\"" ;
+            archivo << "[color = indianred1];" << endl;
+            archivo << "\"" << aux->nick << "\"" << ":e->" << "\"" << aux->sig->nick << "\"" << ":e";
+            archivo << "[color = limegreen];" << endl;
+            archivo << "\"" << aux->sig->nick << "\"" << ":w->" << "\"" << aux->nick << "\"" << ":w";
+            archivo << "[color = indianred1];" << endl;
             break;
         }else{
             archivo << "\"" << aux->nick << "\"" << " [label=\"" << "Nick: " << "\'" << aux->nick << "\'" << "\n" 
                 << "Password" << aux->password << "\n" << "Edad: " << aux->edad << "\n" << "Monedas: " 
                 << aux->monedas << "\"];" << endl;
-            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->sig->nick << "\"" << endl;
-            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->ant->nick << "\"" << endl;
+            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->sig->nick << "\"" ;
+            archivo << "[color = limegreen];" << endl;
+            archivo << "\"" << aux->nick << "\"" << "->" << "\"" << aux->ant->nick << "\"" ;
+            archivo << "[color = indianred1];" << endl;
         }
         aux = aux->sig;
         

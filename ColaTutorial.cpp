@@ -22,10 +22,10 @@ void ColaTutorial::InsertarFinal(int x, int y) {
 
 void ColaTutorial::Imprimir() {
     nodoTutorial*aux = Ultimo;
-    cout << "<===========Tablero===========>" << endl;
+    cout << "<=========== Tablero ===========>" << endl;
             cout << "Ancho: " << Inicio->x << endl;
             cout << "Alto: " << Inicio->y << endl;
-    cout << "<=========Movimientos=========>" << endl;
+    cout << "<========= Movimientos =========>" << endl;
     while (aux != Inicio) {
         
         if (aux->ant == Inicio){

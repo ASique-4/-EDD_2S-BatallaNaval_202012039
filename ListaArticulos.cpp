@@ -91,7 +91,7 @@ void ListaArticulos::OrdenamientoDescendente(){
 void ListaArticulos::Imprimir() {
     nodoArticulos*aux = new nodoArticulos();
     aux = Inicio;
-    cout << "==================================Tienda=================================="<<endl;
+    cout << "================================== Tienda =================================="<<endl;
     while(aux != NULL) {
         
         cout << "ID: " << aux->id << "  ";

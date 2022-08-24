@@ -1,12 +1,13 @@
 digraph G {
 graph [rankdir = LR ]
-node [shape = box]
-{rank = same "Epico""Normal""Espacial"}
-Epico-> "Normal"-> "Espacial"
-Epico [label="Epico"];
-"Epico"->Martillo->"Espada"->"Cuchillo"->"Carne"->"Bebida"->"Mascara"->"Gorra"->"Libro Encantado"->"Zapatos"
-Normal [label="Normal"];
-"Normal"->Escudo->"Pan"->"Diamante"->"Dulce"->"Lapiz"->"Capa"
-Espacial [label="Espacial"];
-"Espacial"->Pistola->"Guantes"
+bgcolor="lavender"
+node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]
+{rank = same "mitico""legendario""raro"}
+"mitico"-> "legendario"-> "raro"[color = indianred1];
+"mitico" [label="mitico"];
+"mitico"->"Barco ranita"[color = limegreen];
+"legendario" [label="legendario"];
+"legendario"->"Barco interdimensional"->"Barco cuadrado"[color = limegreen];
+"raro" [label="raro"];
+"raro"->"Flota japonesa"[color = limegreen];
 }

@@ -471,11 +471,8 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                 {
                                 case 1:
                                     articulos.OrdenamientoDescendente();
-                                    cout << "1" << endl;
                                     articulos.Imprimir();
-                                    cout << "2" << endl;
                                     cabecera.CrearGraphviz();
-                                    cout << "3" << endl;
                                     cout << endl;
                                     cout << endl;
                                     break;

@@ -1,6 +1,8 @@
 digraph Tutorial {
 graph [rankdir = LR ]
 node [shape = box]
+bgcolor="lavender"
+node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]
 0 [label="X: 1
 Y: 1"];
 1 [label="X: 2
