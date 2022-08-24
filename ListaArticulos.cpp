@@ -56,7 +56,7 @@ void ListaArticulos::OrdenamientoAscendente(){
     aux2 = Inicio->sig;
     while (aux != NULL && aux2 != NULL) {
         while (aux2 != NULL) {
-            if (aux->id > aux2->id)
+            if (aux->precio > aux2->precio)
             {
                 swap(aux, aux2);
             }
@@ -75,7 +75,7 @@ void ListaArticulos::OrdenamientoDescendente(){
     int i = 0;
     while (aux != NULL && aux2 != NULL) {
         while (aux2 != NULL) {
-            if (aux->id < aux2->id)
+            if (aux->precio < aux2->precio)
             {
                 swap(aux, aux2);
             }

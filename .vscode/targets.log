@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 23 17:55:45 2022
+# Make data base, printed on Tue Aug 23 20:17:49 2022
 
 # Variables
 
@@ -113,7 +113,7 @@ SNAP_REEXEC =
 # makefile (from 'nbproject/Makefile-variables.mk', line 23)
 CND_PACKAGE_NAME_Release = fase1.tar
 # environment
-VSCODE_PID = 45529
+VSCODE_PID = 1263052
 # makefile (from 'Makefile', line 50)
 CCADMIN = CCadmin
 # environment
@@ -237,7 +237,7 @@ SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # makefile (from 'nbproject/Makefile-variables.mk', line 7)
 CND_BUILDDIR = build
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 45466
+GIO_LAUNCHED_DESKTOP_FILE_PID = 1262079
 # environment
 SSH_AGENT_PID = 2675
 # environment
@@ -277,6 +277,7 @@ XDG_SESSION_ID = c1
 # default
 .RECIPEPREFIX := 
 # automatic
+ 
 <F = $(notdir $<)
 # environment
 SNAP_VERSION = e4503b30
@@ -296,7 +297,6 @@ SUBPROJECTS = ${SUB_${SUB}}
 XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/angel
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
- 
 # environment
 SNAP_USER_DATA = /home/angel/snap/code/105
 # environment
@@ -318,9 +318,9 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 
 # Directories
 
-# . (device 66312, inode 191357): 42 files, no impossibilities.
+# . (device 66312, inode 191357): 44 files, no impossibilities.
 
-# 42 files, no impossibilities in 1 directories.
+# 44 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -570,6 +570,7 @@ test: .test-post
 #  File has not been updated.
 
 clobber: .clobber-post
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -589,7 +590,6 @@ nbproject/Makefile-impl.mk:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 #  recipe to execute (from 'nbproject/Makefile-impl.mk', line 59):
- 
 	@#echo "=> Running $@..."
 	for CONF in ${ALLCONFS}; \
 	do \
@@ -649,12 +649,12 @@ build-tests: .build-tests-post
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 80 / storage = 1033 B / avg = 12 B
-# current buf: size = 8162 B / used = 1033 B / count = 80 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 82 / storage = 1057 B / avg = 12 B
+# current buf: size = 8162 B / used = 1057 B / count = 82 / avg = 12 B
 
-# strcache performance: lookups = 152 / hit rate = 47%
+# strcache performance: lookups = 154 / hit rate = 46%
 # hash-table stats:
-# Load=80/8192=1%, Rehash=0, Collisions=0/152=0%
-# Finished Make data base on Tue Aug 23 17:55:45 2022
+# Load=82/8192=1%, Rehash=0, Collisions=0/154=0%
+# Finished Make data base on Tue Aug 23 20:17:49 2022
 
  
