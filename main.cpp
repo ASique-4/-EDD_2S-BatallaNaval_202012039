@@ -211,6 +211,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
                 } while (repetir);
 
                 usuarioActivo->lista.InsertarFinal(colaMovimientos);
+                usuarioActivo->monedas += 1;
                 cout << usuarioActivo->lista.primero->lista->nombre << endl;
                 cout << "Movimientos agregados exitosamente" << endl;
                 cin.get();
