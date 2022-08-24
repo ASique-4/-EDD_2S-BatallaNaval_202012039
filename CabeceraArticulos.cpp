@@ -86,7 +86,7 @@ void Cabecera::CrearGraphviz() {
 
     archivo << "}";
     archivo.close();
-
+    system("dot -Tpng tienda.dot -o tienda.png");
 }
 
 bool Cabecera::Buscar(string categoria) {

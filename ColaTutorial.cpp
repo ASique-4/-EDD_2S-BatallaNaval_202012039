@@ -64,4 +64,6 @@ void ColaTutorial::CrearGraphviz(){
     }
 
     archivo << "}" << endl;
+    archivo.close();
+    system("dot -Tpng tutorial.dot -o tutorial.png");
 }

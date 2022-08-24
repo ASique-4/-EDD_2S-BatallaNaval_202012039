@@ -350,7 +350,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 cout << endl;
                 cout << endl;
                 cout << "Se ha cargado el archivo correctamente" << endl;
-                cin.get();
+                
                 cout << endl;
             }
             break;
@@ -431,7 +431,6 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     usuarios.OrdenamientoDescendente();
                                     usuarios.Imprimir();
                                     usuarios.CrearGraphviz();
-                                    cin.get();
                                     cout << endl;
                                     cout << endl;
                                     break;
@@ -471,17 +470,18 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                 {
                                 case 1:
                                     articulos.OrdenamientoDescendente();
+                                    cout << "1" << endl;
                                     articulos.Imprimir();
-                                    articulos.CrearGraphviz();
-                                    cin.get();
+                                    cout << "2" << endl;
+                                    cabecera.CrearGraphviz();
+                                    cout << "3" << endl;
                                     cout << endl;
                                     cout << endl;
                                     break;
                                 case 2:
                                     articulos.OrdenamientoAscendente();
                                     articulos.Imprimir();
-                                    articulos.CrearGraphviz();
-                                    cin.get();
+                                    cabecera.CrearGraphviz();
                                     cout << endl;
                                     cout << endl;
                                     break;
@@ -490,10 +490,10 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     break;
                                 default:
                                     cout << "Opcion no valida" << endl;
-                                    cin.get();
                                     cout << endl;
                                     break;
                                 }
+                                cin.get();
                             } while (repetir2);
                         }
                         break;

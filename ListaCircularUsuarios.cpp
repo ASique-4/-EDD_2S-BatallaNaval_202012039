@@ -41,6 +41,7 @@ void ListaUsuarios::Imprimir() {
         aux = aux->sig;
         if (aux == primero)
         {
+            cin.get();
             break;
         }
     }
@@ -213,7 +214,7 @@ void ListaUsuarios::CrearGraphviz()
 
     archivo << "}";
     archivo.close();
-
+    system("dot -Tpng usuarios.dot -o usuarios.png");
 }
 
 void ListaUsuarios::MostrarMovimientos(nodoUsuarios *usuario){

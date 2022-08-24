@@ -50,10 +50,13 @@ void ListaArticulos::swap(nodoArticulos* a, nodoArticulos* b)
 }
 
 void ListaArticulos::OrdenamientoAscendente(){
-    nodoArticulos*aux = Inicio;
-    nodoArticulos*aux2 = Inicio->sig;
-    while (aux != NULL) {
-        while (aux2 != Inicio) {
+    nodoArticulos*aux = new nodoArticulos();
+    aux = Inicio;
+    nodoArticulos*aux2 = new nodoArticulos();
+    aux2 = Inicio->sig;
+    while (aux != NULL && aux2 != NULL) {
+        while (aux2 != NULL) {
+            cout << "Comparando " << aux->id << " con " << aux2->id << endl;
             if (aux->id > aux2->id)
             {
                 swap(aux, aux2);
@@ -66,24 +69,32 @@ void ListaArticulos::OrdenamientoAscendente(){
 }
 
 void ListaArticulos::OrdenamientoDescendente(){
-    nodoArticulos*aux = Inicio;
-    nodoArticulos*aux2 = Inicio->sig;
-    while (aux != NULL) {
-        while (aux2 != Inicio) {
+    nodoArticulos*aux = new nodoArticulos();
+    aux = Inicio;
+    nodoArticulos*aux2 = new nodoArticulos();
+    aux2 = Inicio->sig;
+    int i = 0;
+    while (aux != NULL && aux2 != NULL) {
+        while (aux2 != NULL) {
             if (aux->id < aux2->id)
             {
+                cout << "i: " << i << endl;
+                cout << aux->id << " " << aux2->id << endl;
                 swap(aux, aux2);
+                cout << aux->id << " " << aux2->id << endl;
             }
             aux2 = aux2->sig;
         }
         aux = aux->sig;
         aux2 = aux->sig;
+        i++;
     }
 }
 
 
 void ListaArticulos::Imprimir() {
-    nodoArticulos*aux = Inicio;
+    nodoArticulos*aux = new nodoArticulos();
+    aux = Inicio;
     cout << "==================================Tienda=================================="<<endl;
     while(aux != NULL) {
         
@@ -94,28 +105,10 @@ void ListaArticulos::Imprimir() {
         cout << "Src: " << aux->src << endl;
         
         aux = aux->sig;
+        
     }
     cout << "==========================================================================" << endl;
 
+
 }
 
-void ListaArticulos::CrearGraphviz(){
-    nodoArticulos*aux = Inicio;
-    ofstream archivo;
-    archivo.open("tienda.dot");
-    archivo << "digraph Tienda {" << endl;
-    while(aux != NULL) {
-        archivo << aux->id << " [label=\"" << aux->nombre << "\"];" << endl;
-        aux = aux->sig;
-    }
-    aux = Inicio;
-    while(aux != NULL) {
-        if(aux->sig != NULL) {
-            archivo << aux->id << " -> " << aux->sig->id << ";" << endl;
-        }
-        aux = aux->sig;
-    }
-    archivo << "}" << endl;
-    archivo.close();
-    system("dot -Tpng tienda.dot -o tienda.png");
-}

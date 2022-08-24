@@ -17,7 +17,6 @@ public:
     }
     void InsertarFinal(int id, string categoria, int precio, string nombre, string src);
     void Imprimir();
-    void CrearGraphviz();
     void InsertarCabecera(string categoria);
     void Ordenar();
     void swap(nodoArticulos* a, nodoArticulos* b);
