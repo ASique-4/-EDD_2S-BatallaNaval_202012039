@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 23 14:34:16 2022
+# Make data base, printed on Tue Aug 23 17:55:45 2022
 
 # Variables
 
@@ -113,7 +113,7 @@ SNAP_REEXEC =
 # makefile (from 'nbproject/Makefile-variables.mk', line 23)
 CND_PACKAGE_NAME_Release = fase1.tar
 # environment
-VSCODE_PID = 25209
+VSCODE_PID = 45529
 # makefile (from 'Makefile', line 50)
 CCADMIN = CCadmin
 # environment
@@ -237,7 +237,7 @@ SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # makefile (from 'nbproject/Makefile-variables.mk', line 7)
 CND_BUILDDIR = build
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 25166
+GIO_LAUNCHED_DESKTOP_FILE_PID = 45466
 # environment
 SSH_AGENT_PID = 2675
 # environment
@@ -295,8 +295,8 @@ SUBPROJECTS = ${SUB_${SUB}}
 # environment
 XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/angel
 # default
- 
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
+ 
 # environment
 SNAP_USER_DATA = /home/angel/snap/code/105
 # environment
@@ -589,6 +589,7 @@ nbproject/Makefile-impl.mk:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
 #  recipe to execute (from 'nbproject/Makefile-impl.mk', line 59):
+ 
 	@#echo "=> Running $@..."
 	for CONF in ${ALLCONFS}; \
 	do \
@@ -626,7 +627,6 @@ nbproject/Makefile-impl.mk:
 	"${MAKE}" -f nbproject/Makefile-${CONF}.mk SUBPROJECTS=${SUBPROJECTS} .test-conf
 
 build-tests: .build-tests-post
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -655,6 +655,6 @@ build-tests: .build-tests-post
 # strcache performance: lookups = 152 / hit rate = 47%
 # hash-table stats:
 # Load=80/8192=1%, Rehash=0, Collisions=0/152=0%
-# Finished Make data base on Tue Aug 23 14:34:16 2022
+# Finished Make data base on Tue Aug 23 17:55:45 2022
 
  

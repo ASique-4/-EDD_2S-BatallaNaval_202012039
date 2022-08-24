@@ -47,11 +47,26 @@ void ListaUsuarios::Imprimir() {
 
 }
 
+bool ListaUsuarios::BuscarNick(string nick){
+    nodoUsuarios*aux = primero;
+    if (aux == NULL){
+        return false;
+    }
+    while (aux->sig != primero) {
 
+        if (aux->nick == nick) {
+            return true;
+        }
+        aux = aux->sig;
+    }
+    return false;
+}
 
 nodoUsuarios* ListaUsuarios::BuscarUsuario(string nick, string password) {
     nodoUsuarios*aux = primero;
-    
+    if (aux == NULL){
+        return NULL;
+    }
     while (aux->sig != primero) {
 
         if (aux->nick == nick && aux->password == password) {

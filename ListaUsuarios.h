@@ -32,6 +32,7 @@ public:
     void swap(nodoUsuarios* a, nodoUsuarios* b);
     void InsertarLista(ListaMovimientos*lista, nodoUsuarios* usuario);
     void MostrarMovimientos(nodoUsuarios* usuario);
+    bool BuscarNick(string nick);
 private:
 };
 

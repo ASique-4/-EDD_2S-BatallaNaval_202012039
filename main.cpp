@@ -60,7 +60,7 @@ void menuEditar(nodoUsuarios *usuarioActivo)
     string nick;
     int edad;
     string password;
-
+    system("clear");
     cout << "Editar usuario" << endl;
     cout << "Nick: " << usuarioActivo->nick << endl;
     cout << "Edad: " << usuarioActivo->edad << endl;
@@ -83,16 +83,19 @@ void menuEditar(nodoUsuarios *usuarioActivo)
             cout << "Ingrese el nuevo nick: ";
             cin >> nick;
             usuarioActivo->nick = nick;
+            cin.get();
             break;
         case 2:
             cout << "Ingrese la nueva edad: ";
             cin >> edad;
             usuarioActivo->edad = edad;
+            cin.get();
             break;
         case 3:
             cout << "Ingrese la nueva password: ";
             cin >> password;
             usuarioActivo->password = password;
+            cin.get();
             break;
         case 4:
             salir = true;
@@ -108,7 +111,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
 
     do
     {
-
+        system("clear");
         cout << "       ==> Bienvenido " << usuarioActivo->nick << " <==" << endl;
         cout << "=======================================" << endl;
         cout << "1. Editar usuario" << endl;
@@ -142,12 +145,14 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
                 usuarios.EliminarUsuario(usuarioActivo);
                 repetir = false;
                 cout << "Usuario eliminado" << endl;
+                cin.get();
                 cout << endl;
                 cout << endl;
             }
             else
             {
                 cout << "Se ha cancelado la eliminacion" << endl;
+                cin.get();
                 cout << endl;
                 cout << endl;
             }
@@ -157,6 +162,8 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
             cout << "       Ver tutorial" << endl;
             {
                 tutorial.Imprimir();
+                cin.get();
+                cout << endl;
             }
             break;
         case 4:
@@ -164,6 +171,8 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
             {
                 cout << "==========================Monedas: " << usuarioActivo->monedas << endl;
                 articulos.Imprimir();
+                cin.get();
+                cout << endl;
             }
             break;
         case 5:
@@ -204,16 +213,21 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
                 usuarioActivo->lista.InsertarFinal(colaMovimientos);
                 cout << usuarioActivo->lista.primero->lista->nombre << endl;
                 cout << "Movimientos agregados exitosamente" << endl;
+                cin.get();
+                cout << endl;
             }
             break;
         case 6:
             cout << "Mostrar movimientos" << endl;
             {
                 usuarios.MostrarMovimientos(usuarioActivo);
+                cin.get();
+                cout << endl;
             }
             break;
         case 7:
-            cout << "Salir al menu principal" << endl;
+            cout << "Saliendo al menu principal" << endl;
+            cin.get();
             repetir = false;
             break;
         }
@@ -223,7 +237,7 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
 
 void login(ListaUsuarios usuarios, ColaTutorial tutorial, ListaArticulos articulos)
 {
-
+    system("clear");
     cout << "=======================================" << endl;
     cout << "               LOGIN" << endl;
 
@@ -260,7 +274,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
     {
 
         // Texto del menú que se verá cada vez
-
+        system("clear");
         cout << "=======================================" << endl;
         cout << "           Menu de Opciones" << endl;
         cout << "1. Carga Masiva" << endl;
@@ -289,7 +303,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 const Json::Value &usuariosJson = usuariosObj["usuarios"];
                 for (int i = 0; i < usuariosJson.size(); i++)
                 {
-                    if (usuarios.BuscarUsuario(usuariosJson[i]["nick"].asString(), usuariosJson[i]["password"].asString()) == false)
+                    if (usuarios.BuscarNick(usuariosJson[i]["nick"].asString()) == false)
                     {
                         usuarios.InsertarFinal(usuariosJson[i]["nick"].asString(), encriptarSHA256(usuariosJson[i]["password"].asString()),
                                                stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
@@ -337,6 +351,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 cout << endl;
                 cout << "Se ha cargado el archivo correctamente" << endl;
                 cin.get();
+                cout << endl;
             }
             break;
 
@@ -354,12 +369,18 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 cin >> nick;
                 cout << "=>Password: ";
                 cin >> password;
-                cout << "=>Monedas: ";
-                cin >> monedas;
+
                 cout << "=>Edad: ";
                 cin >> edad;
-                usuarios.InsertarFinal(nick, encriptarSHA256(password), monedas, edad);
-                cout << "Usuario registrado" << endl;
+                if (usuarios.BuscarNick(nick) == false)
+                {
+                    usuarios.InsertarFinal(nick, encriptarSHA256(password), 0, edad);
+                    cout << "Usuario registrado" << endl;
+                }else{
+                    cout << "Ya existe un usuario con este nick" << endl;
+                    cin.get();
+                }
+
                 cin.get();
                 cout << endl;
                 cout << endl;
@@ -379,12 +400,12 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 bool repetir1 = true;
                 do
                 {
+                    system("clear");
                     cout << "=======================================" << endl;
                     cout << "           Reportes" << endl;
                     cout << "1. Reporte de usuarios" << endl;
                     cout << "2. Reporte de articulos" << endl;
                     cout << "3. Reporte de tutorial" << endl;
-                    cout << "4. Reporte de jugadas" << endl;
                     cout << "0. Salir" << endl;
                     cout << "=======================================" << endl;
                     cout << "   Ingrese una opcion: ";
@@ -410,6 +431,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     usuarios.OrdenamientoDescendente();
                                     usuarios.Imprimir();
                                     usuarios.CrearGraphviz();
+                                    cin.get();
                                     cout << endl;
                                     cout << endl;
                                     break;
@@ -417,6 +439,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     usuarios.OrdenamientoAscendente();
                                     usuarios.Imprimir();
                                     usuarios.CrearGraphviz();
+                                    cin.get();
                                     cout << endl;
                                     cout << endl;
                                     break;
@@ -424,6 +447,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     repetir2 = false;
                                     break;
                                 default:
+                                    cin.get();
                                     cout << "Opcion no valida" << endl;
                                     break;
                                 }
@@ -449,6 +473,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     articulos.OrdenamientoDescendente();
                                     articulos.Imprimir();
                                     articulos.CrearGraphviz();
+                                    cin.get();
                                     cout << endl;
                                     cout << endl;
                                     break;
@@ -456,6 +481,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     articulos.OrdenamientoAscendente();
                                     articulos.Imprimir();
                                     articulos.CrearGraphviz();
+                                    cin.get();
                                     cout << endl;
                                     cout << endl;
                                     break;
@@ -464,6 +490,8 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                                     break;
                                 default:
                                     cout << "Opcion no valida" << endl;
+                                    cin.get();
+                                    cout << endl;
                                     break;
                                 }
                             } while (repetir2);
@@ -472,10 +500,6 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                     case 3:
                         // Lista de instrucciones de la opción 3
                         tutorial.CrearGraphviz();
-                        break;
-                    case 4:
-                        // Lista de instrucciones de la opción 4
-
                         break;
                     case 0:
                         // Lista de instrucciones de la opción 0
