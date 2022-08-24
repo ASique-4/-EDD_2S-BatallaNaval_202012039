@@ -111,7 +111,6 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
 
     do
     {
-        system("clear");
         cout << "       ==> Bienvenido " << usuarioActivo->nick << " <==" << endl;
         cout << "=======================================" << endl;
         cout << "1. Editar usuario" << endl;
@@ -222,6 +221,8 @@ void menuLogin(nodoUsuarios *usuarioActivo, ListaUsuarios usuarios, ColaTutorial
             cout << "Mostrar movimientos" << endl;
             {
                 usuarios.MostrarMovimientos(usuarioActivo);
+                cout << "Mostrar movimientos exitosamente" << endl;
+                usuarioActivo->lista.CrearGraphviz();
                 cin.get();
                 cout << endl;
             }

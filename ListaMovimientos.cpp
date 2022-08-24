@@ -22,7 +22,7 @@ void ListaMovimientos::InsertarFinal(int x, int y) {
 void ListaMovimientos::Imprimir() {
     nodoMovimientos*aux = Inicio;
     int i = 1;
-    cout << "======" << nombre << "======" << endl;
+    cout << "====== " << nombre << " ======" << endl;
     while (aux != NULL) {
         cout << i <<  ". [" << aux->x << "]--";
         cout <<"[" << aux->y << "]";

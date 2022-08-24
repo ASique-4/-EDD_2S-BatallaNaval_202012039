@@ -218,10 +218,14 @@ void ListaUsuarios::CrearGraphviz()
 }
 
 void ListaUsuarios::MostrarMovimientos(nodoUsuarios *usuario){
-    ListaMovimientos*movimientos = new ListaMovimientos();
-    movimientos = usuario->lista.primero->lista;
+    nodoListaDeListas*movimientos = new nodoListaDeListas();
+    movimientos = usuario->lista.primero;
     while(movimientos != NULL){
-        movimientos->Imprimir();
-        movimientos = movimientos->sig;
+        cout << movimientos->lista->nombre << endl;
+        movimientos->lista->Imprimir();
+        if (movimientos == usuario->lista.ultimo){
+            break;
+        }
+        movimientos = movimientos->sigNodo;
     }
 }

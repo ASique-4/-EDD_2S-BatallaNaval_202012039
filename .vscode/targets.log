@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Aug 23 20:17:49 2022
+# Make data base, printed on Tue Aug 23 20:58:56 2022
 
 # Variables
 
@@ -93,7 +93,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXQwGGSg/agent.2674
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXS6LNTz/agent.2669
 # default
 .SHELLFLAGS := -c
 # environment
@@ -113,7 +113,7 @@ SNAP_REEXEC =
 # makefile (from 'nbproject/Makefile-variables.mk', line 23)
 CND_PACKAGE_NAME_Release = fase1.tar
 # environment
-VSCODE_PID = 1263052
+VSCODE_PID = 2909
 # makefile (from 'Makefile', line 50)
 CCADMIN = CCadmin
 # environment
@@ -125,7 +125,7 @@ BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # makefile (from 'Makefile', line 49)
 CP = cp
 # environment
-SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/2582,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/2582
+SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/2573,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/2573
 # automatic
 *F = $(notdir $*)
 # environment
@@ -237,9 +237,9 @@ SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # makefile (from 'nbproject/Makefile-variables.mk', line 7)
 CND_BUILDDIR = build
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 1262079
+GIO_LAUNCHED_DESKTOP_FILE_PID = 2868
 # environment
-SSH_AGENT_PID = 2675
+SSH_AGENT_PID = 2670
 # environment
 _ = /snap/code/105/usr/share/code/code
 # makefile (from 'nbproject/Makefile-impl.mk', line 31)
@@ -277,7 +277,6 @@ XDG_SESSION_ID = c1
 # default
 .RECIPEPREFIX := 
 # automatic
- 
 <F = $(notdir $<)
 # environment
 SNAP_VERSION = e4503b30
@@ -318,6 +317,7 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 
 # Directories
 
+ 
 # . (device 66312, inode 191357): 44 files, no impossibilities.
 
 # 44 files, no impossibilities in 1 directories.
@@ -570,7 +570,6 @@ test: .test-post
 #  File has not been updated.
 
 clobber: .clobber-post
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -647,6 +646,7 @@ build-tests: .build-tests-post
 
 # No 'vpath' search paths.
 
+ 
 # No general ('VPATH' variable) search path.
 
 # strcache buffers: 1 (0) / strings = 82 / storage = 1057 B / avg = 12 B
@@ -655,6 +655,6 @@ build-tests: .build-tests-post
 # strcache performance: lookups = 154 / hit rate = 46%
 # hash-table stats:
 # Load=82/8192=1%, Rehash=0, Collisions=0/154=0%
-# Finished Make data base on Tue Aug 23 20:17:49 2022
+# Finished Make data base on Tue Aug 23 20:58:56 2022
 
  

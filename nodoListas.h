@@ -10,8 +10,10 @@ class nodoListaDeListas{
     public:
     ListaMovimientos*lista;
     ListaMovimientos*listasig;
+    nodoListaDeListas*sigNodo;
 
     nodoListaDeListas(){
+        sigNodo = NULL;
         lista = NULL;
         listasig = NULL;
     }

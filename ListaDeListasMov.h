@@ -19,6 +19,7 @@ public:
     }
     void InsertarFinal(ListaMovimientos*lista);
     void Imprimir();
+    void CrearGraphviz();
 };
 #endif /* LISTADELISTAS_H */
     
