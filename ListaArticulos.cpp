@@ -56,7 +56,6 @@ void ListaArticulos::OrdenamientoAscendente(){
     aux2 = Inicio->sig;
     while (aux != NULL && aux2 != NULL) {
         while (aux2 != NULL) {
-            cout << "Comparando " << aux->id << " con " << aux2->id << endl;
             if (aux->id > aux2->id)
             {
                 swap(aux, aux2);
@@ -78,10 +77,7 @@ void ListaArticulos::OrdenamientoDescendente(){
         while (aux2 != NULL) {
             if (aux->id < aux2->id)
             {
-                cout << "i: " << i << endl;
-                cout << aux->id << " " << aux2->id << endl;
                 swap(aux, aux2);
-                cout << aux->id << " " << aux2->id << endl;
             }
             aux2 = aux2->sig;
         }
@@ -105,9 +101,13 @@ void ListaArticulos::Imprimir() {
         cout << "Src: " << aux->src << endl;
         
         aux = aux->sig;
+        if (aux == NULL) {
+            cout << "==========================================================================" << endl;
+            cin.get();
+        }
         
     }
-    cout << "==========================================================================" << endl;
+    
 
 
 }
