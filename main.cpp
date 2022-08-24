@@ -402,7 +402,6 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 bool repetir1 = true;
                 do
                 {
-                    system("clear");
                     cout << "=======================================" << endl;
                     cout << "           Reportes" << endl;
                     cout << "1. Reporte de usuarios" << endl;
@@ -501,6 +500,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                         break;
                     case 3:
                         // Lista de instrucciones de la opción 3
+                        tutorial.Imprimir();
                         tutorial.CrearGraphviz();
                         break;
                     case 0:

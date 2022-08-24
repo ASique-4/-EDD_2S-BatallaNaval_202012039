@@ -13,6 +13,7 @@ void ColaTutorial::InsertarFinal(int x, int y) {
         Ultimo = nuevo;
     } else {
         Ultimo->sig = nuevo;
+        nuevo->ant = Ultimo;
         Ultimo = nuevo;
     }
 }
@@ -20,29 +21,33 @@ void ColaTutorial::InsertarFinal(int x, int y) {
 
 
 void ColaTutorial::Imprimir() {
-    nodoTutorial*aux = Inicio;
-    while (aux != NULL) {
-        if (aux == Inicio)
-        {
-            cout << "<===========Tablero===========>" << endl;
-            cout << "Ancho: " << aux->x << endl;
-            cout << "Alto: " << aux->y << endl;
-            cout << "<=========Movimientos=========>" << endl;
-        }else if (aux == Ultimo){
-             cout << "(" << aux->x << "," << aux->y << ")" << endl;
+    nodoTutorial*aux = Ultimo;
+    cout << "<===========Tablero===========>" << endl;
+            cout << "Ancho: " << Inicio->x << endl;
+            cout << "Alto: " << Inicio->y << endl;
+    cout << "<=========Movimientos=========>" << endl;
+    while (aux != Inicio) {
+        
+        if (aux->ant == Inicio){
+             cout << "(" << aux->x << "," << aux->y << ")" ;
              //Salto de linea
-                cout << endl;
-                cout << endl;
         }else{
-            cout << "(" << aux->x << "," << aux->y << ")=>" ;
+            cout << "(" << aux->x << "," << aux->y << ")==>" ;
         }
         
-        aux = aux->sig;
+        aux = aux->ant;
+        if (aux == Inicio)
+        {
+            cin.get();
+            cout << endl;
+            cout << endl;
+            break;
+        }
     }
 }
 
 void ColaTutorial::CrearGraphviz(){
-    nodoTutorial*aux = Inicio;
+    nodoTutorial*aux = Ultimo;
     ofstream archivo;
     archivo.open("tutorial.dot");
     archivo << "digraph Tutorial {" << endl;
@@ -51,7 +56,7 @@ void ColaTutorial::CrearGraphviz(){
     int i = 0;
 
     while(aux != NULL) {
-        if (aux == Ultimo){
+        if (aux == Inicio){
             archivo << i << " [label=\"" << "X: " << aux->x << "\n" << "Y: " << aux->y << "\"];" << endl;
             break;
         }else{
@@ -59,7 +64,7 @@ void ColaTutorial::CrearGraphviz(){
             archivo << i << " -> " << i+1 << endl;
         }
         
-        aux = aux->sig;
+        aux = aux->ant;
         i++;
     }
 

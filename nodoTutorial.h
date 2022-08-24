@@ -11,7 +11,9 @@ public:
     int y;
 
     nodoTutorial*sig;
+    nodoTutorial*ant;
     nodoTutorial() {
+        ant = NULL;
         sig = NULL;
         x = 0;
         y = 0;
