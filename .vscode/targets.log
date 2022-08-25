@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Aug 24 13:12:25 2022
+# Make data base, printed on Wed Aug 24 23:41:32 2022
 
 # Variables
 
@@ -113,7 +113,7 @@ SNAP_REEXEC =
 # makefile (from 'nbproject/Makefile-variables.mk', line 23)
 CND_PACKAGE_NAME_Release = fase1.tar
 # environment
-VSCODE_PID = 2938
+VSCODE_PID = 58372
 # makefile (from 'Makefile', line 50)
 CCADMIN = CCadmin
 # environment
@@ -237,7 +237,7 @@ SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # makefile (from 'nbproject/Makefile-variables.mk', line 7)
 CND_BUILDDIR = build
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 2896
+GIO_LAUNCHED_DESKTOP_FILE_PID = 58327
 # environment
 SSH_AGENT_PID = 2695
 # environment
@@ -281,7 +281,6 @@ XDG_SESSION_ID = c1
 # environment
 SNAP_VERSION = e4503b30
 # makefile (from 'nbproject/Makefile-impl.mk', line 34)
- 
 ALLCONFS = Debug Release 
 # default
 SUFFIXES := 
@@ -318,9 +317,9 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 
 # Directories
 
-# . (device 66312, inode 191357): 47 files, no impossibilities.
+# . (device 66312, inode 191357): 39 files, no impossibilities.
 
-# 47 files, no impossibilities in 1 directories.
+# 39 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -339,6 +338,7 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 .test-post: .test-impl
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+ 
 #  File has not been updated.
 
 .validate-impl:
@@ -532,7 +532,6 @@ help: .help-post
 .help-pre:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
 #  File has not been updated.
 
 build: .build-post
@@ -649,12 +648,12 @@ build-tests: .build-tests-post
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 85 / storage = 1088 B / avg = 12 B
-# current buf: size = 8162 B / used = 1088 B / count = 85 / avg = 12 B
+# strcache buffers: 1 (0) / strings = 77 / storage = 1008 B / avg = 13 B
+# current buf: size = 8162 B / used = 1008 B / count = 77 / avg = 13 B
 
-# strcache performance: lookups = 157 / hit rate = 45%
+# strcache performance: lookups = 149 / hit rate = 48%
 # hash-table stats:
-# Load=85/8192=1%, Rehash=0, Collisions=0/157=0%
-# Finished Make data base on Wed Aug 24 13:12:25 2022
+# Load=77/8192=1%, Rehash=0, Collisions=0/149=0%
+# Finished Make data base on Wed Aug 24 23:41:32 2022
 
  
