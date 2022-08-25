@@ -1,5 +1,6 @@
 #include "ListaUsuarios.h"
 #include "ListaDeListasMov.h"
+#include <cstring>
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -29,24 +30,32 @@ void ListaUsuarios::InsertarLista(ListaMovimientos*movimientos, nodoUsuarios*usu
     usuario->lista.InsertarFinal(movimientos);
 }
 
+char* ListaUsuarios::stringtochar(std::string s){
+    char*c = new char[s.length() + 1];
+    strcpy(c, s.c_str());
+    return c;
+}
+
 void ListaUsuarios::Imprimir() {
     nodoUsuarios*aux = primero;
+    printf("______________________________________________________________________________________________________\n");
+    printf("| %-10s | %-64s | %-10s | %-5s |\n", "Nick", "Password", "Monedas", "Edad");
+    printf("______________________________________________________________________________________________________\n");
     while (aux != NULL) {
-        cout << "====================" << endl;
-        cout << "Nick: " << aux->nick << endl;
-        cout << "Password: " << aux->password << endl;
-        cout << "Monedas: " << aux->monedas << endl;
-        cout << "Edad: " << aux->edad << endl;
-        cout << "====================" << endl;
+            
+        printf("| %-10s | %-64s | %-10s | %-5s |\n", stringtochar(aux->nick), stringtochar(aux->password), stringtochar(to_string(aux->monedas)), stringtochar(to_string(aux->edad)));
         aux = aux->sig;
         if (aux == primero)
         {
+            printf("______________________________________________________________________________________________________\n");
             cin.get();
             break;
         }
     }
 
 }
+
+
 
 bool ListaUsuarios::BuscarNick(string nick){
     nodoUsuarios*aux = primero;

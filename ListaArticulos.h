@@ -22,6 +22,7 @@ public:
     void swap(nodoArticulos* a, nodoArticulos* b);
     void OrdenamientoAscendente();
     void OrdenamientoDescendente();
+    char* string_to_char(string s);
 private:
 };
 

@@ -276,7 +276,6 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
     {
 
         // Texto del menú que se verá cada vez
-        system("clear");
         cout << "=======================================" << endl;
         cout << "           Menu de Opciones" << endl;
         cout << "1. Carga Masiva" << endl;

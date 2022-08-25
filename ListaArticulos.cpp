@@ -1,7 +1,14 @@
 #include "ListaArticulos.h"
 #include <iostream>
+#include <cstring>
 #include <fstream>
 using namespace std;
+
+char* ListaArticulos::string_to_char(std::string s){
+    char*c = new char[s.length() + 1];
+    strcpy(c, s.c_str());
+    return c;
+}
 
 void ListaArticulos::InsertarFinal(int id, string categoria, int precio, string nombre, string src) {
     nodoArticulos*nuevo = new nodoArticulos();
@@ -91,18 +98,16 @@ void ListaArticulos::OrdenamientoDescendente(){
 void ListaArticulos::Imprimir() {
     nodoArticulos*aux = new nodoArticulos();
     aux = Inicio;
-    cout << "================================== Tienda =================================="<<endl;
+    cout << "______________" << endl;
+    cout << "______________________________________________ TIENDA ______________________________________________"<<endl;
+    printf("| %-10s | %-15s | %-10s | %-25s | %-25s |  \n", "ID", "Categoria", "Precio", "Nombre", "SRC");
     while(aux != NULL) {
-        
-        cout << "ID: " << aux->id << "  ";
-        cout << "Categoria: " << aux->categoria << "  ";
-        cout << "Precio: " << aux->precio << "  ";
-        cout << "Nombre: " << aux->nombre << "  ";
-        cout << "Src: " << aux->src << endl;
-        
+        printf("| %-10s | %-15s | %-10s | %-25s | %-25s |  \n", 
+        string_to_char(to_string(aux->id)), string_to_char(aux->categoria), 
+        string_to_char(to_string(aux->precio)), string_to_char(aux->nombre),string_to_char(aux->src));
         aux = aux->sig;
         if (aux == NULL) {
-            cout << "==========================================================================" << endl;
+            cout << "____________________________________________________________________________________________________" << endl;
             cin.get();
         }
         
