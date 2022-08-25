@@ -11,8 +11,10 @@ public:
     
 
     nodoMovimientos*sig;
+    nodoMovimientos*ant;
     nodoMovimientos() {
         sig = NULL;
+        ant = NULL;
         x = 0;
         y = 0;
     }

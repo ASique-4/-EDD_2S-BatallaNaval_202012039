@@ -42,24 +42,44 @@ void ListaDeListas::CrearGraphviz(){
     archivo << "digraph Tutorial {" << endl;
     archivo << "graph [rankdir = LR ]" << endl;
     archivo << "node [shape = box]" << endl;
+    archivo << "bgcolor=\"lavender\"" << endl;
+    archivo << "node [ style=filled,shape = box, fillcolor=\"lavenderblush:lavenderblush1\"]" << endl;
     int i = 0;
-    cout << aux->lista->nombre << endl;
-    while(aux != NULL) {
-        cout << i << " -> " << aux->lista->nombre << endl;
-        aux2 = aux->lista->Inicio;
-        while (aux2 != NULL) {
-            
-            if (aux2 == aux->lista->Ultimo){
-                archivo << i << " [label=\"" << "X: " << aux2->x << "\n" << "Y: " << aux2->y << "\"];" << endl;
-                break;
-            }else{
-                archivo << i << " [label=\"" << "X: " << aux2->x << "\n" << "Y: " << aux2->y << "\"];" << endl;
-                archivo << i << " -> " << i+1 << endl;
-            }
-            aux2 = aux2->sig;
+    cout << "\"" <<  aux->lista->nombre << "\"" << endl;
+    string rank;
+    string nodos;
+    string felchas;
+    felchas = "";
+    while (aux != NULL){
+        rank += "\"" + aux->lista->nombre + "\"";
+        if (aux != primero){
+            nodos += "-> \"" + aux->lista->nombre + "\"";
         }
         aux = aux->sigNodo;
-        i++;
+    }
+    archivo << "{rank = same " << rank << "}" << endl;
+    aux = primero;
+    archivo << "\"" << aux->lista->nombre << "\"" << nodos << "[color = indianred1];" << endl;
+    
+    while(aux != NULL) {
+        archivo << "\"" << aux->lista->nombre << "\"" << " [label=\"" << aux->lista->nombre << "\"];" << endl;
+        aux2 = aux->lista->Ultimo;
+        while (aux2 != NULL) {
+            archivo << i<< " [label=\"" << "X: " << aux2->x << "\n" << "Y: " << aux2->y << "\"];" << endl;
+            if (aux2 == aux->lista->Ultimo){
+                felchas +=   "\"" + aux->lista->nombre + "\"" + "->" + to_string(i);
+            }else{
+                felchas += " -> " +to_string(i);
+            }
+            aux2 = aux2->ant;
+            
+            i++;
+        }
+        aux = aux->sigNodo;
+        archivo << felchas << "[color = limegreen]; " << endl;
+        felchas = "";
+        archivo << endl;
+        
     }
     archivo << "}" << endl;
     archivo.close();

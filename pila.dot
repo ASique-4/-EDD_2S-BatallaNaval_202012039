@@ -3,14 +3,33 @@ graph [rankdir = LR ]
 node [shape = box]
 bgcolor="lavender"
 node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]
-0 [label="X: 1
-Y: 1"];
-1 [label="X: 2
-Y: 2"];
-1 -> 2
-1 [label="X: 6
-Y: 4"];
-1 -> 2
-1 [label="X: 8
+{rank = same "mov1""mov2""mov3"}
+"mov1"-> "mov2"-> "mov3"[color = indianred1];
+"mov1" [label="mov1"];
+0 [label="X: 8
+Y: 8"];
+1 [label="X: 7
+Y: 8"];
+"mov1"->0 -> 1[color = limegreen]; 
+
+"mov2" [label="mov2"];
+2 [label="X: 7
+Y: 7"];
+3 [label="X: 9
 Y: 9"];
+4 [label="X: 6
+Y: 6"];
+5 [label="X: 4
+Y: 4"];
+"mov2"->2 -> 3 -> 4 -> 5[color = limegreen]; 
+
+"mov3" [label="mov3"];
+6 [label="X: 2
+Y: 2"];
+7 [label="X: 1
+Y: 1"];
+8 [label="X: 0
+Y: 0"];
+"mov3"->6 -> 7 -> 8[color = limegreen]; 
+
 }

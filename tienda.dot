@@ -2,12 +2,14 @@ digraph G {
 graph [rankdir = LR ]
 bgcolor="lavender"
 node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]
-{rank = same "mitico""legendario""raro"}
-"mitico"-> "legendario"-> "raro"[color = indianred1];
-"mitico" [label="mitico"];
-"mitico"->"Barco ranita"[color = limegreen];
-"legendario" [label="legendario"];
-"legendario"->"Barco interdimensional"->"Barco cuadrado"[color = limegreen];
-"raro" [label="raro"];
-"raro"->"Flota japonesa"[color = limegreen];
+{rank = same "Level1""Level3""Level4""Leve2"}
+"Level1"-> "Level3"-> "Level4"-> "Leve2"[color = indianred1];
+"Level1" [label="Level1"];
+"Level1"->"Trevino"->"Holden"->"Garner"->"Montoya"->"Giles"->"Branch"->"Guerra"->"Osborn"[color = limegreen];
+"Level3" [label="Level3"];
+"Level3"->"Sykes"->"Farrell"->"Blair"->"Noel"->"Justice"->"Washington"->"Petty"->"Delacruz"->"Kirk"[color = limegreen];
+"Level4" [label="Level4"];
+"Level4"->"Snow"->"Henson"->"Albert"->"Camacho"->"Wolf"->"Sosa"[color = limegreen];
+"Leve2" [label="Leve2"];
+"Leve2"->"Flores"->"Waters"[color = limegreen];
 }

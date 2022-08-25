@@ -53,6 +53,8 @@ void ColaTutorial::CrearGraphviz(){
     archivo << "digraph Tutorial {" << endl;
     archivo << "graph [rankdir = LR ]" << endl;
     archivo << "node [shape = box]" << endl;
+    archivo << "bgcolor=\"lavender\"" << endl;
+    archivo << "node [ style=filled,shape = box, fillcolor=\"lavenderblush:lavenderblush1\"]" << endl;
     int i = 0;
 
     while(aux != NULL) {

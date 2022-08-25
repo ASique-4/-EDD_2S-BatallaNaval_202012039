@@ -75,8 +75,6 @@ void Cabecera::CrearGraphviz() {
             }else{
                 archivo << "->" << "\"" << aux2->nombre << "\"";
             }
-
-            
             aux2 = aux2->sig;
         }
         archivo << "[color = limegreen];" << endl;

@@ -11,6 +11,7 @@ void ListaMovimientos::InsertarFinal(int x, int y) {
         Ultimo = nuevo;
     } else {
         Ultimo->sig = nuevo;
+        nuevo->ant = Ultimo;
         Ultimo = nuevo;
     }
 
