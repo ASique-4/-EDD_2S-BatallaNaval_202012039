@@ -6,7 +6,7 @@
 using namespace std;
 class nodoArticulos {
 public:
-    int id;
+    string id;
     string categoria;
     int precio;
     string nombre;
@@ -15,7 +15,7 @@ public:
 
     nodoArticulos() {
         sig = NULL;
-        id = 0;
+        id = ' ';
         categoria = ' ';
         precio = 0;
         nombre = ' ';

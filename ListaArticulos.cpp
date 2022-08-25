@@ -10,7 +10,7 @@ char* ListaArticulos::string_to_char(std::string s){
     return c;
 }
 
-void ListaArticulos::InsertarFinal(int id, string categoria, int precio, string nombre, string src) {
+void ListaArticulos::InsertarFinal(string id, string categoria, int precio, string nombre, string src) {
     nodoArticulos*nuevo = new nodoArticulos();
     nuevo->id = id;
     nuevo->categoria = categoria;
@@ -37,7 +37,7 @@ void ListaArticulos::InsertarFinal(int id, string categoria, int precio, string 
 
 void ListaArticulos::swap(nodoArticulos* a, nodoArticulos* b)
 {
-    int tmp_id = a->id;
+    string tmp_id = a->id;
     string tmp_categoria = a->categoria;
     int tmp_precio = a->precio;
     string tmp_nombre = a->nombre;
@@ -99,15 +99,15 @@ void ListaArticulos::Imprimir() {
     nodoArticulos*aux = new nodoArticulos();
     aux = Inicio;
     cout << "______________" << endl;
-    cout << "______________________________________________ TIENDA ______________________________________________"<<endl;
-    printf("| %-10s | %-15s | %-10s | %-25s | %-25s |  \n", "ID", "Categoria", "Precio", "Nombre", "SRC");
+    cout << "______________________________________________ TIENDA _____________________________________________________________________"<<endl;
+    printf("| %-40s | %-35s | %-20s | %-25s | %-25s |  \n", "ID", "Categoria", "Precio", "Nombre", "SRC");
     while(aux != NULL) {
-        printf("| %-10s | %-15s | %-10s | %-25s | %-25s |  \n", 
-        string_to_char(to_string(aux->id)), string_to_char(aux->categoria), 
+        printf("| %-40s | %-35s | %-20s | %-25s | %-25s |  \n", 
+        string_to_char((aux->id)), string_to_char(aux->categoria), 
         string_to_char(to_string(aux->precio)), string_to_char(aux->nombre),string_to_char(aux->src));
         aux = aux->sig;
         if (aux == NULL) {
-            cout << "____________________________________________________________________________________________________" << endl;
+            cout << "___________________________________________________________________________________________________________________________" << endl;
             cin.get();
         }
         

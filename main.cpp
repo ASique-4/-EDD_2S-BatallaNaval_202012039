@@ -326,7 +326,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 }
                 for (int i = 0; i < articulosJson.size(); i++)
                 {
-                    articulos.InsertarFinal(stringtoint(articulosJson[i]["id"].asString()), articulosJson[i]["categoria"].asString(),
+                    articulos.InsertarFinal(articulosJson[i]["id"].asString(), articulosJson[i]["categoria"].asString(),
                                             stringtoint(articulosJson[i]["precio"].asString()), articulosJson[i]["nombre"].asString(), articulosJson[i]["src"].asString());
                 }
                 cabecera.InsertarArticulos(articulos);

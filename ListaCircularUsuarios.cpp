@@ -39,11 +39,11 @@ char* ListaUsuarios::stringtochar(std::string s){
 void ListaUsuarios::Imprimir() {
     nodoUsuarios*aux = primero;
     printf("______________________________________________________________________________________________________\n");
-    printf("| %-10s | %-64s | %-10s | %-5s |\n", "Nick", "Password", "Monedas", "Edad");
+    printf("| %-20s | %-64s | %-10s | %-5s |\n", "Nick", "Password", "Monedas", "Edad");
     printf("______________________________________________________________________________________________________\n");
     while (aux != NULL) {
             
-        printf("| %-10s | %-64s | %-10s | %-5s |\n", stringtochar(aux->nick), stringtochar(aux->password), stringtochar(to_string(aux->monedas)), stringtochar(to_string(aux->edad)));
+        printf("| %-20s | %-64s | %-10s | %-5s |\n", stringtochar(aux->nick), stringtochar(aux->password), stringtochar(to_string(aux->monedas)), stringtochar(to_string(aux->edad)));
         aux = aux->sig;
         if (aux == primero)
         {

@@ -15,7 +15,7 @@ public:
         Inicio = NULL;
         cantidad = 0;
     }
-    void InsertarFinal(int id, string categoria, int precio, string nombre, string src);
+    void InsertarFinal(string id, string categoria, int precio, string nombre, string src);
     void Imprimir();
     void InsertarCabecera(string categoria);
     void Ordenar();

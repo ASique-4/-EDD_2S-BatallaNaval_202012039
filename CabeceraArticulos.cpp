@@ -47,6 +47,8 @@ void Cabecera::CrearGraphviz() {
     ofstream archivo;
     string rank;
     string nodos;
+    string label;
+    label = "";
     archivo.open("tienda.dot");
     archivo << "digraph G {" << endl;
     archivo << "graph [rankdir = LR ]" << endl;
@@ -68,17 +70,19 @@ void Cabecera::CrearGraphviz() {
     {
         archivo << "\"" << aux->categoria << "\"" << " [label=\"" << aux->categoria << "\"];" << endl;
         aux2 = aux->derecha->Inicio;
+        label = "";
         while (aux2 != NULL)
         {
+            label += "\"" + aux2->id + "\"" + " [label=\"" + aux2->nombre + "\"];" +"\n";
             if (aux2 == aux->derecha->Inicio){
-                archivo << "\"" << aux->categoria << "\"" << "->" << "\"" << aux2->nombre << "\"";
+                archivo << "\"" << aux->categoria << "\"" << "->" << "\"" << aux2->id << "\"";
             }else{
-                archivo << "->" << "\"" << aux2->nombre << "\"";
+                archivo << "->" << "\"" << aux2->id << "\"";
             }
             aux2 = aux2->sig;
         }
         archivo << "[color = limegreen];" << endl;
-
+        archivo << label;
         aux = aux->abajo;
         
     }
