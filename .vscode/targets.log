@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Aug 24 23:41:32 2022
+# Make data base, printed on Wed Sep 21 20:35:25 2022
 
 # Variables
 
@@ -20,10 +22,6 @@ SNAP_INSTANCE_KEY =
 MANDATORY_PATH = /usr/share/gconf/xfce.mandatory.path
 # environment
 VSCODE_CWD = /home/angel
-# makefile (from 'nbproject/Makefile-variables.mk', line 13)
-CND_ARTIFACT_PATH_Debug = dist/Debug/GNU-Linux/fase_1
-# makefile (from 'nbproject/Makefile-impl.mk', line 18)
-BUILD_SUBPROJECTS_ = .build-subprojects
 # environment
 GDM_LANG = es_ES
 # default
@@ -37,37 +35,23 @@ QT_ACCESSIBILITY = 1
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/105/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
-# makefile (from 'nbproject/Makefile-variables.mk', line 12)
-CND_ARTIFACT_NAME_Debug = fase_1
+GDK_PIXBUF_MODULEDIR = /snap/code/108/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
 .VARIABLES := 
-# makefile (from 'nbproject/Makefile-variables.mk', line 8)
-CND_DISTDIR = dist
 # environment
 PWD = /home/angel/Desktop/Dev/Github/EDD/Proyecto1
-# makefile (from 'nbproject/Makefile-variables.mk', line 16)
-CND_PACKAGE_PATH_Debug = dist/Debug/GNU-Linux/package/fase1.tar
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # environment
-XDG_DATA_DIRS = /usr/share/xfce4:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share
-# makefile (from 'nbproject/Makefile-variables.mk', line 6)
-CND_BASEDIR = `pwd`
-# makefile (from 'nbproject/Makefile-variables.mk', line 11)
-CND_ARTIFACT_DIR_Debug = dist/Debug/GNU-Linux
-# makefile (from 'nbproject/Makefile-variables.mk', line 20)
-CND_ARTIFACT_NAME_Release = fase_1
+XDG_DATA_DIRS = /usr/share/xfce4:/home/angel/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop:/usr/share
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/angel/.config/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
-# makefile (from 'nbproject/Makefile-impl.mk', line 27)
-PROJECTNAME = Fase 1
+VSCODE_CODE_CACHE_PATH = /home/angel/.config/Code/CachedData/74b1f979648cc44d385a2286793c226e611f59e7
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
@@ -80,8 +64,6 @@ XAUTHORITY = /home/angel/.Xauthority
 .INCLUDE_DIRS = /usr/local/include /usr/include /usr/include
 # makefile
 MAKEFLAGS = pqrR
-# makefile (from 'nbproject/Makefile-variables.mk', line 14)
-CND_PACKAGE_DIR_Debug = dist/Debug/GNU-Linux/package
 # makefile
 CURDIR := /home/angel/Desktop/Dev/Github/EDD/Proyecto1
 # environment
@@ -93,7 +75,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXEv3UzW/agent.2694
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXQpivsK/agent.3844
 # default
 .SHELLFLAGS := -c
 # environment
@@ -102,30 +84,22 @@ XDG_CONFIG_DIRS = /etc/xdg/xdg-xfce:/etc/xdg:/etc/xdg
 +D = $(patsubst %/,%,$(dir $+))
 # environment
 XDG_SESSION_DESKTOP = xfce
-# makefile (from 'nbproject/private/Makefile-variables.mk', line 1)
-MAKEFILE_LIST := Makefile nbproject/Makefile-impl.mk nbproject/Makefile-variables.mk nbproject/private/Makefile-variables.mk
-# makefile (from 'nbproject/Makefile-variables.mk', line 21)
-CND_ARTIFACT_PATH_Release = dist/Release/GNU-Linux/fase_1
+# makefile
+MAKEFILE_LIST := 
 # environment
 SNAP_REEXEC = 
 # automatic
 @F = $(notdir $@)
-# makefile (from 'nbproject/Makefile-variables.mk', line 23)
-CND_PACKAGE_NAME_Release = fase1.tar
 # environment
-VSCODE_PID = 58372
-# makefile (from 'Makefile', line 50)
-CCADMIN = CCadmin
+VSCODE_PID = 4540
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
-# makefile (from 'Makefile', line 49)
-CP = cp
 # environment
-SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/2598,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/2598
+SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/3727,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/3727
 # automatic
 *F = $(notdir $*)
 # environment
@@ -137,7 +111,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"locale":"es","availableLanguages":{"*":"es"},"_languagePackId":"9336b18a2694f1b71e2417b4e335df52.es","_translationsConfigFile":"/home/angel/.config/Code/clp/9336b18a2694f1b71e2417b4e335df52.es/tcf.json","_cacheRoot":"/home/angel/.config/Code/clp/9336b18a2694f1b71e2417b4e335df52.es","_resolvedLanguagePackCoreLocation":"/home/angel/.config/Code/clp/9336b18a2694f1b71e2417b4e335df52.es/e4503b30fc78200f846c62cf8091b76ff5547662","_corruptedFile":"/home/angel/.config/Code/clp/9336b18a2694f1b71e2417b4e335df52.es/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"es","availableLanguages":{"*":"es"},"_languagePackId":"48c0cb88c5de364e79f72fefeace3f1a.es","_translationsConfigFile":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es/tcf.json","_cacheRoot":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es","_resolvedLanguagePackCoreLocation":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es/74b1f979648cc44d385a2286793c226e611f59e7","_corruptedFile":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es/corrupted.info","_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # makefile
@@ -146,18 +120,10 @@ SHELL = /bin/sh
 MAKECMDGOALS := all
 # environment
 XMODIFIERS = @im=ibus
-# makefile (from 'nbproject/Makefile-variables.mk', line 15)
-CND_PACKAGE_NAME_Debug = fase1.tar
 # environment
 SHLVL = 1
-# makefile (from 'nbproject/Makefile-impl.mk', line 20)
-BUILD_SUBPROJECTS = ${BUILD_SUBPROJECTS_${SUBPROJECTS}}
 # environment
 MAKELEVEL := 0
-# makefile (from 'nbproject/Makefile-impl.mk', line 19)
-BUILD_SUBPROJECTS_NO = 
-# makefile (from 'Makefile', line 48)
-MKDIR = mkdir
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
@@ -173,23 +139,17 @@ LANGUAGE = es_GT:es
 # environment
 SNAP_USER_COMMON = /home/angel/snap/code/common
 # environment
-SNAP = /snap/code/105
+SNAP = /snap/code/108
 # environment
-SNAP_REVISION = 105
+SNAP_REVISION = 108
 # environment
 SNAP_REAL_HOME = /home/angel
-# makefile (from 'nbproject/Makefile-variables.mk', line 24)
-CND_PACKAGE_PATH_Release = dist/Release/GNU-Linux/package/fase1.tar
 # automatic
 ?F = $(notdir $?)
-# makefile (from 'nbproject/Makefile-variables.mk', line 18)
-CND_PLATFORM_Release = GNU-Linux
 # environment
 XDG_SEAT = seat0
 # environment
 GTK_IM_MODULE = ibus
-# makefile (from 'nbproject/Makefile-variables.mk', line 22)
-CND_PACKAGE_DIR_Release = dist/Release/GNU-Linux/package
 # environment
 XDG_CURRENT_DESKTOP = XFCE
 # automatic
@@ -204,8 +164,6 @@ ORIGINAL_XDG_CURRENT_DESKTOP = XFCE
 GNUMAKEFLAGS := 
 # environment
 CLUTTER_IM_MODULE = ibus
-# makefile (from 'nbproject/Makefile-variables.mk', line 19)
-CND_ARTIFACT_DIR_Release = dist/Release/GNU-Linux
 # environment
 LOGNAME = angel
 # environment
@@ -215,7 +173,7 @@ SNAP_ARCH = amd64
 # environment
 XDG_VTNR = 7
 # makefile
-.DEFAULT_GOAL := build
+.DEFAULT_GOAL := 
 # environment
 DISPLAY = :0.0
 # environment
@@ -226,26 +184,16 @@ GTK_MODULES = gail:atk-bridge
 DEFAULTS_PATH = /usr/share/gconf/xfce.default.path
 # default
 MAKE_VERSION := 4.3
-# 'override' directive
-.SHELLSTATUS := 0
 # environment
-DISABLE_WAYLAND = 1
-# environment
-SNAP_DATA = /var/snap/code/105
+SNAP_DATA = /var/snap/code/108
 # environment
 SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
-# makefile (from 'nbproject/Makefile-variables.mk', line 7)
-CND_BUILDDIR = build
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 58327
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4487
 # environment
-SSH_AGENT_PID = 2695
+SSH_AGENT_PID = 3846
 # environment
-_ = /snap/code/105/usr/share/code/code
-# makefile (from 'nbproject/Makefile-impl.mk', line 31)
-CONF = ${DEFAULTCONF}
-# makefile (from 'nbproject/Makefile-impl.mk', line 30)
-DEFAULTCONF = Debug
+_ = /snap/code/108/usr/share/code/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -258,20 +206,14 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 HOME = /home/angel
 # environment
 QT_IM_MODULE = ibus
-# makefile (from 'nbproject/Makefile-impl.mk', line 16)
-SUB_no = NO
-# makefile (from 'nbproject/Makefile-impl.mk', line 22)
-CLEAN_SUBPROJECTS_NO = 
-# makefile (from 'nbproject/Makefile-impl.mk', line 23)
-CLEAN_SUBPROJECTS = ${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-f80804e1-1.70.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-f80804e1-1.71.2-main.sock
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/105/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/108/usr/share/glib-2.0/schemas
 # environment
 XDG_SESSION_ID = c1
 # default
@@ -279,9 +221,7 @@ XDG_SESSION_ID = c1
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = e4503b30
-# makefile (from 'nbproject/Makefile-impl.mk', line 34)
-ALLCONFS = Debug Release 
+SNAP_VERSION = 74b1f979
 # default
 SUFFIXES := 
 # environment
@@ -290,26 +230,20 @@ VSCODE_CLI = 1
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
 SNAP_COMMON = /var/snap/code/common
-# makefile (from 'nbproject/Makefile-impl.mk', line 17)
-SUBPROJECTS = ${SUB_${SUB}}
 # environment
 XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/angel
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/angel/snap/code/105
+SNAP_USER_DATA = /home/angel/snap/code/108
 # environment
 XDG_MENU_PREFIX = xfce-
-# makefile (from 'nbproject/Makefile-variables.mk', line 10)
-CND_PLATFORM_Debug = GNU-Linux
 # environment
 GDMSESSION = xfce
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
-# makefile (from 'nbproject/Makefile-impl.mk', line 21)
-CLEAN_SUBPROJECTS_ = .clean-subprojects
 # variable set hash-table stats:
-# Load=149/1024=15%, Rehash=0, Collisions=13/193=7%
+# Load=115/1024=11%, Rehash=0, Collisions=5/142=4%
 
 # Pattern-specific Variable Values
 
@@ -317,9 +251,9 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 
 # Directories
 
-# . (device 66312, inode 191357): 39 files, no impossibilities.
+# . (device 66312, inode 191357): 7 files, no impossibilities.
 
-# 39 files, no impossibilities in 1 directories.
+# 7 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -327,151 +261,12 @@ CLEAN_SUBPROJECTS_ = .clean-subprojects
 
 # Files
 
-.clean-impl: .clean-pre .validate-impl .depcheck-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 45):
-	@#echo "=> Running $@... Configuration=$(CONF)"
-	"${MAKE}" -f nbproject/Makefile-${CONF}.mk QMAKE=${QMAKE} SUBPROJECTS=${SUBPROJECTS} .clean-conf
-
-.test-post: .test-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
- 
-#  File has not been updated.
-
-.validate-impl:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 90):
-	@if [ ! -f nbproject/Makefile-${CONF}.mk ]; \
-	then \
-	    echo ""; \
-	    echo "Error: can not find the makefile for configuration '${CONF}' in project ${PROJECTNAME}"; \
-	    echo "See 'make help' for details."; \
-	    echo "Current directory: " `pwd`; \
-	    echo ""; \
-	fi
-	@if [ ! -f nbproject/Makefile-${CONF}.mk ]; \
-	then \
-	    exit 1; \
-	fi
-
-# makefile (from 'nbproject/Makefile-variables.mk', line 29)
-ROOT: sh = test -f nbproject/private/Makefile-variables.mk || (mkdir -p nbproject/private && touch nbproject/private/Makefile-variables.mk)
-# Not a target:
-ROOT:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-# variable set hash-table stats:
-# Load=1/32=3%, Rehash=0, Collisions=0/2=0%
-
-.build-impl: .build-pre .validate-impl .depcheck-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 39):
-	@#echo "=> Running $@... Configuration=$(CONF)"
-	"${MAKE}" -f nbproject/Makefile-${CONF}.mk QMAKE=${QMAKE} SUBPROJECTS=${SUBPROJECTS} .build-conf
-
-.build-post: .build-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.all-post: .all-impl
-#  Implicit rule search has been done.
-#  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
-
-.help-post: .help-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.help-impl: .help-pre
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 106):
-	@echo "This makefile supports the following configurations:"
-	@echo "    ${ALLCONFS}"
-	@echo ""
-	@echo "and the following targets:"
-	@echo "    build  (default target)"
-	@echo "    clean"
-	@echo "    clobber"
-	@echo "    all"
-	@echo "    help"
-	@echo ""
-	@echo "Makefile Usage:"
-	@echo "    make [CONF=<CONFIGURATION>] [SUB=no] build"
-	@echo "    make [CONF=<CONFIGURATION>] [SUB=no] clean"
-	@echo "    make [SUB=no] clobber"
-	@echo "    make [SUB=no] all"
-	@echo "    make help"
-	@echo ""
-	@echo "Target 'build' will build a specific configuration and, unless 'SUB=no',"
-	@echo "    also build subprojects."
-	@echo "Target 'clean' will clean a specific configuration and, unless 'SUB=no',"
-	@echo "    also clean subprojects."
-	@echo "Target 'clobber' will remove all built files from all configurations and,"
-	@echo "    unless 'SUB=no', also from subprojects."
-	@echo "Target 'all' will will build all configurations and, unless 'SUB=no',"
-	@echo "    also build subprojects."
-	@echo "Target 'help' prints this message."
-	@echo ""
-
-.clean-post: .clean-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-17 08:26:54
-#  File has been updated.
-#  Successfully updated.
-
-.build-tests-post: .build-tests-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-clean: .clean-post
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.clean-pre:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.build-pre:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-nbproject/private/Makefile-variables.mk:
-#  Implicit rule search has been done.
-#  Last modified 2022-08-13 13:07:18
-#  File has been updated.
-#  Successfully updated.
-
-.all-pre:
-#  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Failed to be updated.
 
 # Not a target:
 .DEFAULT:
@@ -479,181 +274,42 @@ nbproject/private/Makefile-variables.mk:
 #  Modification time never checked.
 #  File has not been updated.
 
-all: .all-post
+# Not a target:
+all:
 #  Command line target.
 #  Implicit rule search has been done.
 #  File does not exist.
-#  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
-
-help: .help-post
-#  Implicit rule search has not been done.
-#  Modification time never checked.
 #  File has not been updated.
 
-.depcheck-impl:
-#  Implicit rule search has not been done.
-#  Implicit/static pattern stem: ''
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := .depcheck-impl
-# automatic
-# * := 
-# automatic
-# < := 
-# automatic
-# + := 
-# automatic
-# % := 
-# automatic
-# ^ := 
-# automatic
-# ? := 
-# automatic
-# | := 
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=6/12=50%
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 77):
-	@echo "# This code depends on make tool being used" >.dep.inc
-	@if [ -n "${MAKE_VERSION}" ]; then \
-	    echo "DEPFILES=\$$(wildcard \$$(addsuffix .d, \$${OBJECTFILES} \$${TESTOBJECTFILES}))" >>.dep.inc; \
-	    echo "ifneq (\$${DEPFILES},)" >>.dep.inc; \
-	    echo "include \$${DEPFILES}" >>.dep.inc; \
-	    echo "endif" >>.dep.inc; \
-	else \
-	    echo ".KEEP_STATE:" >>.dep.inc; \
-	    echo ".KEEP_STATE_FILE:.make.state.\$${CONF}" >>.dep.inc; \
-	fi
-
-.help-pre:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-build: .build-post
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Failed to be updated.
 
 # Not a target:
-nbproject/Makefile-variables.mk:
+GNUmakefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-18 08:35:44
-#  File has been updated.
-#  Successfully updated.
-
-.clobber-post: .clobber-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-test: .test-post
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.build-tests-impl: .build-impl .build-tests-pre
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 67):
-	@#echo "=> Running $@... Configuration=$(CONF)"
-	"${MAKE}" -f nbproject/Makefile-${CONF}.mk SUBPROJECTS=${SUBPROJECTS} .build-tests-conf
-
-.clobber-pre:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-clobber: .clobber-post
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-# Not a target:
-nbproject/Makefile-impl.mk:
-#  Implicit rule search has been done.
-#  Last modified 2022-08-18 08:35:44
-#  File has been updated.
-#  Successfully updated.
-
-.all-impl: .all-pre .depcheck-impl
-#  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/4=0%
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 59):
-	@#echo "=> Running $@..."
-	for CONF in ${ALLCONFS}; \
-	do \
-	    "${MAKE}" -f nbproject/Makefile-$${CONF}.mk QMAKE=${QMAKE} SUBPROJECTS=${SUBPROJECTS} .build-conf; \
-	done
-
-.clobber-impl: .clobber-pre .depcheck-impl
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 51):
-	@#echo "=> Running $@..."
-	for CONF in ${ALLCONFS}; \
-	do \
-	    "${MAKE}" -f nbproject/Makefile-$${CONF}.mk QMAKE=${QMAKE} SUBPROJECTS=${SUBPROJECTS} .clean-conf; \
-	done
-
-# Not a target:
-.SUFFIXES:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.PHONY:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.test-impl: .build-tests-impl .test-pre
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-#  recipe to execute (from 'nbproject/Makefile-impl.mk', line 72):
-	@#echo "=> Running $@... Configuration=$(CONF)"
-	"${MAKE}" -f nbproject/Makefile-${CONF}.mk SUBPROJECTS=${SUBPROJECTS} .test-conf
-
-build-tests: .build-tests-post
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.test-pre: build-tests
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
-
-.build-tests-pre:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+#  Failed to be updated.
 
 # files hash-table stats:
-# Load=38/1024=4%, Rehash=0, Collisions=3/100=3%
+# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 77 / storage = 1008 B / avg = 13 B
-# current buf: size = 8162 B / used = 1008 B / count = 77 / avg = 13 B
+# strcache buffers: 1 (0) / strings = 15 / storage = 124 B / avg = 8 B
+# current buf: size = 8162 B / used = 124 B / count = 15 / avg = 8 B
 
-# strcache performance: lookups = 149 / hit rate = 48%
+# strcache performance: lookups = 18 / hit rate = 16%
 # hash-table stats:
-# Load=77/8192=1%, Rehash=0, Collisions=0/149=0%
-# Finished Make data base on Wed Aug 24 23:41:32 2022
+ 
+# Load=15/8192=0%, Rehash=0, Collisions=0/18=0%
+# Finished Make data base on Wed Sep 21 20:35:25 2022
 
  
