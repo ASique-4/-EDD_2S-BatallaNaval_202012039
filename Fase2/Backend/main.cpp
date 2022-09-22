@@ -12,8 +12,8 @@
 
 #include "glove/glovehttpserver.hpp"
 #include "ListaArticulos.cpp"
+#include "ArbolB.cpp"
 #include "ListaDeListasMov.cpp"
-#include "ListaCircularUsuarios.cpp"
 #include "ColaTutorial.cpp"
 #include "CabeceraArticulos.cpp"
 #include "ListaMovimientos.cpp"
@@ -350,10 +350,11 @@ void cargarArchivos(string archivo, ListaUsuarios usuarios, ListaArticulos artic
 class Servidor
 {
 public:
-    Servidor(ListaUsuarios servidorUsuarios, ColaTutorial servidorTutorial, ListaArticulos servidorArticulos, Cabecera servidorCabecera,string servidorRuta)
+    Servidor(ListaUsuarios servidorUsuarios, ColaTutorial servidorTutorial, ListaArticulos servidorArticulos, 
+            Cabecera servidorCabecera,string servidorRuta, ArbolB servidorArbol)
     {
         
-
+        serverArbol = servidorArbol;
         serverUsuarios = servidorUsuarios;
         serverTutorial = servidorTutorial;
         serverArticulos = servidorArticulos;
@@ -381,6 +382,9 @@ public:
                                             stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
                 }
             }
+
+            serverArbol.agregarTodosLosUsuarios(serverUsuarios);
+
             ifstream ifs2(ruta);
             Json::Value articulosObj;
             reader.parse(ifs2, articulosObj);
@@ -420,8 +424,8 @@ public:
             ifs3.close();
 
             cout << "Se ha cargado el archivo correctamente" << endl;
-            
             response << serverUsuarios.getDatosComoJson();
+            serverArbol.Grafo();
         }else{
             response << "{"
                         << "\"error\": \"No se ha cargado ningun archivo\""
@@ -518,6 +522,7 @@ private:
     ColaTutorial serverTutorial;
     Cabecera serverCabecera;
     string ruta;
+    ArbolB serverArbol;
 };
 
 void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutorial, Cabecera cabecera)
@@ -779,10 +784,11 @@ int main(int argc, char **argv)
     ListaArticulos articulos;
     ColaTutorial tutorial;
     Cabecera cabecera;
+    ArbolB arbol;
     string archivo = "";
     //menu(usuarios, articulos, tutorial, cabecera);
     usuarios.InsertarFinal("EDD", encriptarSHA256("edd123"), 0, 50);
-    Servidor API(usuarios,tutorial,articulos,cabecera,archivo);
+    Servidor API(usuarios,tutorial,articulos,cabecera,archivo,arbol);
     GloveHttpServer serv(8080, "", 2048);
     serv.compression("gzip, deflate");
     namespace ph = std::placeholders;
@@ -811,8 +817,6 @@ int main(int argc, char **argv)
     std::cout << "TEST" << std::endl;
 
     
-    
-
     return 0;
 }
 

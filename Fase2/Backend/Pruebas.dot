@@ -1,0 +1,28 @@
+digraph G {
+node[shape=record]
+		//Agregar Nodos Rama
+R0x7fe5cc00fd30[label="<C1>|ID: 20\n Nick: user20|<C2>"];
+R0x7fe5cc00fcd0[label="<C1>|ID: 14\n Nick: user14|<C2>|ID: 17\n Nick: user17|<C3>"];
+R0x7fe5cc00fa00[label="<C1>|ID: 8\n Nick: user8|<C2>|ID: 11\n Nick: user11|<C3>"];
+R0x7fe5cc00f730[label="<C1>|ID: 2\n Nick: user2|<C2>|ID: 5\n Nick: user5|<C3>"];
+R0x7fe5cc00f460[label="ID: 0\n Nick: EDD|ID: 1\n Nick: user1"];
+R0x7fe5cc00f580[label="ID: 3\n Nick: user3|ID: 4\n Nick: user4"];
+R0x7fe5cc00f6a0[label="ID: 6\n Nick: user6|ID: 7\n Nick: user7"];
+R0x7fe5cc00f850[label="ID: 9\n Nick: user9|ID: 10\n Nick: user10"];
+R0x7fe5cc00f970[label="ID: 12\n Nick: user12|ID: 13\n Nick: user13"];
+R0x7fe5cc00fb20[label="ID: 15\n Nick: user15|ID: 16\n Nick: user16"];
+R0x7fe5cc00fc40[label="ID: 18\n Nick: user18|ID: 19\n Nick: user19"];
+R0x7fe5cc00fd60[label="ID: 21\n Nick: user21|ID: 22\n Nick: user22"];
+		//Agregar conexiones
+R0x7fe5cc00fd30:C1->R0x7fe5cc00fcd0;
+R0x7fe5cc00fcd0:C1->R0x7fe5cc00fa00;
+R0x7fe5cc00fa00:C1->R0x7fe5cc00f730;
+R0x7fe5cc00f730:C1->R0x7fe5cc00f460;
+R0x7fe5cc00f730:C2->R0x7fe5cc00f580;
+R0x7fe5cc00f730:C3->R0x7fe5cc00f6a0;
+R0x7fe5cc00fa00:C2->R0x7fe5cc00f850;
+R0x7fe5cc00fa00:C3->R0x7fe5cc00f970;
+R0x7fe5cc00fcd0:C2->R0x7fe5cc00fb20;
+R0x7fe5cc00fcd0:C3->R0x7fe5cc00fc40;
+R0x7fe5cc00fd30:C2->R0x7fe5cc00fd60;
+}

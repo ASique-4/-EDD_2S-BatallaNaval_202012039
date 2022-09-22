@@ -13,6 +13,7 @@ public:
     int monedas;
     int edad;
     ListaDeListas lista;
+    int id;
 
 
     nodoUsuarios*ant;
@@ -25,6 +26,7 @@ public:
         password = ' ';
         monedas = 0;
         edad = 0;
+        id = 0;
     }
 private:
 };
