@@ -3,9 +3,25 @@ import json
 import PySimpleGUI as sg
 from PIL import Image
 import io
+from MatrizDispersa import MatrizDispersa
 
 
 base_url = "http://localhost:8080/"
+
+usuario_global = {
+    'nick': '',
+    'password': '',
+    'monedas': '',
+    'edad': ''
+}
+
+#Crear tablero
+def crear_tablero(ancho :int ,alto :int):
+    matriz = MatrizDispersa()
+    for i in range(0, (ancho)):
+        for j in range(0, (alto)):
+            matriz.insertar(i, j, str(i) + "," + str(j))
+    matriz.graficarNeato("Tablero")
 
 
 #Ruta relativa
@@ -19,7 +35,13 @@ def verify_login( nick,  password):
         res = requests.get(f'{base_url}ObtenerUsuario/' + nick + '/' + password + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
+        print(data)
+        usuario_global['nick'] = data['usuario'][0]['nick']
+        usuario_global['password'] = data['usuario'][0]['password']
+        usuario_global['monedas'] = data['usuario'][0]['monedas']
+        usuario_global['edad'] = data['usuario'][0]['edad']
         return (data['status'])
+
     except:
         return "error"
 
@@ -27,6 +49,7 @@ def verify_login( nick,  password):
 def menu():
     layout = [[sg.Text('Menu',size = (10,0), font="Arial 30 bold", justification='center')],
                 [sg.Button('Cargar Datos', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Crear Tablero', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Sesion', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Registrar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Editar Usuario', size = (20,0), font="Arial 15 bold")],
@@ -46,12 +69,29 @@ def menu():
         if event == 'Editar Usuario':
             editar_usuario()
         if event == 'Eliminar Usuario':
-            sg.popup_yes_no('¿Estas seguro de eliminar tu usuario?')
-            if event == 'Yes':
-                eliminar_usuario()
+            
+            if sg.popup_yes_no('¿Estas seguro de eliminar tu usuario?'):
+                print(eliminar_usuario(usuario_global['nick'], usuario_global['password']))
+                print('Eliminar usuario')
             
     window.close()
     return event
+
+#Eliminar Usuario
+def eliminar_usuario(nick, password):
+    try:
+        progress_bar()
+        print(nick, password)
+        res = requests.get(f'{base_url}EliminarUsuario/' + nick + '/' + password + '/')
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        print(data)
+        return (data['status'])
+    except:
+        return "error"
+
+#Crear tablero
+
 
 #Registrar usuario
 def registrar_usuario():
@@ -67,7 +107,7 @@ def registrar_usuario():
         if event == sg.WIN_CLOSED or event == 'Salir':
             break
         if event == 'Registrar':
-            registrar(values[0], values[1], values[2], values[3], values[4], values[5])
+            registrar(values[0], values[1], values[2])
     window.close()
     return event
 
@@ -96,7 +136,7 @@ def editar_usuario():
         if event == sg.WIN_CLOSED or event == 'Salir':
             break
         if event == 'Editar':
-            editar(values[0], values[1], values[2], values[3], values[4], values[5])
+            editar(values[0], values[1], values[2])
     window.close()
     return event
 
@@ -104,23 +144,26 @@ def editar_usuario():
 def editar(nick, password, edad):
     try:
         progress_bar()
-        res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + password + '/' + edad + '/')
+        if(nick != "" & password == "" & edad == ""):
+            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + usuario_global['password'] + '/' + usuario_global['edad'] + '/')
+        elif (nick == "" & password != "" & edad == ""):
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['nick'] + '/' + password + '/' + usuario_global['edad'] + '/')
+        elif (nick == "" & password == "" & edad != ""):
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['nick'] + '/' + usuario_global['password'] + '/' + edad + '/')
+        elif (nick == "" & password != "" & edad != ""):
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['nick'] + '/' + password + '/' + edad + '/')
+        elif (nick != "" & password == "" & edad != ""):
+            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + usuario_global['password'] + '/' + edad + '/')
+        elif (nick != "" & password != "" & edad == ""):
+            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + password + '/' + usuario_global['edad'] + '/')
+        else:
+            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + password + '/' + edad + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
         return (data['status'])
     except:
         return "error"
 
-#Eliminar usuario
-def eliminar_usuario(nick, password):
-    try:
-        progress_bar()
-        res = requests.get(f'{base_url}EliminarUsuario/' + nick + '/' + password + '/')
-        data = res.text#convertimos la respuesta en dict
-        data = json.loads(data)
-        return (data['status'])
-    except:
-        return "error"
 
 #Cargar datos
 def cargar_datos():
@@ -153,7 +196,7 @@ def cargar_archivo(archivo):
 
 #Menu Admin
 def menu_admin():
-    layout = [[sg.Text('Menu De Administrador',size = (10,0), font="Arial 30 bold", justification='center')],
+    layout = [[sg.Text('Menu De Administrador',size = (20,0), font="Arial 30 bold", justification='center')],
                 [sg.Button('Cargar Datos', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Sesion', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Registrar Usuario', size = (20,0), font="Arial 15 bold")],
@@ -168,15 +211,17 @@ def menu_admin():
         if event == sg.WIN_CLOSED or event == 'Salir':
             break
         if event == 'Cargar Datos':
+            window.hide()
             cargar_datos()
         if event == 'Iniciar Sesion':
+            window.close()
             login()
         if event == 'Registrar Usuario':
             registrar_usuario()
         if event == 'Editar Usuario':
             editar_usuario()
         if event == 'Eliminar Usuario':
-            eliminar_usuario()
+            eliminar_usuario(usuario_global['nick'],usuario_global['password'])
         if event == 'Reportes':
             menu_reportes()
 
@@ -242,7 +287,7 @@ def progress_bar():
 def login():
     sg.theme('BlueMono')
 
-    img = Image.open('Fase2/Frontend/login.png')    
+    img = Image.open('/home/angel/Desktop/Dev/Github/EDD/Proyecto1/Fase2/Frontend/login.png')    
     bio = io.BytesIO()
     img.save(bio, format="PNG")
     data = bio.getvalue()
@@ -260,15 +305,16 @@ def login():
     window = sg.Window('Login', layout,size=(300, 550), element_justification='center',finalize=True)
     
     while True:
-        values = window.read()
+        event, values = window.read()
         #veficar el inicio de sesion
-        if (verify_login(values[1][1],values[1][2])) == "ok":
+        if (verify_login(values[1],values[2])) == "ok":
             window.close()
-            if(values[1][1] == "EDD"):
+            if(values[1] == "EDD"):
                 menu_admin()
             else:
                 menu()
-            break
+        elif event == sg.WIN_CLOSED:
+            window.close()
         else:
             sg.PopupError('Usuario o contraseña incorrectos', title='Error')
             
@@ -276,4 +322,5 @@ def login():
 
 
 
-login()
+#login()
+crear_tablero(10,10)

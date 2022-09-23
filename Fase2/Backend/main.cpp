@@ -483,13 +483,14 @@ public:
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != ""){
             if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
-                serverUsuarios.EliminarUsuario(serverUsuarios.BuscarUsuario(request.special["nick"],encriptarSHA256(request.special["password"])));
+                serverUsuarios.EliminarUsuario(serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"])));
                 response << "{"
                         << jsonkv("nick", request.special["nick"])
+                        << jsonkv("status", "ok")
                         << "}";
             }else{
                 response << "{"
-                        << jsonkv("error", "El usuario no existe")
+                        << jsonkv("status", "El usuario no existe")
                         << "}";
             }
         }
@@ -498,15 +499,19 @@ public:
     void postModificarUsuario(GloveHttpRequest &request, GloveHttpResponse &response)
     {
         response.contentType("text/json");
-        if(request.special["nick"] != "" && request.special["password"] != "" && request.special["edad"] != ""){
+        if(request.special["nick"] != "" && request.special["password"] != ""){
             if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
                 nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],encriptarSHA256(request.special["password"]));
-                tmpUsuario->edad = stringtoint(request.special["edad"]);
-                tmpUsuario->nick = (request.special["nick"]);
-                tmpUsuario->password = encriptarSHA256(request.special["password"]);
+                tmpUsuario->edad = stringtoint(request.special["newEdad"]);
+                tmpUsuario->nick = (request.special["newNick"]);
+                tmpUsuario->password = encriptarSHA256(request.special["newPassword"]);
                 response << "{"
                         << jsonkv("status", "ok")
-                        << jsonkv("nick", request.special["nick"])
+                        << "usuario: ["
+                        << jsonkv("nick", tmpUsuario->nick) << ","
+                        << jsonkv("password", encriptarSHA256(tmpUsuario->password)) << ","
+                        << jsonkv("edad", to_string(tmpUsuario->edad))
+                        << "]"
                         << "}";
             }else{
                 response << "{"
@@ -799,13 +804,13 @@ int main(int argc, char **argv)
     serv.addRest("/ObtenerUsuario/$nick/$password/", 2,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getUsuario, &API, ph::_1, ph::_2));  
-    serv.addRest("/EliminarUsuari/$nick/$password/", 2,
+    serv.addRest("/EliminarUsuario/$nick/$password/", 2,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postEliminarUsuario, &API, ph::_1, ph::_2));  
     serv.addRest("/CrearUsuario/$nick/$password/$edad/", 3,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postCrearUsuario, &API, ph::_1, ph::_2));
-    serv.addRest("/ModificarUsuario/$nick/$password/$edad/", 3,
+    serv.addRest("/ModificarUsuario/$nick/$password/$newNick/$newPassword/$newEdad", 3,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postModificarUsuario, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
