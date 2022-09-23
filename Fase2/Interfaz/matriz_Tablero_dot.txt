@@ -1,0 +1,80 @@
+digraph G{
+    node[shape=box, width=1, height=1, fontname="Arial", fillcolor="white", style=filled]
+    edge[style = "invis" arrowhead="none" arrowtail="none"]
+    node[label = "0,0" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;label = "
+MATRIZ DISPERSA" 
+fontname="Arial Black" 
+fontsize="25pt" 
+
+                    
+
+	node[label = "F1" fillcolor="azure3" pos="-1,-0!" shape=box]x1
+	node[label = "F2" fillcolor="azure3" pos="-1,-1!" shape=box]x2
+	x1->x2
+	x1->x2[dir=back]
+	raiz->x1
+	node[label = "C1" fillcolor="azure3" pos = "0,1!" shape=box]y1
+	node[label = "C2" fillcolor="azure3" pos = "1,1!" shape=box]y2
+	node[label = "C3" fillcolor="azure3" pos = "2,1!" shape=box]y3
+	node[label = "C4" fillcolor="azure3" pos = "3,1!" shape=box]y4
+	node[label = "C5" fillcolor="azure3" pos = "4,1!" shape=box]y5
+	y1->y2
+	y1->y2[dir=back]
+	y2->y3
+	y2->y3[dir=back]
+	y3->y4
+	y3->y4[dir=back]
+	y4->y5
+	y4->y5[dir=back]
+	raiz->y1
+	node[label=" " fillcolor="white" pos="0,-0!" shape=box]i1_1
+	node[label=" " fillcolor="white" pos="1,-0!" shape=box]i1_2
+	node[label=" " fillcolor="white" pos="2,-0!" shape=box]i1_3
+	node[label=" " fillcolor="white" pos="3,-0!" shape=box]i1_4
+	node[label=" " fillcolor="white" pos="4,-0!" shape=box]i1_5
+	i1_1->i1_2
+	i1_1->i1_2[dir=back]
+	i1_2->i1_3
+	i1_2->i1_3[dir=back]
+	i1_3->i1_4
+	i1_3->i1_4[dir=back]
+	i1_4->i1_5
+	i1_4->i1_5[dir=back]
+	x1->i1_1
+	x1->i1_1[dir=back]
+	node[label=" " fillcolor="white" pos="0,-1!" shape=box]i2_1
+	node[label=" " fillcolor="white" pos="1,-1!" shape=box]i2_2
+	node[label=" " fillcolor="white" pos="2,-1!" shape=box]i2_3
+	node[label=" " fillcolor="white" pos="3,-1!" shape=box]i2_4
+	node[label=" " fillcolor="white" pos="4,-1!" shape=box]i2_5
+	i2_1->i2_2
+	i2_1->i2_2[dir=back]
+	i2_2->i2_3
+	i2_2->i2_3[dir=back]
+	i2_3->i2_4
+	i2_3->i2_4[dir=back]
+	i2_4->i2_5
+	i2_4->i2_5[dir=back]
+	x2->i2_1
+	x2->i2_1[dir=back]
+	i1_1->i2_1
+	i1_1->i2_1[dir=back]
+	y1->i1_1
+	y1->i1_1[dir=back]
+	i1_2->i2_2
+	i1_2->i2_2[dir=back]
+	y2->i1_2
+	y2->i1_2[dir=back]
+	i1_3->i2_3
+	i1_3->i2_3[dir=back]
+	y3->i1_3
+	y3->i1_3[dir=back]
+	i1_4->i2_4
+	i1_4->i2_4[dir=back]
+	y4->i1_4
+	y4->i1_4[dir=back]
+	i1_5->i2_5
+	i1_5->i2_5[dir=back]
+	y5->i1_5
+	y5->i1_5[dir=back]
+}

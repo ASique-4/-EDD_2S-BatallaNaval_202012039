@@ -17,11 +17,15 @@ usuario_global = {
 
 #Crear tablero
 def crear_tablero(ancho :int ,alto :int):
-    matriz = MatrizDispersa()
-    for i in range(0, (ancho)):
-        for j in range(0, (alto)):
-            matriz.insertar(i, j, str(i) + "," + str(j))
-    matriz.graficarNeato("Tablero")
+    #Si el ancho y alto es mayor a 10
+    if(ancho >= 10 & alto >= 10):
+        matriz = MatrizDispersa()
+        for i in range(1, (ancho) + 1):
+            for j in range(1, (alto) + 1):
+                matriz.insertar(i, j, str(i) + "," + str(j))
+        matriz.graficarNeato("Tablero")
+    else:
+        sg.PopupError("El alto y ancho debe ser mayor a 10", title="Error")
 
 
 #Ruta relativa
@@ -63,6 +67,7 @@ def menu():
         if event == 'Cargar Datos':
             cargar_datos()
         if event == 'Iniciar Sesion':
+            window.close()
             login()
         if event == 'Registrar Usuario':
             registrar_usuario()
@@ -318,9 +323,8 @@ def login():
         else:
             sg.PopupError('Usuario o contraseña incorrectos', title='Error')
             
-    window.close()
 
 
 
-#login()
-crear_tablero(10,10)
+login()
+#crear_tablero(2,5)

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Sep 22 22:35:53 2022
+# Make data base, printed on Fri Sep 23 14:03:31 2022
 
 # Variables
 
@@ -73,7 +73,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXiJkvbM/agent.3853
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXSdYTmN/agent.3637
 # default
 .SHELLFLAGS := -c
 # environment
@@ -89,7 +89,7 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 75782
+VSCODE_PID = 9192
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -97,7 +97,7 @@ XDG_SESSION_TYPE = x11
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/3735,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/3735
+SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/3586,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/3586
 # automatic
 *F = $(notdir $*)
 # environment
@@ -116,8 +116,6 @@ MAKE_HOST := x86_64-pc-linux-gnu
 SHELL = /bin/sh
 # default
 MAKECMDGOALS := all
-# environment
-XMODIFIERS = @im=ibus
 # environment
 SHLVL = 1
 # environment
@@ -147,8 +145,6 @@ SNAP_REAL_HOME = /home/angel
 # environment
 XDG_SEAT = seat0
 # environment
-GTK_IM_MODULE = ibus
-# environment
 XDG_CURRENT_DESKTOP = XFCE
 # automatic
 +F = $(notdir $+)
@@ -160,8 +156,6 @@ DESKTOP_SESSION = xfce
 ORIGINAL_XDG_CURRENT_DESKTOP = XFCE
 # 'override' directive
 GNUMAKEFLAGS := 
-# environment
-CLUTTER_IM_MODULE = ibus
 # environment
 LOGNAME = angel
 # environment
@@ -187,9 +181,9 @@ SNAP_DATA = /var/snap/code/108
 # environment
 SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 75732
+GIO_LAUNCHED_DESKTOP_FILE_PID = 9125
 # environment
-SSH_AGENT_PID = 3856
+SSH_AGENT_PID = 3638
 # environment
 _ = /snap/code/108/usr/share/code/code
 # environment
@@ -202,8 +196,6 @@ XDG_SESSION_CLASS = user
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /home/angel
-# environment
-QT_IM_MODULE = ibus
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
@@ -241,7 +233,7 @@ GDMSESSION = xfce
 # environment
 SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd/void
 # variable set hash-table stats:
-# Load=115/1024=11%, Rehash=0, Collisions=5/142=4%
+# Load=111/1024=11%, Rehash=0, Collisions=5/138=4%
 
 # Pattern-specific Variable Values
 
@@ -296,13 +288,13 @@ GNUmakefile:
 # files hash-table stats:
 # Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
 # VPATH Search Paths
- 
-make: *** No rule to make target 'all'.  Stop.
-
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
+
+ 
+make: *** No rule to make target 'all'.  Stop.
 
 # strcache buffers: 1 (0) / strings = 15 / storage = 124 B / avg = 8 B
 # current buf: size = 8162 B / used = 124 B / count = 15 / avg = 8 B
@@ -310,6 +302,6 @@ make: *** No rule to make target 'all'.  Stop.
 # strcache performance: lookups = 18 / hit rate = 16%
 # hash-table stats:
 # Load=15/8192=0%, Rehash=0, Collisions=0/18=0%
-# Finished Make data base on Thu Sep 22 22:35:53 2022
+# Finished Make data base on Fri Sep 23 14:03:31 2022
 
  
