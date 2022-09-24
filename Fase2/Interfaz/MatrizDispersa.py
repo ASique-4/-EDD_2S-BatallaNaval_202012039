@@ -153,6 +153,16 @@ class MatrizDispersa():
             print(tmp.caracter)
             tmp = tmp.getAbajo()
 
+    def getNodo(self,fila,columna):
+        tmp = self.filas.primero
+        while(tmp is not None):
+            nodoTmp = tmp.acceso
+            while(nodoTmp is not None):
+                if(str(nodoTmp.coordenadaX) == str(fila) and str(nodoTmp.coordenadaY) == str(columna)):
+                    return nodoTmp
+                nodoTmp = nodoTmp.derecha
+            tmp = tmp.siguiente
+        return None
 
     def ubicarCoordenada(self, fila, columna):
         try:
@@ -170,10 +180,10 @@ class MatrizDispersa():
     def graficarNeato(self, nombre):
         contenido = '''digraph G{
     node[shape=box, width=1, height=1, fontname="Arial", fillcolor="white", style=filled]
-    edge[style = "invis" arrowhead="none" arrowtail="none"]
+    edge[style = "invis" arrowhead="none" arrowtail="none" width="300" height="300"]
     node[label = "0,0" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
         contenido += '''label = "{}" \nfontname="Arial Black" \nfontsize="25pt" \n
-                    \n'''.format('\nMATRIZ DISPERSA')
+                    \n'''.format('MATRIZ DISPERSA')
 
         # --graficar nodos CABECERA
         # --graficar nodos fila
@@ -264,4 +274,4 @@ class MatrizDispersa():
             grafo.write(contenido)
         result = "matriz_{}.pdf".format(nombre)
         os.system("neato -Tpdf " + dot + " -o " + result)
-        webbrowser.open(result)        
+        #webbrowser.open(result)        
