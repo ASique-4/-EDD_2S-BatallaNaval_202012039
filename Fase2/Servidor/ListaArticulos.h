@@ -23,6 +23,7 @@ public:
     void OrdenamientoAscendente();
     void OrdenamientoDescendente();
     char* string_to_char(string s);
+    string getArticulosComoJson();
 private:
 };
 

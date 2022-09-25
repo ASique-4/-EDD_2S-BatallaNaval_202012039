@@ -24,7 +24,8 @@ void Cabecera::InsertarArticulos(ListaArticulos listaArticulos) {
         auxArticulos = listaArticulos.Inicio;
         while (auxArticulos != NULL) {
             if (aux->categoria == auxArticulos->categoria) {
-                aux->derecha->InsertarFinal(auxArticulos->id, auxArticulos->categoria, auxArticulos->precio, auxArticulos->nombre, auxArticulos->src);
+                aux->derecha->InsertarFinal(auxArticulos->id, auxArticulos->categoria, auxArticulos->precio, 
+                auxArticulos->nombre, auxArticulos->src);
             }
             auxArticulos = auxArticulos->sig;
         }
@@ -102,4 +103,32 @@ bool Cabecera::Buscar(string categoria) {
         aux = aux->abajo;
     }
     return false;
+}
+
+string Cabecera::getArticulosComoJson() {
+    //Regresa los articulos ordenados por categoria en formato json
+    nodoCabecera*aux = Inicio;
+    nodoArticulos*aux2;
+    string json = "";
+    while (aux != NULL) {
+        json += "\""+aux->categoria+"\": [";
+        aux2 = aux->derecha->Inicio;
+        while (aux2 != NULL) {
+            json += "{\"id\": \""+aux2->id+
+            "\", \"categoria\": \""+aux2->categoria+
+            "\", \"precio\": \""+to_string(aux2->precio)+
+            "\", \"nombre\": \""+aux2->nombre+
+            "\", \"src\": \""+aux2->src+"\"}";
+            if (aux2->sig != NULL) {
+                json += ",";
+            }
+            aux2 = aux2->sig;
+        }
+        json += "]";
+        if (aux->abajo != NULL) {
+            json += ",";
+        }
+        aux = aux->abajo;
+    }
+    return json;
 }

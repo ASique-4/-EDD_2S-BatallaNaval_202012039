@@ -425,7 +425,7 @@ public:
 
             cout << "Se ha cargado el archivo correctamente" << endl;
             response << serverUsuarios.getDatosComoJson();
-            serverArbol.Grafo();
+            
         }else{
             response << "{"
                         << "\"error\": \"No se ha cargado ningun archivo\""
@@ -521,6 +521,12 @@ public:
         }
     }
 
+    void getTienda(GloveHttpRequest &request, GloveHttpResponse &response){
+        response.contentType("text/json");
+        response << "{"
+                << serverCabecera.getArticulosComoJson()
+                << "}";
+    }
 private:
     ListaUsuarios serverUsuarios;
     ListaArticulos serverArticulos;
@@ -813,6 +819,9 @@ int main(int argc, char **argv)
     serv.addRest("/ModificarUsuario/$nick/$password/$newNick/$newPassword/$newEdad", 3,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postModificarUsuario, &API, ph::_1, ph::_2));
+    serv.addRest("/ObtenerTienda/", 0,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::getTienda, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
     while (1)
     {

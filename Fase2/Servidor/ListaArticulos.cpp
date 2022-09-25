@@ -117,3 +117,22 @@ void ListaArticulos::Imprimir() {
 
 }
 
+string ListaArticulos::getArticulosComoJson()
+{
+    nodoArticulos*aux = new nodoArticulos();
+    aux = Inicio;
+    string json = "[";
+    while(aux != NULL) {
+        json += "{";
+        json += "\"id\":\"" + aux->id + "\",";
+        json += "\"categoria\":\"" + aux->categoria + "\",";
+        json += "\"precio\":\"" + to_string(aux->precio) + "\",";
+        json += "\"nombre\":\"" + aux->nombre + "\",";
+        json += "\"src\":\"" + aux->src + "\"";
+        json += "},";
+        aux = aux->sig;
+    }
+    json = json.substr(0, json.length() - 1);
+    json += "]";
+    return json;
+}

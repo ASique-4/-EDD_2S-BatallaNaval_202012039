@@ -29,10 +29,10 @@ def crear_tablero(tamanio :int):
     Buque = 4*constante
     layout.append(
         [sg.OptionMenu(('Portaaviones', 'Submarino', 'Destructor', 'Buque'),'Portaaviones'),
-        sg.Text('Portaaviones',text_color='#FFE9A0'),sg.Text(str(Portaaviones),text_color='#FFE9A0'),
-        sg.Text('Submarino',text_color='#367E18'),sg.Text(str(Submarino),text_color='#367E18'),
-        sg.Text('Destructor',text_color='#F57328'),sg.Text(str(Destructor),text_color='#F57328'),
-        sg.Text('Buque',text_color='#CC3636'),sg.Text(str(Buque),text_color='#CC3636')
+        sg.Text('Portaaviones',text_color='#C98474'),sg.Text(str(Portaaviones),text_color='#C98474'),
+        sg.Text('Submarino',text_color='#25316D'),sg.Text(str(Submarino),text_color='#25316D'),
+        sg.Text('Destructor',text_color='#A2B5BB'),sg.Text(str(Destructor),text_color='#A2B5BB'),
+        sg.Text('Buque',text_color='#6FEDD6'),sg.Text(str(Buque),text_color='#6FEDD6')
         ]
         )
     #Si el ancho y alto es mayor a 10
@@ -84,23 +84,35 @@ def crear_tablero(tamanio :int):
                                                                 limpiar_botones(layout)
                                                                 break
                                                         elif values[0] == 'Submarino' and Submarino > 0:
-                                                            pintar_submarino(int(i), int(j), int(k), int(l), matriz, layout)
-                                                            limpiar_botones(layout)
-                                                            Submarino -= 1
-                                                            layout[0][4].update(Submarino)
-                                                            break
+                                                            if(pintar_submarino(int(i), int(j), int(k), int(l), matriz, layout) != False):
+                                                                limpiar_botones(layout)
+                                                                Submarino -= 1
+                                                                layout[0][4].update(Submarino)
+                                                                break
+                                                            else:
+                                                                sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                                                                limpiar_botones(layout)
+                                                                break
                                                         elif values[0] == 'Destructor' and Destructor > 0:
-                                                            pintar_destructor(int(i), int(j), int(k), int(l), matriz, layout)
-                                                            limpiar_botones(layout)
-                                                            Destructor -= 1
-                                                            layout[0][6].update(Destructor)
-                                                            break
+                                                            if(pintar_destructor(int(i), int(j), int(k), int(l), matriz, layout) != False):
+                                                                limpiar_botones(layout)
+                                                                Destructor -= 1
+                                                                layout[0][6].update(Destructor)
+                                                                break
+                                                            else:
+                                                                sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                                                                limpiar_botones(layout)
+                                                                break
                                                         elif values[0] == 'Buque' and Buque > 0:
-                                                            pintar_buque(int(i), int(j), int(k), int(l), matriz, layout)
-                                                            limpiar_botones(layout)
-                                                            Buque -= 1
-                                                            layout[0][8].update(Buque)
-                                                            break
+                                                            if(pintar_buque(int(i), int(j), int(k), int(l), matriz, layout) != False):
+                                                                limpiar_botones(layout)
+                                                                Buque -= 1
+                                                                layout[0][8].update(Buque)
+                                                                break
+                                                            else:
+                                                                sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                                                                limpiar_botones(layout)
+                                                                break
                                                         else:
                                                             sg.popup_error('No quedan ' + values[0], title="Error")
                                                             limpiar_botones(layout)
@@ -121,28 +133,28 @@ def pintar_portaavion(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa
         j = x1
         for i in range(x1, x2 + 1):
             matriz.getNodo(j, y1).caracter = "P"
-            layout[j][y1].update(button_color=('black', '#FFE9A0'))
+            layout[j][y1].update(button_color=('black', '#C98474'))
             j += 1
     #Arriba
     elif(x2 == x1-3):
         j = x1
         for i in range(x2, x1 + 1):
             matriz.getNodo(j, y1).caracter = "P"
-            layout[j][y1].update(button_color=('black', '#FFE9A0'))
+            layout[j][y1].update(button_color=('black', '#C98474'))
             j -= 1
     #Derecha
     elif(y2 == y1+3):
         j = y1
         for i in range(y1, y2 + 1):
             matriz.getNodo(x1, j).caracter = "P"
-            layout[x1][j].update(button_color=('black', '#FFE9A0'))
+            layout[x1][j].update(button_color=('black', '#C98474'))
             j += 1
     #Izquierda
     elif(y2 == y1-3):
         j = y1
         for i in range(y2, y1 + 1):
             matriz.getNodo(x1, j).caracter = "P"
-            layout[x1][j].update(button_color=('black', '#FFE9A0'))
+            layout[x1][j].update(button_color=('black', '#C98474'))
             j -= 1
     else:
         return False
@@ -153,60 +165,60 @@ def pintar_submarino(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa,
         j = x1
         for i in range(x1, x2 + 1):
             matriz.getNodo(j, y1).caracter = "S"
-            layout[j][y1].update(button_color=('black', '#367E18'))
+            layout[j][y1].update(button_color=('black', '#25316D'))
             j += 1
     #Arriba
     elif(x2 == x1 - 2):
         j = x1
         for i in range(x2, x1 + 1):
             matriz.getNodo(j, y1).caracter = "S"
-            layout[j][y1].update(button_color=('black', '#367E18'))
+            layout[j][y1].update(button_color=('black', '#25316D'))
             j -= 1
     #Derecha
     elif(y2 == y1 + 2):
         j = y1
         for i in range(y1, y2 + 1):
             matriz.getNodo(x1, j).caracter = "S"
-            layout[x1][j].update(button_color=('black', '#367E18'))
+            layout[x1][j].update(button_color=('black', '#25316D'))
             j += 1
     #Izquierda
     elif(y2 == y1 - 2):
         j = y1
         for i in range(y2, y1 + 1):
             matriz.getNodo(x1, j).caracter = "S"
-            layout[x1][j].update(button_color=('black', '#367E18'))
+            layout[x1][j].update(button_color=('black', '#25316D'))
             j -= 1
     else:
         return False
 #Pintar destructor
 def pintar_destructor(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
     #Abajo
-    if(x2 == x1 - 1):
+    if(x2 == x1 + 1):
         j = x1
         for i in range(x1, x2 + 1):
             matriz.getNodo(j, y1).caracter = "D"
-            layout[j][y1].update(button_color=('black', '#F57328'))
+            layout[j][y1].update(button_color=('black', '#A2B5BB'))
             j += 1
     #Arriba
-    elif(x2 == x1 + 1):
+    elif(x2 == x1 - 1):
         j = x1
         for i in range(x2, x1 + 1):
             matriz.getNodo(j, y1).caracter = "D"
-            layout[j][y1].update(button_color=('black', '#F57328'))
+            layout[j][y1].update(button_color=('black', '#A2B5BB'))
             j -= 1
     #Derecha
     elif(y2 == y1 + 1):
         j = y1
         for i in range(y1, y2 + 1):
             matriz.getNodo(x1, j).caracter = "D"
-            layout[x1][j].update(button_color=('black', '#F57328'))
+            layout[x1][j].update(button_color=('black', '#A2B5BB'))
             j += 1
     #Izquierda
     elif(y2 == y1 - 1):
         j = y1
         for i in range(y2, y1 + 1):
             matriz.getNodo(x1, j).caracter = "D"
-            layout[x1][j].update(button_color=('black', '#F57328'))
+            layout[x1][j].update(button_color=('black', '#A2B5BB'))
             j -= 1
     else:
         return False
@@ -214,7 +226,7 @@ def pintar_destructor(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa
 def pintar_buque(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
     if(x1 == x2 and y1 == y2):
         matriz.getNodo(x1, y1).caracter = "B"
-        layout[x1][y1].update(button_color=('black', '#CC3636'))
+        layout[x1][y1].update(button_color=('black', '#6FEDD6'))
 
 
 #Limpiar botones
@@ -253,9 +265,6 @@ def no_pintado(x1 :int, y1 :int, x2 :int, y2 :int, layout):
                 if(layout[x1][y1].ButtonColor[1] != '#394a6d'):
                     return False
         return True
-
-    
-
 
 #Colorear botones
 def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layout):
@@ -401,21 +410,85 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
 
 #Iniciar juego
 def iniciar_juego():
-    layout = [[sg.Text('Iniciar juego',size = (20,1), justification='center', font=("Helvetica", 25), relief=sg.RELIEF_RIDGE)],
-            [sg.Button('Crear Tablero',size = (20,1), justification='center', font="Arial 15 bold")],
-            [sg.Button('Regresar al menu',size = (20,1), justification='center', font="Arial 15 bold")]
+    layout = [[sg.Text('Iniciar Juego',size = (20,1), font="Arial 15 bold")],
+            [sg.Button('Crear Tablero',size = (20,1), font="Arial 15 bold")],
+            [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
     ]
     window = sg.Window('Iniciar juego', layout, size=(400, 300), element_justification='center')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Regresar al menu':
             window.close()
-            menu()
             break
         elif event == 'Crear Tablero':
             window.close()
-            crear_tablero(int(sg.popup_get_text('Ingrese el tamaño de la tablero')))
+            crear_tablero(int(sg.popup_get_text('Ingrese el tamaño de la tablero', title='Crear Tablero', size=(5, 1))))
             break
+
+#Tienda
+def tienda():
+    try:
+        res = requests.get(f'{base_url}ObtenerTienda/')
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        print(data)
+        layout = [[sg.Text('Tienda',size = (20,1), font="Arial 15 bold")],
+                [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold")],
+                [sg.Button('Comprar barcos',size = (20,1), font="Arial 15 bold")],
+                [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
+        ]
+        window = sg.Window('Tienda', layout, size=(400, 300), element_justification='center')
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Regresar al menu':
+                window.close()
+                break
+            elif event == 'Comprar barcos':
+                window.hide()
+                comprar_barcos(data)
+                window.un_hide()
+                break
+
+    except:
+        sg.popup('Error al conectar con el servidor', title='Error', size=(5, 1))
+
+#Comprar barcos
+def comprar_barcos(data):
+    layout = [[sg.Text('Comprar barcos',size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Barcos',size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Submarino: ' + str(data['barcos'][0]['precio']),size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Destructor: ' + str(data['barcos'][1]['precio']),size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Buque: ' + str(data['barcos'][2]['precio']),size = (20,1), font="Arial 15 bold")],
+            [sg.Button('Comprar submarino',size = (20,1), font="Arial 15 bold")],
+            [sg.Button('Comprar destructor',size = (20,1), font="Arial 15 bold")],
+            [sg.Button('Comprar buque',size = (20,1), font="Arial 15 bold")],
+            [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
+    ]
+    window = sg.Window('Comprar barcos', layout, size=(400, 300), element_justification='center')
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED or event == 'Regresar al menu':
+            window.close()
+            break
+        elif event == 'Comprar submarino':
+            if(usuario_global['monedas'] >= data['barcos'][0]['precio']):
+                usuario_global['monedas'] -= data['barcos'][0]['precio']
+                usuario_global['submarinos'] += 1
+                window.close()
+                comprar_barcos(data)
+                break
+            else:
+                sg.popup('No tienes suficientes monedas', title='Error', size=(5, 1))
+        elif event == 'Comprar destructor':
+            if(usuario_global['monedas'] >= data['barcos'][1]['precio']):
+                usuario_global['monedas'] -= data['barcos'][1]['precio']
+                usuario_global['destructores'] += 1
+                window.close()
+                comprar_barcos(data)
+                break
+            else:
+                sg.popup('No tienes suficientes monedas', title='Error', size=(5, 1))
 
 #Ruta relativa
 def ruta_relativa(ruta):
@@ -455,14 +528,20 @@ def menu():
         if event == sg.WIN_CLOSED or event == 'Salir':
             break
         if event == 'Cargar Datos':
+            window.hide()
             cargar_datos()
+            window.un_hide()
         if event == 'Iniciar Sesion':
             window.close()
             login()
         if event == 'Registrar Usuario':
+            window.hide()
             registrar_usuario()
+            window.un_hide()
         if event == 'Editar Usuario':
+            window.hide()
             editar_usuario()
+            window.un_hide()
         if event == 'Eliminar Usuario':
             
             if sg.popup_yes_no('¿Estas seguro de eliminar tu usuario?'):
@@ -471,6 +550,7 @@ def menu():
         if event == 'Iniciar Juego':
             window.hide()
             iniciar_juego()
+            window.un_hide()
     window.close()
     return event
 
@@ -486,9 +566,6 @@ def eliminar_usuario(nick, password):
         return (data['status'])
     except:
         return "error"
-
-#Crear tablero
-
 
 #Registrar usuario
 def registrar_usuario():
@@ -561,7 +638,6 @@ def editar(nick, password, edad):
     except:
         return "error"
 
-
 #Cargar datos
 def cargar_datos():
     layout = [[sg.Text('Cargar Datos',size = (10,0), font="Arial 30 bold", justification='center')],
@@ -622,10 +698,13 @@ def menu_admin():
         if event == 'Eliminar Usuario':
             eliminar_usuario(usuario_global['nick'],usuario_global['password'])
         if event == 'Reportes':
+            window.hide()
             menu_reportes()
+            window.un_hide()
         if event == 'Iniciar Juego':
             window.hide()
             iniciar_juego()
+            window.un_hide()
     window.close()
     return event
 
@@ -686,7 +765,7 @@ def progress_bar():
 
 #Create the login interface
 def login():
-    sg.theme('DarkPurple4')
+    sg.theme('DarkTeal2')
 
     img = Image.open('/home/angel/Desktop/Dev/Github/EDD/Proyecto1/Fase2/Interfaz/login.png')    
     bio = io.BytesIO()

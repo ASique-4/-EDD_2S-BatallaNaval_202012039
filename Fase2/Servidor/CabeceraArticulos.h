@@ -24,6 +24,7 @@ public:
     void Imprimir();
     void CrearGraphviz();
     bool Buscar(string categoria);
+    string getArticulosComoJson();
     private:
 };
 
