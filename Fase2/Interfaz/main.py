@@ -425,70 +425,94 @@ def iniciar_juego():
             crear_tablero(int(sg.popup_get_text('Ingrese el tamaño de la tablero', title='Crear Tablero', size=(5, 1))))
             break
 
+#Llenar lista de articulos
+def llenar_articulos(array_articulos):
+    articulos = []
+    for i in array_articulos[1]:
+        articulos.append([i['nombre'] , (i['precio']), i['id'], i['src']])
+    return articulos
+    
+
+
 #Tienda
 def tienda():
-    try:
         res = requests.get(f'{base_url}ObtenerTienda/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
-        print(data)
+        categoria = []
+        combo = []
+        for i in data:
+            categoria.append([i,data[i]])
+            combo.append(i)
+        articulos = llenar_articulos(categoria[1])
         layout = [[sg.Text('Tienda',size = (20,1), font="Arial 15 bold")],
                 [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold")],
-                [sg.Button('Comprar barcos',size = (20,1), font="Arial 15 bold")],
+                [sg.Text('Categoria',size = (20,1), font="Arial 15 bold")],
+                [sg.Combo(combo, size=(20, 5), key='categoria'), sg.Button('Buscar',size = (20,1), font="Arial 10 bold")],
+                [sg.Text('Articulos',size = (20,1), font="Arial 15 bold")],
+                [sg.Table(values=articulos, headings=['Articulos','Precio','Id'], max_col_width=20, auto_size_columns=True, justification='left', num_rows=10, key='tabla')],
+                [sg.Button('Comprar',size = (20,1), font="Arial 15 bold")],
                 [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
         ]
-        window = sg.Window('Tienda', layout, size=(400, 300), element_justification='center')
+        window = sg.Window('Tienda', layout, size=(600, 500), element_justification='center')
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Regresar al menu':
                 window.close()
-                break
-            elif event == 'Comprar barcos':
-                window.hide()
-                comprar_barcos(data)
-                window.un_hide()
-                break
+                break     
+            elif event == 'Buscar':
+                layout[5][0].update(values=llenar_articulos(categoria[combo.index(values['categoria'])]))
+            elif event == 'Comprar':
+                if(values['categoria'] == None):
+                    sg.popup('Seleccione una categoria', title='Error')
+                else:
+                    window.hide()
+                    print(articulos[values['tabla'][0]])
+                    comprar_articulo(articulos[values['tabla'][0]])
+                    window.un_hide()
+                    
+                    
+            
+                                    
+            
 
-    except:
-        sg.popup('Error al conectar con el servidor', title='Error', size=(5, 1))
 
 #Comprar barcos
-def comprar_barcos(data):
-    layout = [[sg.Text('Comprar barcos',size = (20,1), font="Arial 15 bold")],
+def comprar_articulo(data):
+    #Show image in data['src']
+    img = Image.open(data[3])
+    bio = io.BytesIO()
+    img.save(bio, format="PNG")
+    layout = [[sg.Text('COMPRAR BARCO',size = (20,1), font="Arial 15 bold")],
             [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Barcos',size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Submarino: ' + str(data['barcos'][0]['precio']),size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Destructor: ' + str(data['barcos'][1]['precio']),size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Buque: ' + str(data['barcos'][2]['precio']),size = (20,1), font="Arial 15 bold")],
-            [sg.Button('Comprar submarino',size = (20,1), font="Arial 15 bold")],
-            [sg.Button('Comprar destructor',size = (20,1), font="Arial 15 bold")],
-            [sg.Button('Comprar buque',size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Nombre: ' + data[0],size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Precio: ' + str(data[1]),size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Id: ' + str(data[2]),size = (20,1), font="Arial 15 bold")],
+            [sg.Text('Imagen: ',size = (20,1), font="Arial 15 bold")],
+            [sg.Image(data=bio.getvalue())],
+            [sg.Button('Comprar',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
     ]
-    window = sg.Window('Comprar barcos', layout, size=(400, 300), element_justification='center')
+    window = sg.Window('Comprar barco', layout, size=(450, 650), element_justification='center')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Regresar al menu':
             window.close()
             break
-        elif event == 'Comprar submarino':
-            if(usuario_global['monedas'] >= data['barcos'][0]['precio']):
-                usuario_global['monedas'] -= data['barcos'][0]['precio']
-                usuario_global['submarinos'] += 1
-                window.close()
-                comprar_barcos(data)
-                break
+        elif event == 'Comprar':
+            if(usuario_global['monedas'] < data[1]):
+                sg.popup('No tiene suficientes monedas', title='Error')
             else:
-                sg.popup('No tienes suficientes monedas', title='Error', size=(5, 1))
-        elif event == 'Comprar destructor':
-            if(usuario_global['monedas'] >= data['barcos'][1]['precio']):
-                usuario_global['monedas'] -= data['barcos'][1]['precio']
-                usuario_global['destructores'] += 1
                 window.close()
-                comprar_barcos(data)
+                res = requests.get(f'{base_url}ComprarArticulo/' + usuario_global['nick'] + '/' + str(data[2]) + '/')
+                data = res.text#convertimos la respuesta en dict
+                data = json.loads(data)
+                if(data['status'] == 'ok'):
+                    sg.popup('Compra exitosa', title='Exito')
+                    usuario_global['monedas'] = usuario_global['monedas'] - data['precio']
+                else:
+                    sg.popup('Error al comprar', title='Error')
                 break
-            else:
-                sg.popup('No tienes suficientes monedas', title='Error', size=(5, 1))
 
 #Ruta relativa
 def ruta_relativa(ruta):
@@ -742,28 +766,6 @@ def menu_reportes_articulos():
     window.close()
     return event
 
-#ProgressBar
-def progress_bar():
-    # layout the window
-    layout = [[sg.Text('Buscando usuario...')],
-            [sg.ProgressBar(1000, orientation='h', size=(20, 20), key='progressbar')],
-            [sg.Cancel()]]
-
-    # create the window`
-    window = sg.Window('Cargando...', layout)
-    progress_bar = window['progressbar']
-    # loop that would normally do something useful
-    for i in range(1000):
-        # check to see if the cancel button was clicked and exit loop if clicked
-        event, values = window.read(timeout=1.75)
-        if event == 'Cancel'  or event == sg.WIN_CLOSED:
-            break
-    # update bar with loop value +1 so that bar eventually reaches the maximum
-        progress_bar.UpdateBar(i + 1)
-    # done with loop... need to destroy the window as it's still open
-    window.close()
-
-#Create the login interface
 def login():
     sg.theme('DarkTeal2')
 
@@ -801,5 +803,6 @@ def login():
 
 
 
-login()
+#login()
 #crear_tablero(11)
+tienda()
