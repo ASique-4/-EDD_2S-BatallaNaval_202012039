@@ -501,7 +501,7 @@ public:
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != ""){
             if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
-                nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],encriptarSHA256(request.special["password"]));
+                nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"]));
                 tmpUsuario->edad = stringtoint(request.special["newEdad"]);
                 tmpUsuario->nick = (request.special["newNick"]);
                 tmpUsuario->password = encriptarSHA256(request.special["newPassword"]);
@@ -532,10 +532,11 @@ public:
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != "" && request.special["id"] != ""){
             if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
-                nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],encriptarSHA256(request.special["password"]));
+                nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"]));
                 nodoArticulos *tmpArticulo = serverArticulos.getArticulo(request.special["id"]);
                 if(tmpArticulo != NULL){
-                    serverUsuarios.InsertarCompra(tmpUsuario,tmpArticulo);
+                    int tmp = stringtoint(request.special["cantidad"]);
+                    serverUsuarios.InsertarCompra(tmpUsuario,tmpArticulo,tmp);
                     response << "{"
                             << jsonkv("status", "ok")
                             << "}";
@@ -555,12 +556,21 @@ public:
     void getGraficar(GloveHttpRequest &request, GloveHttpResponse &response){
         if(request.special["estructura"] == "arbol"){
             serverArbol.Grafo();
+            response << "{"
+                    << jsonkv("status", "ok") << ","
+                    << jsonkv("url", "Fase2/Servidor/Pruebas.png")
+                    << "}";
         } else if (request.special["estructura"] == "compras" and request.special["nick"] != "" and request.special["password"] != ""){
             cout << "Graficando compras de " << request.special["nick"] << endl;
-            serverUsuarios.MostrarCompras(serverUsuarios.BuscarUsuario(request.special["nick"],encriptarSHA256(request.special["password"])));
+            serverUsuarios.MostrarCompras(serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"])));
+            response << "{"
+                    << jsonkv("status", "ok") << ","
+                    << jsonkv("url", "Fase2/Servidor/Compras.png")
+                    << "}";
         } else {
             response.contentType("text/json");
             response << "{"
+                    << jsonkv("status", "error") << ","
                     << jsonkv("error", "Estructura no encontrada")
                     << "}";
         }
@@ -867,7 +877,7 @@ int main(int argc, char **argv)
     serv.addRest("/Graficar/$estructura/$nick/$password", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getGraficar, &API, ph::_1, ph::_2));
-    serv.addRest("/Comprar/$nick/$password/$id", 1,
+    serv.addRest("/Comprar/$nick/$password/$id/$cantidad", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postCompra, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;

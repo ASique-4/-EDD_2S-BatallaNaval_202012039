@@ -15,15 +15,17 @@
 typedef struct node {
     nodoArticulos *data;
     int height;
+    int cantidad;
     struct node *left;
     struct node *right;
 } node;
 
 /** Create and return a new Node */
-node *createNode(nodoArticulos *data) {
+node *createNode(nodoArticulos *data, int cantidad) {
     node *nn = new node();
     nn->data = data;
     nn->height = 0;
+    nn->cantidad = cantidad;
     nn->left = NULL;
     nn->right = NULL;
     return nn;
@@ -65,14 +67,14 @@ node *minValue(node *root) {
 }
 
 /** Balanced Insertion */
-node *insert(node *root, nodoArticulos*item) {
-    node *nn = createNode(item);
+node *insert(node *root, nodoArticulos*item,int cantidad) {
+    node *nn = createNode(item,cantidad);
     if (root == NULL)
         return nn;
     if (item->precio < root->data->precio)
-        root->left = insert(root->left, item);
+        root->left = insert(root->left, item,cantidad);
     else
-        root->right = insert(root->right, item);
+        root->right = insert(root->right, item,cantidad);
     int b = getBalance(root);
     if (b > 1) {
         if (getBalance(root->left) < 0)
@@ -144,17 +146,17 @@ void printTree(node *root, int space) {
         q.pop();
         if (root->left) {
             q.push(root->left);
-            dot += root->data->id + "[label=\" ID: " + root->data->id + "\nNombre: " + root->data->nombre + "\nCantidad: \"]";
-            dot += root->left->data->id + "[label=\" ID: " + root->left->data->id + "\nNombre: " + root->left->data->nombre + "\nCantidad: \"]";
-            dot += (root->data->id) + "->" +
-                   (root->left->data->id) + ";";
+            dot += "\"" + root->data->id + "\"" +"[label=\" ID: " + root->data->id + "\nNombre: " + root->data->nombre + "\nCantidad: " + to_string(root->cantidad) +"\"]";
+            dot += "\"" +root->left->data->id + "\"" +"[label=\" ID: " + root->left->data->id + "\nNombre: " + root->left->data->nombre + "\nCantidad: " + to_string(root->left->cantidad) + " \"]";
+            dot += "\"" +(root->data->id) + "\"" +"->" +
+                   "\"" +(root->left->data->id) + "\"" +";";
         }
         if (root->right) {
             q.push(root->right);
-            dot += root->data->id + "[label=\" ID: " + root->data->id + "\nNombre: " + root->data->nombre + "\nCantidad: \"]";
-            dot += root->right->data->id + "[label=\" ID: " + root->right->data->id + "\nNombre: " + root->right->data->nombre + "\nCantidad: \"]";
-            dot += (root->data->id) + "->" +
-                   (root->right->data->id) + ";";
+            dot += "\"" +root->data->id + "\"" +"[label=\" ID: " + root->data->id + "\nNombre: " + root->data->nombre + "\nCantidad: " + to_string(root->cantidad) + "\"]";
+            dot += "\"" +root->right->data->id + "\"" +"[label=\" ID: " + root->right->data->id + "\nNombre: " + root->right->data->nombre + "\nCantidad: " + to_string(root->right->cantidad) + "\"]";
+            dot += "\"" +(root->data->id) +"\"" + "->" +"\"" +
+                   (root->right->data->id) + "\"" +";";
         }
     }
     dot += "}";
@@ -167,36 +169,36 @@ void printTree(node *root, int space) {
 }
 
 
-int main(int argc, char const *argv[])
-{
-    node *root = NULL;
-    nodoArticulos *articulo = new nodoArticulos();
-    articulo->id = "1";
-    articulo->nombre = "Articulo 1";
-    articulo->precio = 1;
-    root = insert(root, articulo);
-    articulo = new nodoArticulos();
-    articulo->id = "2";
-    articulo->nombre = "Articulo 2";
-    articulo->precio = 2;
-    root = insert(root, articulo);
-    articulo = new nodoArticulos();
-    articulo->id = "3";
-    articulo->nombre = "Articulo 3";
-    articulo->precio = 3;
-    root = insert(root, articulo);
-    articulo = new nodoArticulos();
-    articulo->id = "4";
-    articulo->nombre = "Articulo 4";
-    articulo->precio = 4;
-    root = insert(root, articulo);
-    articulo = new nodoArticulos();
-    articulo->id = "5";
-    articulo->nombre = "Articulo 5";
-    articulo->precio = 5;
-    root = insert(root, articulo);
-    printTree(root,0);
-    return 0;
-}
+// int main(int argc, char const *argv[])
+// {
+//     node *root = NULL;
+//     nodoArticulos *articulo = new nodoArticulos();
+//     articulo->id = "1";
+//     articulo->nombre = "Articulo 1";
+//     articulo->precio = 1;
+//     root = insert(root, articulo,1);
+//     articulo = new nodoArticulos();
+//     articulo->id = "2";
+//     articulo->nombre = "Articulo 2";
+//     articulo->precio = 2;
+//     root = insert(root, articulo,2);
+//     articulo = new nodoArticulos();
+//     articulo->id = "3";
+//     articulo->nombre = "Articulo 3";
+//     articulo->precio = 3;
+//     root = insert(root, articulo,5);
+//     articulo = new nodoArticulos();
+//     articulo->id = "4";
+//     articulo->nombre = "Articulo 4";
+//     articulo->precio = 4;
+//     root = insert(root, articulo,4);
+//     articulo = new nodoArticulos();
+//     articulo->id = "5";
+//     articulo->nombre = "Articulo 5";
+//     articulo->precio = 5;
+//     root = insert(root, articulo,9);
+//     printTree(root,0);
+//     return 0;
+// }
 
 

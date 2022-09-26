@@ -1,4 +1,5 @@
 import string
+import webbrowser
 import requests
 import json
 import PySimpleGUI as sg
@@ -10,9 +11,11 @@ base_url = "http://localhost:8080/"
 usuario_global = {
     'nick': '',
     'password': '',
-    'monedas': '',
+    'monedas': '1000',
     'edad': ''
 }
+
+
 
 #Crear tablero
 def crear_tablero(tamanio :int):
@@ -434,6 +437,7 @@ def llenar_articulos(array_articulos):
 
 #Tienda
 def tienda():
+        sg.theme('LightBlue4')
         res = requests.get(f'{base_url}ObtenerTienda/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
@@ -442,7 +446,7 @@ def tienda():
         for i in data:
             categoria.append([i,data[i]])
             combo.append(i)
-        articulos = llenar_articulos(categoria[1])
+        articulos = llenar_articulos(categoria[0])
         layout = [[sg.Text('TIENDA',size = (20,1), font="Arial 30 bold",justification='center')],
                 [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold",justification='center')],
                 [sg.Text('Categoria',size = (20,1), font="Arial 15 bold",justification='center')],
@@ -460,11 +464,13 @@ def tienda():
                 break     
             elif event == 'Buscar':
                 layout[5][0].update(values=llenar_articulos(categoria[combo.index(values['categoria'])]))
+                articulos = llenar_articulos(categoria[combo.index(values['categoria'])])
             elif event == 'Comprar':
                 if(values['categoria'] == None):
                     sg.popup('Seleccione una categoria', title='Error')
                 else:
                     window.hide()
+                    #print(articulos)
                     print(articulos[values['tabla'][0]])
                     comprar_articulo(articulos[values['tabla'][0]])
                     window.un_hide()
@@ -472,18 +478,17 @@ def tienda():
                     
             
 #Agregar compra
-def agregar_compra(data):
+def agregar_compra(product_id,cantidad):
     try:
         progress_bar()
-        res = requests.post(f'{base_url}AgregarCompra/', data=data)
+        res = requests.get(f'{base_url}Comprar/' + usuario_global['nick'] + '/' + usuario_global['password'] + '/' + product_id + '/' + cantidad + '/' + cantidad + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
-        if(data['status'] == 'ok'):
-            sg.popup('Compra realizada', title='Compra')
-        else:
-            sg.popup('No se pudo realizar la compra', title='Error')
+        print(data)
+        return data['status']
     except:
         sg.popup('No se pudo realizar la compra', title='Error')
+        return 'errror'
             
 
 
@@ -496,6 +501,7 @@ def comprar_articulo(data):
             [sg.Text('Id: ' + str(data[2]), font="Arial 15 bold",justification='center')],
             [sg.Text('Imagen: ',size = (20,1), font="Arial 15 bold",justification='center')],
             [sg.Image(data[3],background_color='#EEF1FF')],
+            [sg.Text('Cantidad' ,size = (10,0), font="Arial 15 bold", justification='center'), sg.InputText(key='cantidad',size = (10,0), font="Arial 15 bold", justification='center')],
             [sg.Button('Comprar',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
     ]
@@ -506,16 +512,13 @@ def comprar_articulo(data):
             window.close()
             break
         elif event == 'Comprar':
-            if(usuario_global['monedas'] < data[1]):
+            if(int(usuario_global['monedas']) < int(data[1])):
                 sg.popup('No tiene suficientes monedas', title='Error')
             else:
                 window.close()
-                res = requests.get(f'{base_url}ComprarArticulo/' + usuario_global['nick'] + '/' + str(data[2]) + '/')
-                data = res.text#convertimos la respuesta en dict
-                data = json.loads(data)
-                if(data['status'] == 'ok'):
+                if(agregar_compra(str(data[2]),int(values['cantidad'])) == 'ok'):
                     sg.popup('Compra exitosa', title='Exito')
-                    usuario_global['monedas'] = usuario_global['monedas'] - data['precio']
+                    usuario_global['monedas'] = int(usuario_global['monedas']) - int(data[1])
                 else:
                     sg.popup('Error al comprar', title='Error')
                 break
@@ -567,8 +570,9 @@ def menu():
                 [sg.Button('Editar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Eliminar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Juego', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Tienda', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
+    window = sg.Window('Menu', layout, size=(500, 550), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
@@ -596,6 +600,10 @@ def menu():
         if event == 'Iniciar Juego':
             window.hide()
             iniciar_juego()
+            window.un_hide()
+        if event == 'Tienda':
+            window.hide()
+            tienda()
             window.un_hide()
     window.close()
     return event
@@ -723,8 +731,9 @@ def menu_admin():
                 [sg.Button('Eliminar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Juego', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Tienda', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
+    window = sg.Window('Menu', layout, size=(500, 550), element_justification='c')
 
     while True:
         event, values = window.read()
@@ -751,6 +760,10 @@ def menu_admin():
             window.hide()
             iniciar_juego()
             window.un_hide()
+        if event == 'Tienda':
+            window.hide()
+            tienda()
+            window.un_hide()
     window.close()
     return event
 
@@ -759,12 +772,37 @@ def menu_reportes():
     layout = [[sg.Text('Reportes',size = (10,0), font="Arial 30 bold", justification='center')],
                 [sg.Button('Reportes de usuarios', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes de articulos', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Reportes de tutorial', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Reportes de compras', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
     window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
-    event, values = window.read()
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED or event == 'Salir':
+            break
+        if event == 'Reportes de usuarios':
+            window.hide()
+            mostrar_reportes('arbol')
+            window.un_hide()
+        if event == 'Reportes de compras':
+            window.hide()
+            mostrar_reportes('compras')
+            window.un_hide()
     window.close()
     return event
+
+#Mostrar reportes
+def mostrar_reportes(reporte):
+    try:
+        res = requests.get(f'{base_url}Graficar/' + reporte + '/' + usuario_global['nick'] + '/' + usuario_global['passwors'] + '/')
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        if data['status'] == 'ok':
+            sg.popup('Reporte generado')
+            webbrowser.open_new_tab(data['url'])
+        else:
+            sg.popup('Error al generar el reporte')
+    except:
+        sg.popup('Error al generar el reporte')
 
 #Menu Reportes de usuarios
 def menu_reportes_usuarios():
@@ -789,7 +827,7 @@ def menu_reportes_articulos():
     return event
 
 def login():
-    sg.theme('DarkTeal2')
+    sg.theme('LightBlue4')
 
     letter = "Arial 30 bold"
     letter_2 = "Arial 12 bold"
@@ -821,6 +859,6 @@ def login():
 
 
 
-login()
+#login()
 #crear_tablero(11)
-#tienda()
+tienda()

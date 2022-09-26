@@ -308,8 +308,8 @@ void ListaUsuarios::MostrarMovimientos(nodoUsuarios *usuario){
     }
 }
 
-void ListaUsuarios::InsertarCompra(nodoUsuarios *usuario, nodoArticulos *articulo){
-    usuario->compras = insert(usuario->compras, articulo);
+void ListaUsuarios::InsertarCompra(nodoUsuarios *usuario, nodoArticulos *articulo, int cantidad){
+    usuario->compras = insert(usuario->compras, articulo, cantidad);
 }
 
 void ListaUsuarios::MostrarCompras(nodoUsuarios *usuario){

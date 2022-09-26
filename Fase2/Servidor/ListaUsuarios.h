@@ -37,7 +37,7 @@ public:
     void MostrarMovimientos(nodoUsuarios* usuario);
     bool BuscarNick(string nick);
     char* stringtochar(string s);
-    void InsertarCompra(nodoUsuarios* usuario, nodoArticulos* articulo);
+    void InsertarCompra(nodoUsuarios* usuario, nodoArticulos* articulo, int Cantidad);
     void MostrarCompras(nodoUsuarios* usuario);
 private:
 };

@@ -1,17 +1,9 @@
-digraph G {2[label=" ID: 2
-Nombre: Articulo 2
-Cantidad: "]1[label=" ID: 1
-Nombre: Articulo 1
-Cantidad: "]2->1;2[label=" ID: 2
-Nombre: Articulo 2
-Cantidad: "]4[label=" ID: 4
-Nombre: Articulo 4
-Cantidad: "]2->4;4[label=" ID: 4
-Nombre: Articulo 4
-Cantidad: "]3[label=" ID: 3
-Nombre: Articulo 3
-Cantidad: "]4->3;4[label=" ID: 4
-Nombre: Articulo 4
-Cantidad: "]5[label=" ID: 5
-Nombre: Articulo 5
-Cantidad: "]4->5;}
+digraph G {"6ae94616-45e2-498f-8a40-e54b678e09ce"[label=" ID: 6ae94616-45e2-498f-8a40-e54b678e09ce
+Nombre: Lycosa godeffroyi
+Cantidad: 0"]"9cd4be8b-90ac-4d1e-886d-7b98ace99499"[label=" ID: 9cd4be8b-90ac-4d1e-886d-7b98ace99499
+Nombre: Bison bison
+Cantidad: 0 "]"6ae94616-45e2-498f-8a40-e54b678e09ce"->"9cd4be8b-90ac-4d1e-886d-7b98ace99499";"6ae94616-45e2-498f-8a40-e54b678e09ce"[label=" ID: 6ae94616-45e2-498f-8a40-e54b678e09ce
+Nombre: Lycosa godeffroyi
+Cantidad: 0"]"a989148c-65c2-4a53-a09c-05dc5288b53d"[label=" ID: a989148c-65c2-4a53-a09c-05dc5288b53d
+Nombre: Lepus townsendii
+Cantidad: 0"]"6ae94616-45e2-498f-8a40-e54b678e09ce"->"a989148c-65c2-4a53-a09c-05dc5288b53d";}
