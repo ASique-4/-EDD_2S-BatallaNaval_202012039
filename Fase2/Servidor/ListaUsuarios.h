@@ -4,6 +4,7 @@
 #include "nodoUsuarios.h"
 #include "ListaMovimientos.h"
 #include "ListaDeListasMov.h"
+#include "nodoArticulos.h"
 
 
 #include <iostream>
@@ -36,6 +37,8 @@ public:
     void MostrarMovimientos(nodoUsuarios* usuario);
     bool BuscarNick(string nick);
     char* stringtochar(string s);
+    void InsertarCompra(nodoUsuarios* usuario, nodoArticulos* articulo);
+    void MostrarCompras(nodoUsuarios* usuario);
 private:
 };
 

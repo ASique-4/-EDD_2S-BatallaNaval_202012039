@@ -24,6 +24,7 @@ public:
     void OrdenamientoDescendente();
     char* string_to_char(string s);
     string getArticulosComoJson();
+    nodoArticulos* getArticulo(string id);
 private:
 };
 

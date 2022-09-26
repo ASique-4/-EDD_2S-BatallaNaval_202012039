@@ -2,8 +2,6 @@ import string
 import requests
 import json
 import PySimpleGUI as sg
-from PIL import Image
-import io
 from MatrizDispersa import MatrizDispersa
 
 
@@ -445,11 +443,11 @@ def tienda():
             categoria.append([i,data[i]])
             combo.append(i)
         articulos = llenar_articulos(categoria[1])
-        layout = [[sg.Text('Tienda',size = (20,1), font="Arial 15 bold")],
-                [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold")],
-                [sg.Text('Categoria',size = (20,1), font="Arial 15 bold")],
+        layout = [[sg.Text('TIENDA',size = (20,1), font="Arial 30 bold",justification='center')],
+                [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold",justification='center')],
+                [sg.Text('Categoria',size = (20,1), font="Arial 15 bold",justification='center')],
                 [sg.Combo(combo, size=(20, 5), key='categoria'), sg.Button('Buscar',size = (20,1), font="Arial 10 bold")],
-                [sg.Text('Articulos',size = (20,1), font="Arial 15 bold")],
+                [sg.Text('Articulos',size = (20,1), font="Arial 15 bold",justification='center')],
                 [sg.Table(values=articulos, headings=['Articulos','Precio','Id'], max_col_width=20, auto_size_columns=True, justification='left', num_rows=10, key='tabla')],
                 [sg.Button('Comprar',size = (20,1), font="Arial 15 bold")],
                 [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
@@ -473,23 +471,31 @@ def tienda():
                     
                     
             
-                                    
+#Agregar compra
+def agregar_compra(data):
+    try:
+        progress_bar()
+        res = requests.post(f'{base_url}AgregarCompra/', data=data)
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        if(data['status'] == 'ok'):
+            sg.popup('Compra realizada', title='Compra')
+        else:
+            sg.popup('No se pudo realizar la compra', title='Error')
+    except:
+        sg.popup('No se pudo realizar la compra', title='Error')
             
 
 
 #Comprar barcos
 def comprar_articulo(data):
-    #Show image in data['src']
-    img = Image.open(data[3])
-    bio = io.BytesIO()
-    img.save(bio, format="PNG")
-    layout = [[sg.Text('COMPRAR BARCO',size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Nombre: ' + data[0],size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Precio: ' + str(data[1]),size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Id: ' + str(data[2]),size = (20,1), font="Arial 15 bold")],
-            [sg.Text('Imagen: ',size = (20,1), font="Arial 15 bold")],
-            [sg.Image(data=bio.getvalue())],
+    layout = [[sg.Text('COMPRAR BARCO',size = (20,1), font="Arial 30 bold",justification='center')],
+            [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold",justification='center')],
+            [sg.Text('Nombre: ' + data[0], font="Arial 15 bold",justification='center')],
+            [sg.Text('Precio: ' + str(data[1]), font="Arial 15 bold",justification='center')],
+            [sg.Text('Id: ' + str(data[2]), font="Arial 15 bold",justification='center')],
+            [sg.Text('Imagen: ',size = (20,1), font="Arial 15 bold",justification='center')],
+            [sg.Image(data[3],background_color='#EEF1FF')],
             [sg.Button('Comprar',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
     ]
@@ -534,6 +540,22 @@ def verify_login( nick,  password):
 
     except:
         return "error"
+
+#progress bar
+def progress_bar():
+    layout = [[sg.Text('Espere un momento...')],
+              [sg.ProgressBar(1000, orientation='h', size=(20, 20), key='progressbar')],
+              [sg.Cancel()]]
+
+    window = sg.Window('Espere un momento...', layout)
+
+    progress_bar = window['progressbar']
+    for i in range(1000):
+        event, values = window.read(timeout=1)
+        if event == 'Cancel' or event == sg.WIN_CLOSED:
+            break
+        progress_bar.UpdateBar(i + 1)
+    window.close()
 
 #Menu
 def menu():
@@ -769,16 +791,12 @@ def menu_reportes_articulos():
 def login():
     sg.theme('DarkTeal2')
 
-    img = Image.open('/home/angel/Desktop/Dev/Github/EDD/Proyecto1/Fase2/Interfaz/login.png')    
-    bio = io.BytesIO()
-    img.save(bio, format="PNG")
-    data = bio.getvalue()
     letter = "Arial 30 bold"
     letter_2 = "Arial 12 bold"
     letter_3 = "Arial 12"
     layout = [
         [sg.Text('Login',size = (10,0), font=letter, justification='center')],
-        [sg.Image(data=data)],
+        [sg.Image('/home/angel/Desktop/Dev/Github/EDD/Proyecto1/Fase2/Interfaz/login.png')],
         [sg.Text('Usuario', font=letter_2,pad=(0,10),justification='left')],
         [sg.Input(size=(29,0),font=letter_3)],
         [sg.Text('Contraseña', font=letter_2,pad=(0,10),justification='left')],
@@ -803,6 +821,6 @@ def login():
 
 
 
-#login()
+login()
 #crear_tablero(11)
-tienda()
+#tienda()

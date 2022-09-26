@@ -2,7 +2,6 @@
 #define NODOB_H
 
 #include <stddef.h>
-#include "nodoUsuarios.h"
 #include <iostream>
 using namespace std;
 

@@ -4,6 +4,7 @@
 #include <string>
 #include "ListaMovimientos.h"
 #include "ListaDeListasMov.h"
+#include "ComprasAVL.cpp"
 
 using namespace std;
 class nodoUsuarios {
@@ -14,6 +15,7 @@ public:
     int edad;
     ListaDeListas lista;
     int id;
+    node *compras;
 
 
     nodoUsuarios*ant;
@@ -27,6 +29,7 @@ public:
         monedas = 0;
         edad = 0;
         id = 0;
+        compras = NULL;
     }
 private:
 };

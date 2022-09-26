@@ -307,3 +307,11 @@ void ListaUsuarios::MostrarMovimientos(nodoUsuarios *usuario){
         movimientos = movimientos->sigNodo;
     }
 }
+
+void ListaUsuarios::InsertarCompra(nodoUsuarios *usuario, nodoArticulos *articulo){
+    usuario->compras = insert(usuario->compras, articulo);
+}
+
+void ListaUsuarios::MostrarCompras(nodoUsuarios *usuario){
+    printTree(usuario->compras, 0);
+}

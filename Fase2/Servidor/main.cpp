@@ -527,6 +527,47 @@ public:
                 << serverCabecera.getArticulosComoJson()
                 << "}";
     }
+
+    void postCompra(GloveHttpRequest &request, GloveHttpResponse &response){
+        response.contentType("text/json");
+        if(request.special["nick"] != "" && request.special["password"] != "" && request.special["id"] != ""){
+            if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
+                nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],encriptarSHA256(request.special["password"]));
+                nodoArticulos *tmpArticulo = serverArticulos.getArticulo(request.special["id"]);
+                if(tmpArticulo != NULL){
+                    serverUsuarios.InsertarCompra(tmpUsuario,tmpArticulo);
+                    response << "{"
+                            << jsonkv("status", "ok")
+                            << "}";
+                }else{
+                    response << "{"
+                            << jsonkv("status", "El articulo no existe")
+                            << "}";
+                }
+            }else{
+                response << "{"
+                        << jsonkv("status", "El usuario no existe")
+                        << "}";
+            }
+        }
+    }
+
+    void getGraficar(GloveHttpRequest &request, GloveHttpResponse &response){
+        if(request.special["estructura"] == "arbol"){
+            serverArbol.Grafo();
+        } else if (request.special["estructura"] == "compras" and request.special["nick"] != "" and request.special["password"] != ""){
+            cout << "Graficando compras de " << request.special["nick"] << endl;
+            serverUsuarios.MostrarCompras(serverUsuarios.BuscarUsuario(request.special["nick"],encriptarSHA256(request.special["password"])));
+        } else {
+            response.contentType("text/json");
+            response << "{"
+                    << jsonkv("error", "Estructura no encontrada")
+                    << "}";
+        }
+        
+
+    }
+
 private:
     ListaUsuarios serverUsuarios;
     ListaArticulos serverArticulos;
@@ -799,6 +840,7 @@ int main(int argc, char **argv)
     string archivo = "";
     //menu(usuarios, articulos, tutorial, cabecera);
     usuarios.InsertarFinal("EDD", encriptarSHA256("edd123"), 0, 50);
+    cout << (encriptarSHA256("edd123")) << endl;
     Servidor API(usuarios,tutorial,articulos,cabecera,archivo,arbol);
     GloveHttpServer serv(8080, "", 2048);
     serv.compression("gzip, deflate");
@@ -822,6 +864,12 @@ int main(int argc, char **argv)
     serv.addRest("/ObtenerTienda/", 0,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getTienda, &API, ph::_1, ph::_2));
+    serv.addRest("/Graficar/$estructura/$nick/$password", 1,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::getGraficar, &API, ph::_1, ph::_2));
+    serv.addRest("/Comprar/$nick/$password/$id", 1,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::postCompra, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
     while (1)
     {

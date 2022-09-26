@@ -2,9 +2,9 @@
 #define ARBOLB_H
 
 #include <algorithm>
-
-#include "NodoB.h"
 #include "ListaCircularUsuarios.cpp"
+#include "NodoB.h"
+
 
 class ArbolB {
 public:

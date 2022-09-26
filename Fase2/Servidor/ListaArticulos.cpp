@@ -136,3 +136,16 @@ string ListaArticulos::getArticulosComoJson()
     json += "]";
     return json;
 }
+
+nodoArticulos* ListaArticulos::getArticulo(string id)
+{
+    nodoArticulos*aux = new nodoArticulos();
+    aux = Inicio;
+    while(aux != NULL) {
+        if (aux->id == id) {
+            return aux;
+        }
+        aux = aux->sig;
+    }
+    return NULL;
+}
