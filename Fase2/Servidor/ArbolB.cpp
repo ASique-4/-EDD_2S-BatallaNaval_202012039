@@ -5,7 +5,10 @@
 #include <sstream>
 #include <iostream>
 
+
 void ArbolB::insertar(nodoUsuarios* usuario) {
+    usuario->id = tamanio;
+    tamanio++;
     NodoB* nodo = new NodoB(usuario);
     if (raiz == NULL) {
         raiz = nodo;
@@ -339,5 +342,115 @@ void ArbolB::agregarTodosLosUsuarios(ListaUsuarios usuarios){
         if(aux == usuarios.primero){
             break;
         }
+    }
+}
+
+bool ArbolB::login(string nick,string password){
+    NodoB*aux = raiz;
+    while(aux != NULL){
+        if(aux->usuario->nick == nick){
+            if(aux->usuario->password == password){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            if(nick < aux->usuario->nick){
+                aux = aux->izquierda;
+            }else{
+                aux = aux->derecha;
+            }
+        }
+    }
+    return false;
+}
+
+NodoB * ArbolB::buscar(int id){
+    NodoB*aux = raiz;
+    while(aux != NULL){
+        if(aux->usuario->id == id){
+            return aux;
+        }else{
+            if(id < aux->usuario->id){
+                aux = aux->izquierda;
+            }else{
+                aux = aux->derecha;
+            }
+        }
+    }
+    return NULL;
+}
+
+void ArbolB::eliminar(int id){
+    NodoB*aux = raiz;
+    NodoB*padre = NULL;
+    while(aux != NULL){
+        if(aux->usuario->id == id){
+            if(aux->izquierda == NULL && aux->derecha == NULL){
+                if(padre == NULL){
+                    raiz = NULL;
+                }else{
+                    if(padre->izquierda == aux){
+                        padre->izquierda = NULL;
+                    }else{
+                        padre->derecha = NULL;
+                    }
+                }
+            }else if(aux->izquierda == NULL && aux->derecha != NULL){
+                if(padre == NULL){
+                    raiz = aux->derecha;
+                }else{
+                    if(padre->izquierda == aux){
+                        padre->izquierda = aux->derecha;
+                    }else{
+                        padre->derecha = aux->derecha;
+                    }
+                }
+            }else if(aux->izquierda != NULL && aux->derecha == NULL){
+                if(padre == NULL){
+                    raiz = aux->izquierda;
+                }else{
+                    if(padre->izquierda == aux){
+                        padre->izquierda = aux->izquierda;
+                    }else{
+                        padre->derecha = aux->izquierda;
+                    }
+                }
+            }else{
+                NodoB*aux2 = aux->izquierda;
+                NodoB*padre2 = aux;
+                while(aux2->derecha != NULL){
+                    padre2 = aux2;
+                    aux2 = aux2->derecha;
+                }
+                aux->usuario = aux2->usuario;
+                if(padre2->izquierda == aux2){
+                    padre2->izquierda = aux2->izquierda;
+                }else{
+                    padre2->derecha = aux2->izquierda;
+                }
+            }
+            break;
+        }else if(aux->usuario->id > id){
+            padre = aux;
+            aux = aux->izquierda;
+        }else{
+            padre = aux;
+            aux = aux->derecha;
+        }
+    }
+}
+
+void ArbolB::insertarCompra(nodoUsuarios*usuario, nodoArticulos*articulo, int cantidad){
+    NodoB*aux = buscar(usuario->id);
+    if(aux != NULL){
+        aux->usuario->compras = insert(aux->usuario->compras, articulo, cantidad);
+    }
+}
+
+void ArbolB::mostrarVentas(nodoUsuarios*usuario){
+    NodoB*aux = buscar(usuario->id);
+    if(aux != NULL){
+        printTree(aux->usuario->compras,0);
     }
 }

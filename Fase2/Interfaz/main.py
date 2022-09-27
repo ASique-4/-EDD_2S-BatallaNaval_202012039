@@ -12,7 +12,8 @@ usuario_global = {
     'nick': '',
     'password': '',
     'monedas': '1000',
-    'edad': ''
+    'edad': '',
+    'id': ''
 }
 
 
@@ -485,6 +486,7 @@ def agregar_compra(product_id,cantidad):
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
         print(data)
+        usuario_global['monedas'] = data['monedas']
         return data['status']
     except:
         sg.popup('No se pudo realizar la compra', title='Error')
@@ -539,6 +541,7 @@ def verify_login( nick,  password):
         usuario_global['password'] = data['usuario'][0]['password']
         usuario_global['monedas'] = data['usuario'][0]['monedas']
         usuario_global['edad'] = data['usuario'][0]['edad']
+        usuario_global['id'] = data['usuario'][0]['id']
         return (data['status'])
 
     except:
@@ -595,7 +598,7 @@ def menu():
         if event == 'Eliminar Usuario':
             
             if sg.popup_yes_no('¿Estas seguro de eliminar tu usuario?'):
-                print(eliminar_usuario(usuario_global['nick'], usuario_global['password']))
+                print(eliminar_usuario(usuario_global['id']))
                 print('Eliminar usuario')
         if event == 'Iniciar Juego':
             window.hide()
@@ -609,11 +612,10 @@ def menu():
     return event
 
 #Eliminar Usuario
-def eliminar_usuario(nick, password):
+def eliminar_usuario(id):
     try:
         progress_bar()
-        print(nick, password)
-        res = requests.get(f'{base_url}EliminarUsuario/' + nick + '/' + password + '/')
+        res = requests.get(f'{base_url}EliminarUsuario/' + id + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
         print(data)
@@ -673,19 +675,19 @@ def editar(nick, password, edad):
     try:
         progress_bar()
         if(nick != "" & password == "" & edad == ""):
-            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + usuario_global['password'] + '/' + usuario_global['edad'] + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + nick + '/' + usuario_global['password'] + '/' + usuario_global['edad'] + '/')
         elif (nick == "" & password != "" & edad == ""):
-            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['nick'] + '/' + password + '/' + usuario_global['edad'] + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + usuario_global['nick'] + '/' + password + '/' + usuario_global['edad'] + '/')
         elif (nick == "" & password == "" & edad != ""):
-            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['nick'] + '/' + usuario_global['password'] + '/' + edad + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + usuario_global['nick'] + '/' + usuario_global['password'] + '/' + edad + '/')
         elif (nick == "" & password != "" & edad != ""):
-            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['nick'] + '/' + password + '/' + edad + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + usuario_global['nick'] + '/' + password + '/' + edad + '/')
         elif (nick != "" & password == "" & edad != ""):
-            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + usuario_global['password'] + '/' + edad + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + nick + '/' + usuario_global['password'] + '/' + edad + '/')
         elif (nick != "" & password != "" & edad == ""):
-            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + password + '/' + usuario_global['edad'] + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + nick + '/' + password + '/' + usuario_global['edad'] + '/')
         else:
-            res = requests.get(f'{base_url}ModificarUsuario/' + nick + '/' + password + '/' + edad + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + nick + '/' + password + '/' + edad + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
         return (data['status'])
@@ -751,7 +753,7 @@ def menu_admin():
         if event == 'Editar Usuario':
             editar_usuario()
         if event == 'Eliminar Usuario':
-            eliminar_usuario(usuario_global['nick'],usuario_global['password'])
+            eliminar_usuario(usuario_global['id'])
         if event == 'Reportes':
             window.hide()
             menu_reportes()
@@ -793,7 +795,7 @@ def menu_reportes():
 #Mostrar reportes
 def mostrar_reportes(reporte):
     try:
-        res = requests.get(f'{base_url}Graficar/' + reporte + '/' + usuario_global['nick'] + '/' + usuario_global['passwors'] + '/')
+        res = requests.get(f'{base_url}Graficar/' + reporte + '/' + usuario_global['id'] + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
         if data['status'] == 'ok':

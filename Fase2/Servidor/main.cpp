@@ -447,11 +447,17 @@ public:
 
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != ""){
-            if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
+            if(serverArbol.login(request.special["nick"], request.special["password"])){
                 response << "{"
                         << "\"status\": \"ok\","
 
-                 << serverUsuarios.getUsuarioComoJson(request.special["nick"],encriptarSHA256(request.special["password"]))
+                 << "\"usuario\": ["
+                        << jsonkv("nick", serverArbol.buscar(stringtoint(request.special["id"]))->usuario->nick) << ","
+                        << jsonkv("password", serverArbol.buscar(stringtoint(request.special["id"]))->usuario->password) << ","
+                        << jsonkv("monedas", to_string(serverArbol.buscar(stringtoint(request.special["id"]))->usuario->monedas))   << ","
+                        << jsonkv("edad", to_string(serverArbol.buscar(stringtoint(request.special["id"]))->usuario->edad))  << ","
+                        << jsonkv("id", to_string(serverArbol.buscar(stringtoint(request.special["id"]))->usuario->id))
+                        << "]"
                  << "}";
             }else{
                 response << "{"
@@ -465,8 +471,15 @@ public:
     {
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != "" && request.special["edad"] != ""){
-            if(serverUsuarios.BuscarNick(request.special["nick"]) == false){
-                serverUsuarios.InsertarFinal(request.special["nick"],encriptarSHA256(request.special["password"]),0,stringtoint(request.special["edad"]));
+            if(serverArbol.buscar(stringtoint(request.special["id"])) == NULL){
+                nodoUsuarios *nuevo = new nodoUsuarios();
+                nuevo->nick = request.special["nick"];
+                nuevo->password = encriptarSHA256(request.special["password"]);
+                nuevo->monedas = 0;
+                nuevo->edad = stringtoint(request.special["edad"]);
+
+                serverArbol.insertar(nuevo);
+                //serverUsuarios.InsertarFinal(request.special["nick"],encriptarSHA256(request.special["password"]),0,stringtoint(request.special["edad"]));
                 response << "{"
                         << jsonkv("nick", request.special["nick"])
                         << "}";
@@ -481,9 +494,11 @@ public:
     void postEliminarUsuario(GloveHttpRequest &request, GloveHttpResponse &response)
     {
         response.contentType("text/json");
-        if(request.special["nick"] != "" && request.special["password"] != ""){
-            if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
-                serverUsuarios.EliminarUsuario(serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"])));
+        if(request.special["id"] != ""){
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+                serverArbol.eliminar(stringtoint(request.special["id"]));
+                //serverUsuarios.EliminarUsuario(serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"])));
+                
                 response << "{"
                         << jsonkv("nick", request.special["nick"])
                         << jsonkv("status", "ok")
@@ -499,20 +514,37 @@ public:
     void postModificarUsuario(GloveHttpRequest &request, GloveHttpResponse &response)
     {
         response.contentType("text/json");
-        if(request.special["nick"] != "" && request.special["password"] != ""){
-            if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
-                nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"]));
-                tmpUsuario->edad = stringtoint(request.special["newEdad"]);
-                tmpUsuario->nick = (request.special["newNick"]);
-                tmpUsuario->password = encriptarSHA256(request.special["newPassword"]);
+        if(request.special["id"] != ""){
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+
+                nodoUsuarios* aux = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                aux->nick = request.special["newNick"];
+                aux->password = encriptarSHA256(request.special["newPassword"]);
+                aux->edad = stringtoint(request.special["newEdad"]);
+
                 response << "{"
                         << jsonkv("status", "ok")
                         << "usuario: ["
-                        << jsonkv("nick", tmpUsuario->nick) << ","
-                        << jsonkv("password", encriptarSHA256(tmpUsuario->password)) << ","
-                        << jsonkv("edad", to_string(tmpUsuario->edad))
+                        << jsonkv("nick", aux->nick) << ","
+                        << jsonkv("password", encriptarSHA256(aux->password)) << ","
+                        << jsonkv("edad", to_string(aux->edad)) << ","
+                        << jsonkv("id", to_string(aux->id)) << ","
+                        << jsonkv("monedas", to_string(aux->monedas))
                         << "]"
                         << "}";
+
+                // nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"]));
+                // tmpUsuario->edad = stringtoint(request.special["newEdad"]);
+                // tmpUsuario->nick = (request.special["newNick"]);
+                // tmpUsuario->password = encriptarSHA256(request.special["newPassword"]);
+                // response << "{"
+                //         << jsonkv("status", "ok")
+                //         << "usuario: ["
+                //         << jsonkv("nick", tmpUsuario->nick) << ","
+                //         << jsonkv("password", encriptarSHA256(tmpUsuario->password)) << ","
+                //         << jsonkv("edad", to_string(tmpUsuario->edad))
+                //         << "]"
+                //         << "}";
             }else{
                 response << "{"
                         << jsonkv("error", "El usuario no existe")
@@ -531,14 +563,17 @@ public:
     void postCompra(GloveHttpRequest &request, GloveHttpResponse &response){
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != "" && request.special["id"] != ""){
-            if(serverUsuarios.BuscarNick(request.special["nick"]) == true){
-                nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"]));
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+                nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
                 nodoArticulos *tmpArticulo = serverArticulos.getArticulo(request.special["id"]);
                 if(tmpArticulo != NULL){
                     int tmp = stringtoint(request.special["cantidad"]);
-                    serverUsuarios.InsertarCompra(tmpUsuario,tmpArticulo,tmp);
+                    serverArbol.insertarCompra(tmpUsuario, tmpArticulo, tmp);
+                    serverArbol.buscar(stringtoint(request.special["id"]))->usuario->monedas -= tmpArticulo->precio * tmp;
                     response << "{"
-                            << jsonkv("status", "ok")
+                            << jsonkv("status", "ok")   << ","
+                            << jsonkv("nick", tmpUsuario->nick) << ","
+                            << jsonkv("monedas", to_string(tmpUsuario->monedas))
                             << "}";
                 }else{
                     response << "{"
@@ -560,9 +595,9 @@ public:
                     << jsonkv("status", "ok") << ","
                     << jsonkv("url", "Fase2/Servidor/Pruebas.png")
                     << "}";
-        } else if (request.special["estructura"] == "compras" and request.special["nick"] != "" and request.special["password"] != ""){
+        } else if (request.special["estructura"] == "compras" and request.special["id"] != ""){
             cout << "Graficando compras de " << request.special["nick"] << endl;
-            serverUsuarios.MostrarCompras(serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"])));
+            serverArbol.mostrarVentas(serverArbol.buscar(stringtoint(request.special["id"]))->usuario);
             response << "{"
                     << jsonkv("status", "ok") << ","
                     << jsonkv("url", "Fase2/Servidor/Compras.png")
@@ -859,25 +894,25 @@ int main(int argc, char **argv)
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getUsuarios, &API, ph::_1, ph::_2),
                 std::bind(&Servidor::postRuta, &API, ph::_1, ph::_2));
-    serv.addRest("/ObtenerUsuario/$nick/$password/", 2,
+    serv.addRest("/ObtenerUsuario/$nick/$password", 2,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getUsuario, &API, ph::_1, ph::_2));  
-    serv.addRest("/EliminarUsuario/$nick/$password/", 2,
+    serv.addRest("/EliminarUsuario/$id", 2,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postEliminarUsuario, &API, ph::_1, ph::_2));  
     serv.addRest("/CrearUsuario/$nick/$password/$edad/", 3,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postCrearUsuario, &API, ph::_1, ph::_2));
-    serv.addRest("/ModificarUsuario/$nick/$password/$newNick/$newPassword/$newEdad", 3,
+    serv.addRest("/ModificarUsuario/$id/$newNick/$newPassword/$newEdad", 3,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postModificarUsuario, &API, ph::_1, ph::_2));
     serv.addRest("/ObtenerTienda/", 0,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getTienda, &API, ph::_1, ph::_2));
-    serv.addRest("/Graficar/$estructura/$nick/$password", 1,
+    serv.addRest("/Graficar/$estructura/$id", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getGraficar, &API, ph::_1, ph::_2));
-    serv.addRest("/Comprar/$nick/$password/$id/$cantidad", 1,
+    serv.addRest("/Comprar/$nick/$password/$id/$cantidad/$total", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postCompra, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
