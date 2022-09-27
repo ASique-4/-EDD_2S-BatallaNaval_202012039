@@ -244,8 +244,10 @@ void ArbolB::Grafo() {
     //------->generar png
     system(("dot -Tpng ArbolUsuarios.dot -o  ArbolUsuarios.png"));
 
-    //------>abrir archivo
-    system(("ArbolUsuarios.png"));
+    //------->generar pdf
+    system(("dot -Tpdf ArbolUsuarios.dot -o  ArbolUsuarios.pdf"));
+
+    
 
 }
 
@@ -345,17 +347,13 @@ void ArbolB::agregarTodosLosUsuarios(ListaUsuarios usuarios){
     }
 }
 
-bool ArbolB::login(string nick,string password){
+bool ArbolB::login(string nick,string password, int id){
     NodoB*aux = raiz;
     while(aux != NULL){
-        if(aux->usuario->nick == nick){
-            if(aux->usuario->password == password){
-                return true;
-            }else{
-                return false;
-            }
+        if(aux->usuario->id == id and aux->usuario->nick == nick and aux->usuario->password == password){
+            return true;
         }else{
-            if(nick < aux->usuario->nick){
+            if(id < aux->usuario->id){
                 aux = aux->izquierda;
             }else{
                 aux = aux->derecha;

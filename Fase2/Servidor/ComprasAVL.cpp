@@ -166,6 +166,9 @@ void printTree(node *root, int space) {
     archivo << dot;
     archivo.close();
     system("dot -Tpng Compras.dot -o Compras.png");
+
+    //------->generar pdf
+    system("dot -Tpdf Compras.dot -o Compras.pdf");
 }
 
 

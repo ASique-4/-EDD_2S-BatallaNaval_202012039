@@ -84,7 +84,6 @@ void ListaUsuarios::Imprimir() {
 string ListaUsuarios::getDatosComoJson() {
     nodoUsuarios*aux = primero;
     string datos = "";
-    datos += "{";
     datos += "\"usuarios\":[";
     while (aux != NULL) {
         datos += "{";
@@ -103,7 +102,6 @@ string ListaUsuarios::getDatosComoJson() {
     //remover la ultima coma
     datos = datos.substr(0, datos.length() - 1);
     datos += "]";
-    datos += "}";
     return datos;
 }
 

@@ -16,11 +16,13 @@ usuario_global = {
     'id': ''
 }
 
+usuarios = []
+
 
 
 #Crear tablero
 def crear_tablero(tamanio :int):
-    sg.theme('DarkTeal2')
+    sg.theme('DarkTeal4')
     layout = []
     botones = []
     #Numero de barcos
@@ -53,9 +55,6 @@ def crear_tablero(tamanio :int):
         matriz.graficarNeato("Tablero")
 
         #Colocar barcos
-        img = Image.open('matriz_Tablero.png')    
-        bio = io.BytesIO()
-        img.save(bio, format="PNG")
         window =  sg.Window('Menu', layout, element_justification='c')
         while True:
             event, values = window.read()
@@ -64,7 +63,7 @@ def crear_tablero(tamanio :int):
             else:
                 for i in range(1 , len(layout)):
                     for j in range(len(layout) - 1):
-                        if(layout[i][j].ButtonText == event and layout[i][j].ButtonColor[1] == '#394a6d'):
+                        if(layout[i][j].ButtonText == event and layout[i][j].ButtonColor[1] == '#6c7b95'):
                             if(colorear_botones(values[0], int(i), int(j), matriz, layout)):
                                 while True:
                                     event2, values = window.read()
@@ -236,35 +235,35 @@ def limpiar_botones(layout):
     for i in range(1 , len(layout)):
         for j in range(len(layout) - 1):
             if(layout[i][j].ButtonColor[1] == '#EEF1FF'):
-                layout[i][j].update(button_color=('#c0ffb3', '#394a6d'))
+                layout[i][j].update(button_color=('#FFFFFF', '#6c7b95'))
 
 #No está pintado
 def no_pintado(x1 :int, y1 :int, x2 :int, y2 :int, layout):
         if(x1 == x2):
             if(y1 < y2):
                 for i in range(y1, y2 + 1):
-                    if(layout[x1][i].ButtonColor[1] != '#394a6d'):
+                    if(layout[x1][i].ButtonColor[1] != '#6c7b95'):
                         return False
             elif(y1 > y2):
                 for i in range(y2, y1 - 1):
-                    if(layout[x1][i].ButtonColor[1] != '#394a6d'):
+                    if(layout[x1][i].ButtonColor[1] != '#6c7b95'):
                         return False
             elif(y1 == y2):
-                if(layout[x1][y1].ButtonColor[1] != '#394a6d'):
+                if(layout[x1][y1].ButtonColor[1] != '#6c7b95'):
                     return False
         elif(y1 == y2):
             if(x1 < x2):
                 for i in range(x1, x2 + 1):
-                    if(layout[i][y1].ButtonColor[1] != '#394a6d'):
+                    if(layout[i][y1].ButtonColor[1] != '#6c7b95'):
                         return False
             elif(x1 > x2):
                 j = x1
                 for i in range(x2, x1 + 1):
-                    if(layout[j][y1].ButtonColor[1] != '#394a6d'):
+                    if(layout[j][y1].ButtonColor[1] != '#6c7b95'):
                         return False
                     j -= 1
             elif(x1 == x2):
-                if(layout[x1][y1].ButtonColor[1] != '#394a6d'):
+                if(layout[x1][y1].ButtonColor[1] != '#6c7b95'):
                     return False
         return True
 
@@ -402,7 +401,7 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
     elif(barco == "Buque"):
         try:
-            if(matriz.getNodo(x,y) != None and layout[x][y].ButtonColor[1] == '#394a6d'):
+            if(matriz.getNodo(x,y) != None and layout[x][y].ButtonColor[1] == '#6c7b95'):
                 matriz.getNodo(x, y).caracter = "B"
                 layout[x][y].update(button_color=('black', '#EEF1FF'))
                 pintado = True
@@ -416,7 +415,7 @@ def iniciar_juego():
             [sg.Button('Crear Tablero',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
     ]
-    window = sg.Window('Iniciar juego', layout, size=(400, 300), element_justification='center')
+    window = sg.Window('Iniciar juego', layout, size=(300, 250), element_justification='center')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Regresar al menu':
@@ -533,7 +532,10 @@ def ruta_relativa(ruta):
 def verify_login( nick,  password):
     try:
         progress_bar()
-        res = requests.get(f'{base_url}ObtenerUsuario/' + nick + '/' + password + '/')
+        print(nick)
+        print(password)
+        print(f'{base_url}ObtenerUsuario/' + nick + '/' + password + '/' + regresar_id_usuario(nick) + '/')
+        res = requests.get(f'{base_url}ObtenerUsuario/' + nick + '/' + password + '/' + regresar_id_usuario(nick) + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
         print(data)
@@ -574,6 +576,7 @@ def menu():
                 [sg.Button('Eliminar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Juego', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Tienda', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Reportes', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
     window = sg.Window('Menu', layout, size=(500, 550), element_justification='c')
     while True:
@@ -608,6 +611,8 @@ def menu():
             window.hide()
             tienda()
             window.un_hide()
+        if event == 'Reportes':
+            menu_reportes()
     window.close()
     return event
 
@@ -641,14 +646,28 @@ def registrar_usuario():
     window.close()
     return event
 
+#Usuario existe
+def usuario_existe(nick):
+    for i in usuarios:
+        if i[0] == nick:
+            return True
+    return False
+
+#Regresar id usuario
+def regresar_id_usuario(nick):
+    for i in usuarios:
+        if i[0] == nick:
+            return i[1]
+    return ''
 #Registrar
 def registrar(nick, password, edad):
     try:
         progress_bar()
-        res = requests.get(f'{base_url}CrearUsuario/' + nick + '/' + password + '/' + edad + '/')
-        data = res.text#convertimos la respuesta en dict
-        data = json.loads(data)
-        return (data['status'])
+        if (usuario_existe(nick) == False):
+            res = requests.get(f'{base_url}CrearUsuario/' + nick + '/' + password + '/' + edad + '/')
+            data = res.text#convertimos la respuesta en dict
+            data = json.loads(data)
+            return (data['status'])
     except:
         return "error"
 
@@ -699,7 +718,7 @@ def cargar_datos():
     layout = [[sg.Text('Cargar Datos',size = (10,0), font="Arial 30 bold", justification='center')],
                 [sg.Button('Cargar Archivo', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
+    window = sg.Window('Menu', layout, size=(300, 250), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
@@ -719,9 +738,15 @@ def cargar_archivo(archivo):
         res = requests.get(f'{base_url}Cargar/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
+
+        for row in data['usuarios']:
+            usuarios.append([row['nick'],row['id']])
+
         return (data['status'])
     except:
         return "error"
+
+
 
 #Menu Admin
 def menu_admin():
@@ -756,7 +781,7 @@ def menu_admin():
             eliminar_usuario(usuario_global['id'])
         if event == 'Reportes':
             window.hide()
-            menu_reportes()
+            menu_reportes_admin()
             window.un_hide()
         if event == 'Iniciar Juego':
             window.hide()
@@ -772,11 +797,27 @@ def menu_admin():
 #Menu Reportes
 def menu_reportes():
     layout = [[sg.Text('Reportes',size = (10,0), font="Arial 30 bold", justification='center')],
-                [sg.Button('Reportes de usuarios', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Reportes de articulos', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes de compras', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
+    window = sg.Window('Menu', layout, size=(300, 250), element_justification='c')
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED or event == 'Salir':
+            break
+        if event == 'Reportes de compras':
+            window.hide()
+            mostrar_reportes('compras')
+            window.un_hide()
+    window.close()
+    return event
+
+#Menu Reportes Admin
+def menu_reportes_admin():
+    layout = [[sg.Text('Reportes',size = (10,0), font="Arial 30 bold", justification='center')],
+                [sg.Button('Reportes de usuarios', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Reportes de compras', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
+    window = sg.Window('Menu', layout, size=(300, 250), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
@@ -806,30 +847,8 @@ def mostrar_reportes(reporte):
     except:
         sg.popup('Error al generar el reporte')
 
-#Menu Reportes de usuarios
-def menu_reportes_usuarios():
-    layout = [[sg.Text('Reportes de usuarios',size = (10,0), font="Arial 30 bold", justification='center')],
-                [sg.Button('Ordenar de manera ascendente', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Ordenar de manera descendente', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
-    event, values = window.read()
-    window.close()
-    return event
-
-#Menu Reportes de articulos
-def menu_reportes_articulos():
-    layout = [[sg.Text('Reportes de articulos',size = (10,0), font="Arial 30 bold", justification='center')],
-                [sg.Button('Ordenar de manera ascendente', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Ordenar de manera descendente', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
-    event, values = window.read()
-    window.close()
-    return event
 
 def login():
-    sg.theme('LightBlue4')
 
     letter = "Arial 30 bold"
     letter_2 = "Arial 12 bold"
@@ -859,8 +878,34 @@ def login():
             sg.PopupError('Usuario o contraseña incorrectos', title='Error')
             
 
+#Menu principal
+def menuPrincipal():
+    sg.theme('DarkTeal4')
 
+    layout = [[sg.Text('Menu',size = (10,0), font="Arial 30 bold", justification='center')],
+                [sg.Button('Cargar datos', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Crear Usuarios', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Iniciar Sesion', size = (20,0), font="Arial 15 bold")]
+                ]
+    window = sg.Window('Menu', layout, size=(300, 250), element_justification='c')
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            break
+        if event == 'Cargar datos':
+            window.hide()
+            cargar_datos()
+            window.un_hide()
+        if event == 'Crear Usuarios':
+            window.hide()
+            registrar_usuario()
+            window.un_hide()
+        if event == 'Iniciar Sesion':
+            window.close()
+            login()
+    window.close()
 
 #login()
 #crear_tablero(11)
-tienda()
+#tienda()
+menuPrincipal()

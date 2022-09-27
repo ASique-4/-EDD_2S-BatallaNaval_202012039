@@ -18,7 +18,7 @@ public:
 
     void eliminar(int id);
     void insertar(nodoUsuarios* usuario);
-    bool login(string nick, string password);
+    bool login(string nick, string password, int id);
     pair<NodoB*, pair<bool, bool>> insertarCrearRama(NodoB* nodo, NodoB* rama);
     NodoB* dividir(NodoB* rama);
     pair<NodoB*, bool>  insertarEnRama(NodoB* primero, NodoB* nuevo);

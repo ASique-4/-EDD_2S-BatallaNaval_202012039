@@ -424,7 +424,12 @@ public:
             ifs3.close();
 
             cout << "Se ha cargado el archivo correctamente" << endl;
-            response << serverUsuarios.getDatosComoJson();
+            response << "{"
+                        << "\"status\": \"ok\","
+                        << "\"mensaje\": \"Se ha cargado el archivo correctamente\","
+                        << serverUsuarios.getDatosComoJson()
+                        << "}";
+             
             
         }else{
             response << "{"
@@ -446,18 +451,21 @@ public:
     void getUsuario(GloveHttpRequest &request, GloveHttpResponse &response){
 
         response.contentType("text/json");
-        if(request.special["nick"] != "" && request.special["password"] != ""){
-            if(serverArbol.login(request.special["nick"], request.special["password"])){
+        if(request.special["nick"] != "" && request.special["password"] != "" && request.special["id"] != ""){
+            cout << "nick: " << request.special["nick"] << endl;
+            cout << "password: " << request.special["password"] << endl;
+            cout << "id: " << request.special["id"] << endl;
+            if(serverArbol.login(request.special["nick"], encriptarSHA256(request.special["password"]), stringtoint(request.special["id"]))){
                 response << "{"
                         << "\"status\": \"ok\","
 
-                 << "\"usuario\": ["
+                 << "\"usuario\": [{"
                         << jsonkv("nick", serverArbol.buscar(stringtoint(request.special["id"]))->usuario->nick) << ","
                         << jsonkv("password", serverArbol.buscar(stringtoint(request.special["id"]))->usuario->password) << ","
                         << jsonkv("monedas", to_string(serverArbol.buscar(stringtoint(request.special["id"]))->usuario->monedas))   << ","
                         << jsonkv("edad", to_string(serverArbol.buscar(stringtoint(request.special["id"]))->usuario->edad))  << ","
                         << jsonkv("id", to_string(serverArbol.buscar(stringtoint(request.special["id"]))->usuario->id))
-                        << "]"
+                        << "}]"
                  << "}";
             }else{
                 response << "{"
@@ -471,23 +479,18 @@ public:
     {
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != "" && request.special["edad"] != ""){
-            if(serverArbol.buscar(stringtoint(request.special["id"])) == NULL){
-                nodoUsuarios *nuevo = new nodoUsuarios();
-                nuevo->nick = request.special["nick"];
-                nuevo->password = encriptarSHA256(request.special["password"]);
-                nuevo->monedas = 0;
-                nuevo->edad = stringtoint(request.special["edad"]);
+            nodoUsuarios *nuevo = new nodoUsuarios();
+            nuevo->nick = request.special["nick"];
+            nuevo->password = encriptarSHA256(request.special["password"]);
+            nuevo->monedas = 0;
+            nuevo->edad = stringtoint(request.special["edad"]);
 
-                serverArbol.insertar(nuevo);
-                //serverUsuarios.InsertarFinal(request.special["nick"],encriptarSHA256(request.special["password"]),0,stringtoint(request.special["edad"]));
-                response << "{"
-                        << jsonkv("nick", request.special["nick"])
-                        << "}";
-            }else{
-                response << "{"
-                        << jsonkv("error", "El usuario ya existe")
-                        << "}";
-            }
+            serverArbol.insertar(nuevo);
+            //serverUsuarios.InsertarFinal(request.special["nick"],encriptarSHA256(request.special["password"]),0,stringtoint(request.special["edad"]));
+            response << "{"
+                    << jsonkv("nick", request.special["nick"])
+                    << "}";
+
         }
     }
 
@@ -593,14 +596,14 @@ public:
             serverArbol.Grafo();
             response << "{"
                     << jsonkv("status", "ok") << ","
-                    << jsonkv("url", "Fase2/Servidor/Pruebas.png")
+                    << jsonkv("url", "/home/angel/Desktop/Dev/Github/EDD/Proyecto1/Fase2/Servidor/ArbolUsuarios.pdf")
                     << "}";
         } else if (request.special["estructura"] == "compras" and request.special["id"] != ""){
             cout << "Graficando compras de " << request.special["nick"] << endl;
             serverArbol.mostrarVentas(serverArbol.buscar(stringtoint(request.special["id"]))->usuario);
             response << "{"
                     << jsonkv("status", "ok") << ","
-                    << jsonkv("url", "Fase2/Servidor/Compras.png")
+                    << jsonkv("url", "/home/angel/Desktop/Dev/Github/EDD/Proyecto1/Fase2/Servidor/Compras.pdf")
                     << "}";
         } else {
             response.contentType("text/json");
@@ -884,8 +887,14 @@ int main(int argc, char **argv)
     ArbolB arbol;
     string archivo = "";
     //menu(usuarios, articulos, tutorial, cabecera);
-    usuarios.InsertarFinal("EDD", encriptarSHA256("edd123"), 0, 50);
-    cout << (encriptarSHA256("edd123")) << endl;
+    nodoUsuarios*admin = new nodoUsuarios();
+    admin->nick = "EDD";
+    admin->password = encriptarSHA256("edd123");
+    admin->edad = 20;
+    admin->monedas = 0;
+
+    arbol.insertar(admin);
+
     Servidor API(usuarios,tutorial,articulos,cabecera,archivo,arbol);
     GloveHttpServer serv(8080, "", 2048);
     serv.compression("gzip, deflate");
@@ -894,7 +903,7 @@ int main(int argc, char **argv)
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getUsuarios, &API, ph::_1, ph::_2),
                 std::bind(&Servidor::postRuta, &API, ph::_1, ph::_2));
-    serv.addRest("/ObtenerUsuario/$nick/$password", 2,
+    serv.addRest("/ObtenerUsuario/$nick/$password/$id", 3,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getUsuario, &API, ph::_1, ph::_2));  
     serv.addRest("/EliminarUsuario/$id", 2,
