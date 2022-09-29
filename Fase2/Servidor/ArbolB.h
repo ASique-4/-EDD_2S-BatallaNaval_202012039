@@ -32,6 +32,7 @@ public:
     NodoB *buscar(int id);
     void insertarCompra(nodoUsuarios* usuario, nodoArticulos* articulo, int cantidad);
     void mostrarVentas(nodoUsuarios* usuario);
+    string getDatosComoJson();
 private:
 
 };

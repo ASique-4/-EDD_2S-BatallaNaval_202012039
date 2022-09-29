@@ -350,14 +350,14 @@ void ArbolB::agregarTodosLosUsuarios(ListaUsuarios usuarios){
 bool ArbolB::login(string nick,string password, int id){
     NodoB*aux = raiz;
     while(aux != NULL){
-        if(aux->usuario->id == id and aux->usuario->nick == nick and aux->usuario->password == password){
+        if(aux->usuario->nick == nick && aux->usuario->password == password && aux->usuario->id == id){
             return true;
-        }else{
-            if(id < aux->usuario->id){
+        }else if(id < aux->usuario->id){
                 aux = aux->izquierda;
-            }else{
-                aux = aux->derecha;
-            }
+        }else if(aux->siguiente != NULL){
+            aux = aux->siguiente;
+        }else{
+            aux = aux->derecha;
         }
     }
     return false;
@@ -368,12 +368,12 @@ NodoB * ArbolB::buscar(int id){
     while(aux != NULL){
         if(aux->usuario->id == id){
             return aux;
-        }else{
-            if(id < aux->usuario->id){
+        }else if(id < aux->usuario->id){
                 aux = aux->izquierda;
-            }else{
-                aux = aux->derecha;
-            }
+        }else if(aux->siguiente != NULL){
+            aux = aux->siguiente;
+        }else{
+            aux = aux->derecha;
         }
     }
     return NULL;
@@ -451,4 +451,25 @@ void ArbolB::mostrarVentas(nodoUsuarios*usuario){
     if(aux != NULL){
         printTree(aux->usuario->compras,0);
     }
+}
+
+string ArbolB::getDatosComoJson(){
+    string json = "\"usuarios\":[";
+    NodoB*aux = raiz;
+    while(aux != NULL){
+        json += "{";
+        json += "\"nick\": \"" + aux->usuario->nick + "\",";
+        json += "\"password\": \"" + aux->usuario->password + "\",";
+        json += "\"id\": \"" + to_string(aux->usuario->id) + "\",";
+        json += "\"monedas\": \"" + to_string(aux->usuario->monedas) + "\",";
+        json += "\"edad\": \"" + to_string(aux->usuario->edad) + "\"";
+        json += "}";
+        if(aux->siguiente != NULL){
+            json += ",";
+        }
+        aux = aux->siguiente;
+    }
+    json += "]";
+    return json;
+
 }

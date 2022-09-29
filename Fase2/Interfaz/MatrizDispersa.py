@@ -179,9 +179,9 @@ class MatrizDispersa():
 
     def graficarNeato(self, nombre):
         contenido = '''digraph G{
-    node[shape=box, width=1, height=1, fontname="Arial", fillcolor="white", style=filled]
-    edge[style = "invis" arrowhead="none" arrowtail="none" width="300" height="300"]
-    node[label = "0,0" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
+    node[shape=box, width=0.7, height=0.7, fontname="Arial", fillcolor="white", style=filled]
+    edge[style = "bold"]
+    node[label = "MATRIZ" fillcolor="darkolivegreen1" pos = "-1,1!"]raiz;'''
         contenido += '''label = "{}" \nfontname="Arial Black" \nfontsize="25pt" \n
                     \n'''.format('MATRIZ DISPERSA')
 
@@ -229,13 +229,25 @@ class MatrizDispersa():
                     if pivotey.id == pivote_celda.coordenadaY: break
                     posy_celda += 1
                     pivotey = pivotey.siguiente
-                if pivote_celda.caracter == '*':
-                    contenido += '\n\tnode[label="*" fillcolor="black" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
-                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                if pivote_celda.caracter == 'P':
+                    contenido += '\n\tnode[label="({},{})P" fillcolor="#C98474" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        pivote_celda.coordenadaX, pivote_celda.coordenadaY,posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'S':
+                    contenido += '\n\tnode[label="({},{})S" fillcolor="#25316D" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        pivote_celda.coordenadaX, pivote_celda.coordenadaY,posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'D':
+                    contenido += '\n\tnode[label="({},{})D" fillcolor="#A2B5BB" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        pivote_celda.coordenadaX, pivote_celda.coordenadaY,posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'B':
+                    contenido += '\n\tnode[label="({},{})B" fillcolor="#6FEDD6" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        pivote_celda.coordenadaX, pivote_celda.coordenadaY,posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
                     )
                 else:
                     contenido += '\n\tnode[label=" " fillcolor="white" pos="{},-{}!" shape=box]i{}_{}'.format( # pos="{},-{}!"
-                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                        pivote_celda.coordenadaX, pivote_celda.coordenadaY, pivote_celda.coordenadaX, pivote_celda.coordenadaY
                     ) 
                 pivote_celda = pivote_celda.derecha
             

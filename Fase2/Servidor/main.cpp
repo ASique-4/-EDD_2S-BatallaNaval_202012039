@@ -17,7 +17,7 @@
 #include "ColaTutorial.cpp"
 #include "CabeceraArticulos.cpp"
 #include "ListaMovimientos.cpp"
-#include "git/sha256.cpp"
+#include "sha256.cpp"
 #include <cstdlib>
 #include <iostream>
 #include "glove/json.hpp"
@@ -53,7 +53,7 @@ char *stringtochar(string s)
 
 string encriptarSHA256(string cadena)
 {
-    cadena = stringtochar(cadena);
+    
     SHA2562 sha256;
     return sha256(cadena);
 }
@@ -380,10 +380,20 @@ public:
                 {
                     serverUsuarios.InsertarFinal(usuariosJson[i]["nick"].asString(), encriptarSHA256(usuariosJson[i]["password"].asString()),
                                             stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
+                    nodoUsuarios *aux = new nodoUsuarios();
+                    aux->nick = usuariosJson[i]["nick"].asString();
+                    aux->password = encriptarSHA256(usuariosJson[i]["password"].asString());
+                    aux->monedas = stringtoint(usuariosJson[i]["monedas"].asString());
+                    aux->edad = stringtoint(usuariosJson[i]["edad"].asString());
+                    // cout << "----------------------------------------------------------------" << endl;
+                    // cout << aux->nick << " " << aux->password << " " << endl;
+                    // cout << "nick: " << usuariosJson[i]["nick"].asString() << "pass:" << usuariosJson[i]["password"].asString() << endl;
+                    // cout << "----------------------------------------------------------------" << endl;
+                    serverArbol.insertar(aux);
                 }
             }
 
-            serverArbol.agregarTodosLosUsuarios(serverUsuarios);
+            
 
             ifstream ifs2(ruta);
             Json::Value articulosObj;
@@ -451,7 +461,7 @@ public:
     void getUsuario(GloveHttpRequest &request, GloveHttpResponse &response){
 
         response.contentType("text/json");
-        if(request.special["nick"] != "" && request.special["password"] != "" && request.special["id"] != ""){
+        if(request.special["nick"] != "" and request.special["password"] != "" and request.special["id"] != ""){
             cout << "nick: " << request.special["nick"] << endl;
             cout << "password: " << request.special["password"] << endl;
             cout << "id: " << request.special["id"] << endl;
@@ -890,6 +900,7 @@ int main(int argc, char **argv)
     nodoUsuarios*admin = new nodoUsuarios();
     admin->nick = "EDD";
     admin->password = encriptarSHA256("edd123");
+    cout << admin->password << endl;
     admin->edad = 20;
     admin->monedas = 0;
 

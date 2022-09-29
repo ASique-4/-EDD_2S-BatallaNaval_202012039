@@ -49,16 +49,16 @@ def crear_tablero(tamanio :int):
                 botones = []
                 
             for j in range(0, (tamanio)):
-                matriz.insertar(i, j, str(i) + "," + str(j))
                 boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold")
                 botones.append(boton)
-        matriz.graficarNeato("Tablero")
+        
 
         #Colocar barcos
         window =  sg.Window('Menu', layout, element_justification='c')
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Salir':
+                matriz.graficarNeato('Tablero')
                 break
             else:
                 for i in range(1 , len(layout)):
@@ -133,28 +133,28 @@ def pintar_portaavion(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa
     if(x2 == x1+3):
         j = x1
         for i in range(x1, x2 + 1):
-            matriz.getNodo(j, y1).caracter = "P"
+            matriz.insertar(j-1, y1, "P")
             layout[j][y1].update(button_color=('black', '#C98474'))
             j += 1
     #Arriba
     elif(x2 == x1-3):
         j = x1
         for i in range(x2, x1 + 1):
-            matriz.getNodo(j, y1).caracter = "P"
+            matriz.insertar(j-1, y1, "P")
             layout[j][y1].update(button_color=('black', '#C98474'))
             j -= 1
     #Derecha
     elif(y2 == y1+3):
         j = y1
         for i in range(y1, y2 + 1):
-            matriz.getNodo(x1, j).caracter = "P"
+            matriz.insertar(x1, j, "P")
             layout[x1][j].update(button_color=('black', '#C98474'))
             j += 1
     #Izquierda
     elif(y2 == y1-3):
         j = y1
         for i in range(y2, y1 + 1):
-            matriz.getNodo(x1, j).caracter = "P"
+            matriz.insertar(x1, j, "P")
             layout[x1][j].update(button_color=('black', '#C98474'))
             j -= 1
     else:
@@ -165,28 +165,28 @@ def pintar_submarino(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa,
     if(x2 == x1 + 2):
         j = x1
         for i in range(x1, x2 + 1):
-            matriz.getNodo(j, y1).caracter = "S"
+            matriz.insertar(j, y1, "S")
             layout[j][y1].update(button_color=('black', '#25316D'))
             j += 1
     #Arriba
     elif(x2 == x1 - 2):
         j = x1
         for i in range(x2, x1 + 1):
-            matriz.getNodo(j, y1).caracter = "S"
+            matriz.insertar(j, y1, "S")
             layout[j][y1].update(button_color=('black', '#25316D'))
             j -= 1
     #Derecha
     elif(y2 == y1 + 2):
         j = y1
         for i in range(y1, y2 + 1):
-            matriz.getNodo(x1, j).caracter = "S"
+            matriz.insertar(x1, j, "S")
             layout[x1][j].update(button_color=('black', '#25316D'))
             j += 1
     #Izquierda
     elif(y2 == y1 - 2):
         j = y1
         for i in range(y2, y1 + 1):
-            matriz.getNodo(x1, j).caracter = "S"
+            matriz.insertar(x1, j, "S")
             layout[x1][j].update(button_color=('black', '#25316D'))
             j -= 1
     else:
@@ -197,28 +197,28 @@ def pintar_destructor(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa
     if(x2 == x1 + 1):
         j = x1
         for i in range(x1, x2 + 1):
-            matriz.getNodo(j, y1).caracter = "D"
+            matriz.insertar(j, y1, "D")
             layout[j][y1].update(button_color=('black', '#A2B5BB'))
             j += 1
     #Arriba
     elif(x2 == x1 - 1):
         j = x1
         for i in range(x2, x1 + 1):
-            matriz.getNodo(j, y1).caracter = "D"
+            matriz.insertar(j, y1, "D")
             layout[j][y1].update(button_color=('black', '#A2B5BB'))
             j -= 1
     #Derecha
     elif(y2 == y1 + 1):
         j = y1
         for i in range(y1, y2 + 1):
-            matriz.getNodo(x1, j).caracter = "D"
+            matriz.insertar(x1, j, "D")
             layout[x1][j].update(button_color=('black', '#A2B5BB'))
             j += 1
     #Izquierda
     elif(y2 == y1 - 1):
         j = y1
         for i in range(y2, y1 + 1):
-            matriz.getNodo(x1, j).caracter = "D"
+            matriz.insertar(x1, j, "D")
             layout[x1][j].update(button_color=('black', '#A2B5BB'))
             j -= 1
     else:
@@ -226,7 +226,7 @@ def pintar_destructor(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa
 #Pintar buque
 def pintar_buque(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
     if(x1 == x2 and y1 == y2):
-        matriz.getNodo(x1, y1).caracter = "B"
+        matriz.insertar(x1, y1, "B")
         layout[x1][y1].update(button_color=('black', '#6FEDD6'))
 
 
@@ -273,19 +273,17 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
     if(barco == "Portaaviones"):
         #Abajo
         try:
-            if(matriz.getNodo(x+3,y) != None and no_pintado(x, y, x + 3, y, layout)):
+            if(no_pintado(x, y, x + 3, y, layout)):
                 for i in range(x, x + 4):
-                    matriz.getNodo(i, y).caracter = "P"
                     layout[i][y].update(button_color=('black', '#EEF1FF')) 
                 pintado = True
         except: 
             pass
         #Arriba
         try:
-            if(matriz.getNodo(x-4,y) != None and no_pintado(x-1, y, x - 3, y, layout)):
+            if(no_pintado(x-1, y, x - 3, y, layout)):
                 j = x
                 for i in range(x, x + 4):
-                    matriz.getNodo(j, y).caracter = "P"
                     layout[j][y].update(button_color=('black', '#EEF1FF'))
                     j -= 1
                 pintado = True
@@ -293,10 +291,9 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
         #Derecha
         try:
-            if(matriz.getNodo(x,y+3) != None and no_pintado(x, y+1, x, y + 3, layout)):
+            if(no_pintado(x, y+1, x, y + 3, layout)):
                 j = y
                 for i in range(y, y + 4):
-                    matriz.getNodo(x, j).caracter = "P"
                     layout[x][j].update(button_color=('black', '#EEF1FF'))
                     j += 1
                 pintado = True
@@ -304,10 +301,9 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
         #Izquierda
         try:
-            if(matriz.getNodo(x,y-3) != None and no_pintado(x, y+1, x, y - 3, layout)):
+            if( (y - 3) >= 0 and no_pintado(x, y+1, x, y - 3, layout)):
                 j = y
                 for i in range(y, y + 4):
-                    matriz.getNodo(x, j).caracter = "P"
                     layout[x][j].update(button_color=('black', '#EEF1FF'))
                     j -= 1
                 pintado = True
@@ -316,19 +312,17 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
     elif(barco == "Submarino"):
         #Abajo
         try:
-            if(matriz.getNodo(x+2,y) != None and no_pintado(x, y, x + 2, y, layout)):
+            if(no_pintado(x, y, x + 2, y, layout)):
                 for i in range(x, x + 3):
-                    matriz.getNodo(i, y).caracter = "S"
                     layout[i][y].update(button_color=('black', '#EEF1FF'))
                 pintado = True
         except:
             pass
         #Arriba
         try:
-            if(matriz.getNodo(x-3,y) != None and no_pintado(x-1, y, x - 2, y, layout)):
+            if(no_pintado(x-1, y, x - 2, y, layout)):
                 j = x
                 for i in range(x, x + 3):
-                    matriz.getNodo(j, y).caracter = "S"
                     layout[j][y].update(button_color=('black', '#EEF1FF'))
                     j -= 1
                 pintado = True
@@ -336,10 +330,9 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
         #Derecha
         try:
-            if(matriz.getNodo(x,y+2) != None and no_pintado(x, y+1, x, y + 2, layout)):
+            if(no_pintado(x, y+1, x, y + 2, layout)):
                 j = y
                 for i in range(y, y + 3):
-                    matriz.getNodo(x, j).caracter = "S"
                     layout[x][j].update(button_color=('black', '#EEF1FF'))
                     j += 1
                 pintado = True
@@ -347,10 +340,9 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
         #Izquierda
         try:
-            if(matriz.getNodo(x,y-2) != None and no_pintado(x, y + 1, x, y - 2, layout)):
+            if((y - 2) >= 0 and no_pintado(x, y + 1, x, y - 2, layout)):
                 j = y
                 for i in range(y, y + 3):
-                    matriz.getNodo(x, j).caracter = "S"
                     layout[x][j].update(button_color=('black', '#EEF1FF'))
                     j -= 1
                 pintado = True
@@ -359,19 +351,17 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
     elif(barco == "Destructor"):
         #Abajo
         try:
-            if(matriz.getNodo(x+1,y) != None and no_pintado(x, y, x + 1, y, layout)):
+            if(no_pintado(x, y, x + 1, y, layout)):
                 for i in range(x, x + 2):
-                    matriz.getNodo(i, y).caracter = "D"
                     layout[i][y].update(button_color=('black', '#EEF1FF'))
                 pintado = True
         except:
             pass
         #Arriba
         try:
-            if(matriz.getNodo(x-2,y) != None and no_pintado(x-1, y, x - 1, y, layout)):
+            if(no_pintado(x-1, y, x - 1, y, layout)):
                 j = x
                 for i in range(x, x + 2):
-                    matriz.getNodo(j, y).caracter = "D"
                     layout[j][y].update(button_color=('black', '#EEF1FF'))
                     j -= 1
                 pintado = True
@@ -379,10 +369,9 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
         #Derecha
         try:
-            if(matriz.getNodo(x,y+1) != None and no_pintado(x, y+1, x, y + 1, layout)):
+            if(no_pintado(x, y+1, x, y + 1, layout)):
                 j = y
                 for i in range(y, y + 2):
-                    matriz.getNodo(x, j).caracter = "D"
                     layout[x][j].update(button_color=('black', '#EEF1FF'))
                     j += 1
                 pintado = True
@@ -390,10 +379,9 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
         #Izquierda
         try:
-            if(matriz.getNodo(x,y-1) != None and no_pintado(x, y+1, x, y - 1, layout)):
+            if((y - 1) >= 0 and no_pintado(x, y+1, x, y - 1, layout)):
                 j = y
                 for i in range(y, y + 2):
-                    matriz.getNodo(x, j).caracter = "D"
                     layout[x][j].update(button_color=('black', '#EEF1FF'))
                     j -= 1
                 pintado = True
@@ -401,8 +389,7 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
             pass
     elif(barco == "Buque"):
         try:
-            if(matriz.getNodo(x,y) != None and layout[x][y].ButtonColor[1] == '#6c7b95'):
-                matriz.getNodo(x, y).caracter = "B"
+            if(layout[x][y].ButtonColor[1] == '#6c7b95'):
                 layout[x][y].update(button_color=('black', '#EEF1FF'))
                 pintado = True
         except:
@@ -437,7 +424,7 @@ def llenar_articulos(array_articulos):
 
 #Tienda
 def tienda():
-        sg.theme('LightBlue4')
+        sg.theme('DarkTeal4')
         res = requests.get(f'{base_url}ObtenerTienda/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
@@ -578,7 +565,7 @@ def menu():
                 [sg.Button('Tienda', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 550), element_justification='c')
+    window = sg.Window('Menu', layout, size=(300, 550), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
@@ -630,13 +617,13 @@ def eliminar_usuario(id):
 
 #Registrar usuario
 def registrar_usuario():
-    layout = [[sg.Text('Registrar Usuario',size = (10,0), font="Arial 30 bold", justification='center')],
+    layout = [[sg.Text('Registrar Usuario', font="Arial 30 bold", justification='center')],
                 [sg.Text('Nick',size = (10,0), font="Arial 15 bold", justification='center'), sg.InputText()],
                 [sg.Text('Password',size = (10,0), font="Arial 15 bold", justification='center'), sg.InputText()],
                 [sg.Text('Edad',size = (10,0), font="Arial 15 bold", justification='center'), sg.InputText()],
                 [sg.Button('Registrar', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(500, 500), element_justification='c')
+    window = sg.Window('Menu', layout, size=(500, 300), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
@@ -667,6 +654,7 @@ def registrar(nick, password, edad):
             res = requests.get(f'{base_url}CrearUsuario/' + nick + '/' + password + '/' + edad + '/')
             data = res.text#convertimos la respuesta en dict
             data = json.loads(data)
+            usuarios.append([nick, usuarios[-1][1] + 1])
             return (data['status'])
     except:
         return "error"
@@ -906,6 +894,7 @@ def menuPrincipal():
     window.close()
 
 #login()
-#crear_tablero(11)
+crear_tablero(11)
 #tienda()
-menuPrincipal()
+#menuPrincipal()
+#menu()
