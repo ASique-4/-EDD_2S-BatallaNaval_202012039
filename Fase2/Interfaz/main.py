@@ -1,3 +1,4 @@
+import random
 import string
 import webbrowser
 import requests
@@ -23,24 +24,24 @@ usuarios = []
 #Crear tablero
 def crear_tablero(tamanio :int):
     sg.theme('DarkTeal4')
-    layout = []
-    botones = []
-    #Numero de barcos
-    constante = int(((tamanio - 1)/10)+1)
-    Portaaviones = 1*constante
-    Submarino = 2*constante
-    Destructor = 3*constante
-    Buque = 4*constante
-    layout.append(
-        [sg.OptionMenu(('Portaaviones', 'Submarino', 'Destructor', 'Buque'),'Portaaviones'),
-        sg.Text('Portaaviones',text_color='#C98474'),sg.Text(str(Portaaviones),text_color='#C98474'),
-        sg.Text('Submarino',text_color='#25316D'),sg.Text(str(Submarino),text_color='#25316D'),
-        sg.Text('Destructor',text_color='#A2B5BB'),sg.Text(str(Destructor),text_color='#A2B5BB'),
-        sg.Text('Buque',text_color='#6FEDD6'),sg.Text(str(Buque),text_color='#6FEDD6')
-        ]
-        )
     #Si el ancho y alto es mayor a 10
     if(tamanio >= 10):
+        layout = []
+        botones = []
+        #Numero de barcos
+        constante = int(((tamanio - 1)/10)+1)
+        Portaaviones = 1*constante
+        Submarino = 2*constante
+        Destructor = 3*constante
+        Buque = 4*constante
+        layout.append(
+            [sg.OptionMenu(('Portaaviones', 'Submarino', 'Destructor', 'Buque'),'Portaaviones'),
+            sg.Text('Portaaviones',text_color='#C98474'),sg.Text(str(Portaaviones),text_color='#C98474'),
+            sg.Text('Submarino',text_color='#25316D'),sg.Text(str(Submarino),text_color='#25316D'),
+            sg.Text('Destructor',text_color='#A2B5BB'),sg.Text(str(Destructor),text_color='#A2B5BB'),
+            sg.Text('Buque',text_color='#6FEDD6'),sg.Text(str(Buque),text_color='#6FEDD6')
+            ]
+            )
         matriz = MatrizDispersa()
         for i in range(0, (tamanio) + 1):
             #Si los botones no están vacios los limpia
@@ -61,71 +62,341 @@ def crear_tablero(tamanio :int):
                 matriz.graficarNeato('Tablero')
                 break
             else:
-                for i in range(1 , len(layout)):
-                    for j in range(len(layout) - 1):
-                        if(layout[i][j].ButtonText == event and layout[i][j].ButtonColor[1] == '#6c7b95'):
-                            if(colorear_botones(values[0], int(i), int(j), matriz, layout)):
-                                while True:
-                                    event2, values = window.read()
-                                    if event2 == sg.WIN_CLOSED or event2 == 'Salir':
-                                        break
-                                    else:
-                                        for k in range(1 , len(layout)):
-                                            for l in range(len(layout) - 1):
-                                                if(layout[k][l].ButtonText == event2 ):
-                                                    if(layout[k][l].ButtonColor[1] == '#EEF1FF'):
-                                                        if values[0] == 'Portaaviones' and Portaaviones > 0:
-                                                            if(pintar_portaavion(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                                                                limpiar_botones(layout)
-                                                                Portaaviones -= 1
-                                                                layout[0][2].update(Portaaviones)
-                                                                break
-                                                            else:
-                                                                sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                                                                limpiar_botones(layout)
-                                                                break
-                                                        elif values[0] == 'Submarino' and Submarino > 0:
-                                                            if(pintar_submarino(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                                                                limpiar_botones(layout)
-                                                                Submarino -= 1
-                                                                layout[0][4].update(Submarino)
-                                                                break
-                                                            else:
-                                                                sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                                                                limpiar_botones(layout)
-                                                                break
-                                                        elif values[0] == 'Destructor' and Destructor > 0:
-                                                            if(pintar_destructor(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                                                                limpiar_botones(layout)
-                                                                Destructor -= 1
-                                                                layout[0][6].update(Destructor)
-                                                                break
-                                                            else:
-                                                                sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                                                                limpiar_botones(layout)
-                                                                break
-                                                        elif values[0] == 'Buque' and Buque > 0:
-                                                            if(pintar_buque(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                                                                limpiar_botones(layout)
-                                                                Buque -= 1
-                                                                layout[0][8].update(Buque)
-                                                                break
-                                                            else:
-                                                                sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                                                                limpiar_botones(layout)
-                                                                break
-                                                        else:
-                                                            sg.popup_error('No quedan ' + values[0], title="Error")
-                                                            limpiar_botones(layout)
-                                                    else:
-                                                        sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                                                        limpiar_botones(layout)
-                                                        break
-                                                    break
-                                        break
-                            break     
+                i = 1
+                print(str(len(layout)))
+                print(tamanio)
+                print("Portaaviones")
+                while i <= (Portaaviones):
+                    x1 = random.randint(1, len(layout) - 1)
+                    y1 = random.randint(0, len(layout[0]) - 1)
+                    x2 = x1
+                    y2 = y1
+                    caso = random.randint(0, 3)
+                    if caso == 0:
+                        x2 = x1+3
+                        if(x2 <= len(layout)-1) :
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                Portaaviones -= 1
+                                layout[0][2].update(Portaaviones)
+                        else:
+                            continue
+                    elif caso == 1:
+                        x2 = x1 - 3
+                        if(x2 >= 1):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                Portaaviones -= 1
+                                layout[0][2].update(Portaaviones)
+                        else:
+                            continue
+                    elif caso == 2:
+                        y2 = y1 + 3
+                        if(y2 <= len(layout[0])):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                Portaaviones -= 1
+                                layout[0][2].update(Portaaviones)
+                        else:
+                            continue
+                    elif caso == 3:
+                        y2 = y1 - 3
+                        if(y2 >= 0):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                Portaaviones -= 1
+                                layout[0][2].update(Portaaviones)
+                        else:
+                            continue
+                i = 1
+                print("Submarino")
+                while i <= (Submarino):
+                    x1 = random.randint(1, len(layout)-1)
+                    y1 = random.randint(0, len(layout[0]))
+                    x2 = x1
+                    y2 = y1
+                    caso = random.randint(0, 3)
+                    if caso == 0:
+                        x2 = x1+2
+                        if(x2 <= len(layout)-1) :
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                Submarino -= 1
+                                layout[0][4].update(Submarino)
+                        else:
+                            continue
+                    elif caso == 1:
+                        x2 = x1 - 2
+                        if(x2 >= 1):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                Submarino -= 1
+                                layout[0][4].update(Submarino)
+                        else:
+                            continue
+                    elif caso == 2:
+                        y2 = y1 + 2
+                        if(y2 <= len(layout[0])):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                Submarino -= 1
+                                layout[0][4].update(Submarino)
+                        else:
+                            continue
+                    elif caso == 3:
+                        y2 = y1 - 2
+                        if(y2 >= 0):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                Submarino -= 1
+                                layout[0][4].update(Submarino)
+                        else:
+                            continue
+                i = 1
+                print("Destructor")
+                while i <= (Destructor):
+                    x1 = random.randint(1, len(layout)-1)
+                    y1 = random.randint(0, len(layout[0]))
+                    x2 = x1
+                    y2 = y1
+                    caso = random.randint(0, 3)
+                    if caso == 0:
+                        x2 = x1+1
+                        if(x2 <= len(layout)-1) :
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                Destructor -= 1
+                                layout[0][6].update(Destructor)
+                        else:
+                            continue
+                    elif caso == 1:
+                        x2 = x1 - 1
+                        if(x2 >= 1):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                Destructor -= 1
+                                layout[0][6].update(Destructor)
+                        else:
+                            continue
+                    elif caso == 2:
+                        y2 = y1 + 1
+                        if(y2 <= len(layout[0])):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                Destructor -= 1
+                                layout[0][6].update(Destructor)
+                        else:
+                            continue
+                    elif caso == 3:
+                        y2 = y1 - 1
+                        if(y2 >= 0):
+                            print(caso)
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                Destructor -= 1
+                                layout[0][6].update(Destructor)
+                        else:
+                            continue
+                
+                i = 1
+                print("Buque")
+                while i <= (Buque):
+                    x1 = random.randint(1, len(layout)-1)
+                    y1 = random.randint(0, len(layout[0]))
+                    x2 = x1
+                    y2 = y1
+                    print("x1: ", x1, "y1: ", y1, "x2: ", x2, "y2: ", y2)
+                    if(matriz.getNodo(x1, y1) == None):
+                        pintar_buque(x1, y1, x2, y2, matriz, layout)
+                        Buque -= 1
+                        layout[0][8].update(Buque)
+
+
+                # for i in range(1 , len(layout)):
+                #     for j in range(len(layout) - 1):
+                #         if(layout[i][j].ButtonText == event and layout[i][j].ButtonColor[1] == '#6c7b95'):
+                #             if(colorear_botones(values[0], int(i), int(j), matriz, layout)):
+                #                 while True:
+                #                     event2, values = window.read()
+                #                     if event2 == sg.WIN_CLOSED or event2 == 'Salir':
+                #                         break
+                #                     else:
+                #                         for k in range(1 , len(layout)):
+                #                             for l in range(len(layout) - 1):
+                #                                 if(layout[k][l].ButtonText == event2 ):
+                #                                     if(layout[k][l].ButtonColor[1] == '#EEF1FF'):
+                #                                         if values[0] == 'Portaaviones' and Portaaviones > 0:
+                #                                             if(pintar_portaavion(int(i), int(j), int(k), int(l), matriz, layout) != False):
+                #                                                 limpiar_botones(layout)
+                #                                                 Portaaviones -= 1
+                #                                                 layout[0][2].update(Portaaviones)
+                #                                                 break
+                #                                             else:
+                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                #                                                 limpiar_botones(layout)
+                #                                                 break
+                #                                         elif values[0] == 'Submarino' and Submarino > 0:
+                #                                             if(pintar_submarino(int(i), int(j), int(k), int(l), matriz, layout) != False):
+                #                                                 limpiar_botones(layout)
+                #                                                 Submarino -= 1
+                #                                                 layout[0][4].update(Submarino)
+                #                                                 break
+                #                                             else:
+                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                #                                                 limpiar_botones(layout)
+                #                                                 break
+                #                                         elif values[0] == 'Destructor' and Destructor > 0:
+                #                                             if(pintar_destructor(int(i), int(j), int(k), int(l), matriz, layout) != False):
+                #                                                 limpiar_botones(layout)
+                #                                                 Destructor -= 1
+                #                                                 layout[0][6].update(Destructor)
+                #                                                 break
+                #                                             else:
+                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                #                                                 limpiar_botones(layout)
+                #                                                 break
+                #                                         elif values[0] == 'Buque' and Buque > 0:
+                #                                             if(pintar_buque(int(i), int(j), int(k), int(l), matriz, layout) != False):
+                #                                                 limpiar_botones(layout)
+                #                                                 Buque -= 1
+                #                                                 layout[0][8].update(Buque)
+                #                                                 break
+                #                                             else:
+                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                #                                                 limpiar_botones(layout)
+                #                                                 break
+                #                                         else:
+                #                                             sg.popup_error('No quedan ' + values[0], title="Error")
+                #                                             limpiar_botones(layout)
+                #                                     else:
+                #                                         sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
+                #                                         limpiar_botones(layout)
+                #                                         break
+                #                                     break
+                #                         break
+                #             break     
     else:
         sg.PopupError("El alto y ancho debe ser mayor a 10", title="Error")
+
+#Portaaviones no pintado
+def portaavionesNoPintado(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa):
+    #Abajo
+    if(x2 == x1+3):
+        j = x1
+        for i in range(x1, x2 + 1):
+            if(matriz.getNodo(j-1, y1) != None):
+                return False
+            j += 1
+    #Arriba
+    elif(x2 == x1-3):
+        j = x1
+        for i in range(x2, x1 + 1):
+            if(matriz.getNodo(j-1, y1) != None):
+                return False
+            j -= 1
+    #Derecha
+    elif(y2 == y1+3):
+        j = y1
+        for i in range(y1, y2 + 1):
+            if(matriz.getNodo(x1-1, j) != None):
+                return False
+            j += 1
+    #Izquierda
+    elif(y2 == y1-3):
+        j = y1
+        for i in range(y2, y1 + 1):
+            if(matriz.getNodo(x1-1, j) != None):
+                return False
+            j -= 1
+    return True
+
+#Submarino no pintado
+def submarinoNoPintado(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa):
+    #Abajo
+    if(x2 == x1+2):
+        j = x1
+        for i in range(x1, x2 + 1):
+            if(matriz.getNodo(j, y1) != None):
+                return False
+            j += 1
+    #Arriba
+    elif(x2 == x1-2):
+        j = x1
+        for i in range(x2, x1 + 1):
+            if(matriz.getNodo(j, y1) != None):
+                return False
+            j -= 1
+    #Derecha
+    elif(y2 == y1+2):
+        j = y1
+        for i in range(y1, y2 + 1):
+            if(matriz.getNodo(x1, j) != None):
+                return False
+            j += 1
+    #Izquierda
+    elif(y2 == y1-2):
+        j = y1
+        for i in range(y2, y1 + 1):
+            if(matriz.getNodo(x1, j) != None):
+                return False
+            j -= 1
+    return True
+
+#Destructor no pintado
+def destructorNoPintado(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa):
+    #Abajo
+    if(x2 == x1+1):
+        j = x1
+        for i in range(x1, x2 + 1):
+            if(matriz.getNodo(j, y1) != None):
+                return False
+            j += 1
+    #Arriba
+    elif(x2 == x1-1):
+        j = x1
+        for i in range(x2, x1 + 1):
+            if(matriz.getNodo(j, y1) != None):
+                return False
+            j -= 1
+    #Derecha
+    elif(y2 == y1+1):
+        j = y1
+        for i in range(y1, y2 + 1):
+            if(matriz.getNodo(x1, j) != None):
+                return False
+            j += 1
+    #Izquierda
+    elif(y2 == y1-1):
+        j = y1
+        for i in range(y2, y1 + 1):
+            if(matriz.getNodo(x1, j) != None):
+                return False
+            j -= 1
+    return True
+
 
 #Pintar portaavion
 def pintar_portaavion(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
@@ -894,7 +1165,7 @@ def menuPrincipal():
     window.close()
 
 #login()
-crear_tablero(11)
+crear_tablero(10)
 #tienda()
 #menuPrincipal()
 #menu()
