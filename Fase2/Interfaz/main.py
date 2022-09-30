@@ -24,6 +24,7 @@ usuarios = []
 #Crear tablero
 def crear_tablero(tamanio :int):
     sg.theme('DarkTeal4')
+    llenado = False
     #Si el ancho y alto es mayor a 10
     if(tamanio >= 10):
         layout = []
@@ -34,12 +35,11 @@ def crear_tablero(tamanio :int):
         Submarino = 2*constante
         Destructor = 3*constante
         Buque = 4*constante
+        vidas = 3
         layout.append(
-            [sg.OptionMenu(('Portaaviones', 'Submarino', 'Destructor', 'Buque'),'Portaaviones'),
-            sg.Text('Portaaviones',text_color='#C98474'),sg.Text(str(Portaaviones),text_color='#C98474'),
-            sg.Text('Submarino',text_color='#25316D'),sg.Text(str(Submarino),text_color='#25316D'),
-            sg.Text('Destructor',text_color='#A2B5BB'),sg.Text(str(Destructor),text_color='#A2B5BB'),
-            sg.Text('Buque',text_color='#6FEDD6'),sg.Text(str(Buque),text_color='#6FEDD6')
+            [
+            sg.Text('Vidas',text_color='#FFABE1',font='Futura 15'),sg.Text(vidas,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(usuario_global['monedas'],text_color='#FFABE1',font='Futura 15'),
             ]
             )
         matriz = MatrizDispersa()
@@ -62,178 +62,187 @@ def crear_tablero(tamanio :int):
                 matriz.graficarNeato('Tablero')
                 break
             else:
-                i = 1
-                print(str(len(layout)))
-                print(tamanio)
-                print("Portaaviones")
-                while i <= (Portaaviones):
-                    x1 = random.randint(1, len(layout) - 1)
-                    y1 = random.randint(0, len(layout[0]) - 1)
-                    x2 = x1
-                    y2 = y1
-                    caso = random.randint(0, 3)
-                    if caso == 0:
-                        x2 = x1+3
-                        if(x2 <= len(layout)-1) :
-                            print(caso)
+                if (llenado == False):
+                    i = 1
+                    print(len(layout))
+                    print("Portaaviones")
+                    while i <= (Portaaviones):
+                        x1 = random.randint(1, len(layout) - 1)
+                        y1 = random.randint(0, len(layout[1])-1)
+                        x2 = x1
+                        y2 = y1
+                        caso = random.randint(0, 3)
+                        if caso == 0:
+                            x2 = x1+3
+                            if(x2 <= len(layout)-1) :
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                        elif caso == 1:
+                            x2 = x1 - 3
+                            if(x2 >= 1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                        elif caso == 2:
+                            y2 = y1 + 3
+                            if(y2 <= len(layout[1])-1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                        elif caso == 3:
+                            y2 = y1 - 3
+                            if(y2 >= 0):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                    i = 1
+                    print("Submarino")
+                    while i <= (Submarino):
+                        x1 = random.randint(1, len(layout)-1)
+                        y1 = random.randint(0, len(layout[1])-1)
+                        x2 = x1
+                        y2 = y1
+                        caso = random.randint(0, 3)
+                        if caso == 0:
+                            x2 = x1+2
+                            if(x2 <= len(layout)-1) :
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                        elif caso == 1:
+                            x2 = x1 - 2
+                            if(x2 >= 1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                        elif caso == 2:
+                            y2 = y1 + 2
+                            if(y2 <= len(layout[1])-1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                        elif caso == 3:
+                            y2 = y1 - 2
+                            if(y2 >= 0):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                    i = 1
+                    print("Destructor")
+                    while i <= (Destructor):
+                        x1 = random.randint(1, len(layout)-1)
+                        y1 = random.randint(0, len(layout[0]))
+                        x2 = x1
+                        y2 = y1
+                        caso = random.randint(0, 3)
+                        if caso == 0:
+                            x2 = x1+1
+                            if(x2 <= len(layout)-1) :
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
+                        elif caso == 1:
+                            x2 = x1 - 1
+                            if(x2 >= 1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
+                        elif caso == 2:
+                            y2 = y1 + 1
+                            if(y2 <= len(layout[0])):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
+                        elif caso == 3:
+                            y2 = y1 - 1
+                            if(y2 >= 0):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
+                    
+                    i = 1
+                    print("Buque")
+                    while i <= (Buque):
+                        x1 = random.randint(1, len(layout)-1)
+                        y1 = random.randint(0, len(layout[1])-1)
+                        x2 = x1
+                        y2 = y1
+                        if(matriz.getNodo(x1-1, y1) == None):
                             print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
-                                Portaaviones -= 1
-                                layout[0][2].update(Portaaviones)
-                        else:
-                            continue
-                    elif caso == 1:
-                        x2 = x1 - 3
-                        if(x2 >= 1):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
-                                Portaaviones -= 1
-                                layout[0][2].update(Portaaviones)
-                        else:
-                            continue
-                    elif caso == 2:
-                        y2 = y1 + 3
-                        if(y2 <= len(layout[0])):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
-                                Portaaviones -= 1
-                                layout[0][2].update(Portaaviones)
-                        else:
-                            continue
-                    elif caso == 3:
-                        y2 = y1 - 3
-                        if(y2 >= 0):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_portaavion(x1, y1, x2, y2, matriz, layout)
-                                Portaaviones -= 1
-                                layout[0][2].update(Portaaviones)
-                        else:
-                            continue
-                i = 1
-                print("Submarino")
-                while i <= (Submarino):
-                    x1 = random.randint(1, len(layout)-1)
-                    y1 = random.randint(0, len(layout[0]))
-                    x2 = x1
-                    y2 = y1
-                    caso = random.randint(0, 3)
-                    if caso == 0:
-                        x2 = x1+2
-                        if(x2 <= len(layout)-1) :
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
-                                Submarino -= 1
-                                layout[0][4].update(Submarino)
-                        else:
-                            continue
-                    elif caso == 1:
-                        x2 = x1 - 2
-                        if(x2 >= 1):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
-                                Submarino -= 1
-                                layout[0][4].update(Submarino)
-                        else:
-                            continue
-                    elif caso == 2:
-                        y2 = y1 + 2
-                        if(y2 <= len(layout[0])):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
-                                Submarino -= 1
-                                layout[0][4].update(Submarino)
-                        else:
-                            continue
-                    elif caso == 3:
-                        y2 = y1 - 2
-                        if(y2 >= 0):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_submarino(x1, y1, x2, y2, matriz, layout)
-                                Submarino -= 1
-                                layout[0][4].update(Submarino)
-                        else:
-                            continue
-                i = 1
-                print("Destructor")
-                while i <= (Destructor):
-                    x1 = random.randint(1, len(layout)-1)
-                    y1 = random.randint(0, len(layout[0]))
-                    x2 = x1
-                    y2 = y1
-                    caso = random.randint(0, 3)
-                    if caso == 0:
-                        x2 = x1+1
-                        if(x2 <= len(layout)-1) :
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
-                                Destructor -= 1
-                                layout[0][6].update(Destructor)
-                        else:
-                            continue
-                    elif caso == 1:
-                        x2 = x1 - 1
-                        if(x2 >= 1):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
-                                Destructor -= 1
-                                layout[0][6].update(Destructor)
-                        else:
-                            continue
-                    elif caso == 2:
-                        y2 = y1 + 1
-                        if(y2 <= len(layout[0])):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
-                                Destructor -= 1
-                                layout[0][6].update(Destructor)
-                        else:
-                            continue
-                    elif caso == 3:
-                        y2 = y1 - 1
-                        if(y2 >= 0):
-                            print(caso)
-                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
-                            if(destructorNoPintado(x1, y1, x2, y2, matriz)):
-                                pintar_destructor(x1, y1, x2, y2, matriz, layout)
-                                Destructor -= 1
-                                layout[0][6].update(Destructor)
-                        else:
-                            continue
+                            pintar_buque(x1, y1, x2, y2, matriz, layout)
+                            Buque -= 1
+                    llenado = True
                 
-                i = 1
-                print("Buque")
-                while i <= (Buque):
-                    x1 = random.randint(1, len(layout)-1)
-                    y1 = random.randint(0, len(layout[0]))
-                    x2 = x1
-                    y2 = y1
-                    print("x1: ", x1, "y1: ", y1, "x2: ", x2, "y2: ", y2)
-                    if(matriz.getNodo(x1, y1) == None):
-                        pintar_buque(x1, y1, x2, y2, matriz, layout)
-                        Buque -= 1
-                        layout[0][8].update(Buque)
+                    matriz.graficarNeato('Tablero')
 
+                    #Disparo
+                    while True:
+                        event2, values = window.read()
+                        if event2 == sg.WIN_CLOSED or event2 == 'Salir':
+                            break
+                        else:
+                            for k in range(1 , len(layout)):
+                                for l in range(len(layout) - 1):
+                                    if(layout[k][l].ButtonText == event2 ):
+                                        if(pintar_disparo(k, l, matriz, layout)):
+                                            usuario_global['monedas'] = int(usuario_global['monedas']) + 20
+                                            layout[0][3].update(usuario_global['monedas'])
+                                        else:
+                                            vidas = vidas - 1
+                                            layout[0][1].update(vidas)
+                                        break
+                                else:
+                                    continue
+                                break
 
                 # for i in range(1 , len(layout)):
                 #     for j in range(len(layout) - 1):
@@ -339,28 +348,28 @@ def submarinoNoPintado(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispers
     if(x2 == x1+2):
         j = x1
         for i in range(x1, x2 + 1):
-            if(matriz.getNodo(j, y1) != None):
+            if(matriz.getNodo(j-1, y1) != None):
                 return False
             j += 1
     #Arriba
     elif(x2 == x1-2):
         j = x1
         for i in range(x2, x1 + 1):
-            if(matriz.getNodo(j, y1) != None):
+            if(matriz.getNodo(j-1, y1) != None):
                 return False
             j -= 1
     #Derecha
     elif(y2 == y1+2):
         j = y1
         for i in range(y1, y2 + 1):
-            if(matriz.getNodo(x1, j) != None):
+            if(matriz.getNodo(x1-1, j) != None):
                 return False
             j += 1
     #Izquierda
     elif(y2 == y1-2):
         j = y1
         for i in range(y2, y1 + 1):
-            if(matriz.getNodo(x1, j) != None):
+            if(matriz.getNodo(x1-1, j) != None):
                 return False
             j -= 1
     return True
@@ -371,28 +380,28 @@ def destructorNoPintado(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDisper
     if(x2 == x1+1):
         j = x1
         for i in range(x1, x2 + 1):
-            if(matriz.getNodo(j, y1) != None):
+            if(matriz.getNodo(j-1, y1) != None):
                 return False
             j += 1
     #Arriba
     elif(x2 == x1-1):
         j = x1
         for i in range(x2, x1 + 1):
-            if(matriz.getNodo(j, y1) != None):
+            if(matriz.getNodo(j-1, y1) != None):
                 return False
             j -= 1
     #Derecha
     elif(y2 == y1+1):
         j = y1
         for i in range(y1, y2 + 1):
-            if(matriz.getNodo(x1, j) != None):
+            if(matriz.getNodo(x1-1, j) != None):
                 return False
             j += 1
     #Izquierda
     elif(y2 == y1-1):
         j = y1
         for i in range(y2, y1 + 1):
-            if(matriz.getNodo(x1, j) != None):
+            if(matriz.getNodo(x1-1, j) != None):
                 return False
             j -= 1
     return True
@@ -405,28 +414,28 @@ def pintar_portaavion(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa
         j = x1
         for i in range(x1, x2 + 1):
             matriz.insertar(j-1, y1, "P")
-            layout[j][y1].update(button_color=('black', '#C98474'))
+            #layout[j][y1].update(button_color=('black', '#C98474'))
             j += 1
     #Arriba
     elif(x2 == x1-3):
         j = x1
         for i in range(x2, x1 + 1):
             matriz.insertar(j-1, y1, "P")
-            layout[j][y1].update(button_color=('black', '#C98474'))
+            #layout[j][y1].update(button_color=('black', '#C98474'))
             j -= 1
     #Derecha
     elif(y2 == y1+3):
         j = y1
         for i in range(y1, y2 + 1):
-            matriz.insertar(x1, j, "P")
-            layout[x1][j].update(button_color=('black', '#C98474'))
+            matriz.insertar(x1-1, j, "P")
+            #layout[x1][j].update(button_color=('black', '#C98474'))
             j += 1
     #Izquierda
     elif(y2 == y1-3):
         j = y1
         for i in range(y2, y1 + 1):
-            matriz.insertar(x1, j, "P")
-            layout[x1][j].update(button_color=('black', '#C98474'))
+            matriz.insertar(x1-1, j, "P")
+            #layout[x1][j].update(button_color=('black', '#C98474'))
             j -= 1
     else:
         return False
@@ -436,29 +445,29 @@ def pintar_submarino(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa,
     if(x2 == x1 + 2):
         j = x1
         for i in range(x1, x2 + 1):
-            matriz.insertar(j, y1, "S")
-            layout[j][y1].update(button_color=('black', '#25316D'))
+            matriz.insertar(j-1, y1, "S")
+            #layout[j][y1].update(button_color=('black', '#25316D'))
             j += 1
     #Arriba
     elif(x2 == x1 - 2):
         j = x1
         for i in range(x2, x1 + 1):
-            matriz.insertar(j, y1, "S")
-            layout[j][y1].update(button_color=('black', '#25316D'))
+            matriz.insertar(j-1, y1, "S")
+            #layout[j][y1].update(button_color=('black', '#25316D'))
             j -= 1
     #Derecha
     elif(y2 == y1 + 2):
         j = y1
         for i in range(y1, y2 + 1):
-            matriz.insertar(x1, j, "S")
-            layout[x1][j].update(button_color=('black', '#25316D'))
+            matriz.insertar(x1-1, j, "S")
+            #layout[x1][j].update(button_color=('black', '#25316D'))
             j += 1
     #Izquierda
     elif(y2 == y1 - 2):
         j = y1
         for i in range(y2, y1 + 1):
-            matriz.insertar(x1, j, "S")
-            layout[x1][j].update(button_color=('black', '#25316D'))
+            matriz.insertar(x1-1, j, "S")
+            #layout[x1][j].update(button_color=('black', '#25316D'))
             j -= 1
     else:
         return False
@@ -468,38 +477,60 @@ def pintar_destructor(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa
     if(x2 == x1 + 1):
         j = x1
         for i in range(x1, x2 + 1):
-            matriz.insertar(j, y1, "D")
-            layout[j][y1].update(button_color=('black', '#A2B5BB'))
+            matriz.insertar(j-1, y1, "D")
+            #layout[j][y1].update(button_color=('black', '#A2B5BB'))
             j += 1
     #Arriba
     elif(x2 == x1 - 1):
         j = x1
         for i in range(x2, x1 + 1):
-            matriz.insertar(j, y1, "D")
-            layout[j][y1].update(button_color=('black', '#A2B5BB'))
+            matriz.insertar(j-1, y1, "D")
+            #layout[j][y1].update(button_color=('black', '#A2B5BB'))
             j -= 1
     #Derecha
     elif(y2 == y1 + 1):
         j = y1
         for i in range(y1, y2 + 1):
-            matriz.insertar(x1, j, "D")
-            layout[x1][j].update(button_color=('black', '#A2B5BB'))
+            matriz.insertar(x1-1, j, "D")
+            #layout[x1][j].update(button_color=('black', '#A2B5BB'))
             j += 1
     #Izquierda
     elif(y2 == y1 - 1):
         j = y1
         for i in range(y2, y1 + 1):
-            matriz.insertar(x1, j, "D")
-            layout[x1][j].update(button_color=('black', '#A2B5BB'))
+            matriz.insertar(x1-1, j, "D")
+            #layout[x1][j].update(button_color=('black', '#A2B5BB'))
             j -= 1
     else:
         return False
 #Pintar buque
 def pintar_buque(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
     if(x1 == x2 and y1 == y2):
-        matriz.insertar(x1, y1, "B")
-        layout[x1][y1].update(button_color=('black', '#6FEDD6'))
+        matriz.insertar(x1-1, y1, "B")
+        #layout[x1][y1].update(button_color=('black', '#6FEDD6'))
 
+#Pintar disparo
+def pintar_disparo(x :int, y :int, matriz :MatrizDispersa, layout):
+    if(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "B"):
+        layout[x][y].update(button_color=('black', '#6FEDD6'))
+        layout[x][y].update('X')
+        return True
+    elif(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "D"):
+        layout[x][y].update(button_color=('black', '#A2B5BB'))
+        layout[x][y].update('X')
+        return True
+    elif(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "S"):
+        layout[x][y].update(button_color=('black', '#25316D'))
+        layout[x][y].update('X')
+        return True
+    elif(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "P"):
+        layout[x][y].update(button_color=('black', '#C98474'))
+        layout[x][y].update('X')
+        return True
+    else:
+        layout[x][y].update(button_color=('white', '#FF1E1E'))
+        layout[x][y].update('X')
+        return False
 
 #Limpiar botones
 def limpiar_botones(layout):
@@ -1165,7 +1196,7 @@ def menuPrincipal():
     window.close()
 
 #login()
-crear_tablero(10)
+crear_tablero(12)
 #tienda()
 #menuPrincipal()
 #menu()
