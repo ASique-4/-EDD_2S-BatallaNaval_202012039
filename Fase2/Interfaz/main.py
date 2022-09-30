@@ -1,5 +1,6 @@
 import random
 import string
+from time import sleep
 import webbrowser
 import requests
 import json
@@ -14,10 +15,10 @@ usuario_global = {
     'password': '',
     'monedas': '1000',
     'edad': '',
-    'id': ''
+    'id': '',
+    'juegos': '0'
 }
-
-usuarios = []
+usuarios = [['EDD','0']]
 
 
 
@@ -39,7 +40,12 @@ def crear_tablero(tamanio :int):
         layout.append(
             [
             sg.Text('Vidas',text_color='#FFABE1',font='Futura 15'),sg.Text(vidas,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
             sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(usuario_global['monedas'],text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Button('Colocar minas',button_color=('black','#FFABE1'),font='Futura 10'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Button('Retroceder un movimiento',button_color=('black','#FFABE1'),font='Futura 10'),
             ]
             )
         matriz = MatrizDispersa()
@@ -53,15 +59,30 @@ def crear_tablero(tamanio :int):
                 boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold")
                 botones.append(boton)
         
-
+        nombreJuego = 'Juego' + str(usuario_global['juegos'])
+        usuario_global['juegos'] = str(int(usuario_global['juegos']) + 1)
         #Colocar barcos
         window =  sg.Window('Menu', layout, element_justification='c')
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Salir':
-                matriz.graficarNeato('Tablero')
                 break
-            else:
+            elif(event == 'Retroceder un movimiento'):
+                if((int(usuario_global['monedas']) - 5) >= 0):
+                    try:
+                        movimientos = obtener_movimientos(0,0,nombreJuego,usuario_global['id'])
+                        print(movimientos)
+                        for i in movimientos['movimientos']:
+                            movimiento = i
+                        print(movimiento)
+                        layout[movimiento['x'] + 1][movimiento['y']].update(button_color=('black','#FFABE1'))
+                        eliminar_movimiento(movimiento['x'],movimiento['y'],nombreJuego,usuario_global['id'])
+                        usuario_global['monedas'] = str(int(usuario_global['monedas']) - 5)
+                    except:
+                        sg.popup_error('No hay movimientos que retroceder')
+                else:
+                    sg.popup_error('No tienes suficientes monedas')
+            elif(event == 'Colocar minas'):
                 if (llenado == False):
                     i = 1
                     print(len(layout))
@@ -164,7 +185,7 @@ def crear_tablero(tamanio :int):
                     print("Destructor")
                     while i <= (Destructor):
                         x1 = random.randint(1, len(layout)-1)
-                        y1 = random.randint(0, len(layout[0]))
+                        y1 = random.randint(0, len(layout[1])-1)
                         x2 = x1
                         y2 = y1
                         caso = random.randint(0, 3)
@@ -223,27 +244,29 @@ def crear_tablero(tamanio :int):
                     llenado = True
                 
                     matriz.graficarNeato('Tablero')
-
-                    #Disparo
-                    while True:
-                        event2, values = window.read()
-                        if event2 == sg.WIN_CLOSED or event2 == 'Salir':
-                            break
-                        else:
-                            for k in range(1 , len(layout)):
-                                for l in range(len(layout) - 1):
-                                    if(layout[k][l].ButtonText == event2 ):
-                                        if(pintar_disparo(k, l, matriz, layout)):
-                                            usuario_global['monedas'] = int(usuario_global['monedas']) + 20
-                                            layout[0][3].update(usuario_global['monedas'])
-                                        else:
-                                            vidas = vidas - 1
-                                            layout[0][1].update(vidas)
-                                        break
+            else:
+                if(vidas > 0 and revisar_tablero(matriz,layout) == False):
+                    for k in range(1 , len(layout)):
+                        for l in range(len(layout) - 1):
+                            if(layout[k][l].ButtonText == event ):
+                                if(pintar_disparo(k, l, matriz, layout)):
+                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    usuario_global['monedas'] = int(usuario_global['monedas']) + 20
+                                    layout[0][4].update(usuario_global['monedas'])
                                 else:
-                                    continue
+                                    vidas = vidas - 1
+                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    layout[0][1].update(vidas)
                                 break
-
+                        else:
+                            continue
+                        break
+                else:
+                    sg.popup('Perdiste')
+                    break
+                if(revisar_tablero(matriz,layout)):
+                    sg.popup_animated('Fase2/Interfaz/trophy.gif')
+                    break
                 # for i in range(1 , len(layout)):
                 #     for j in range(len(layout) - 1):
                 #         if(layout[i][j].ButtonText == event and layout[i][j].ButtonColor[1] == '#6c7b95'):
@@ -532,6 +555,14 @@ def pintar_disparo(x :int, y :int, matriz :MatrizDispersa, layout):
         layout[x][y].update('X')
         return False
 
+#Revisar tablero
+def revisar_tablero(matriz :MatrizDispersa,layout):
+    for i in range(1 , len(layout)):
+        for j in range(len(layout[1]) - 1):
+            if(matriz.getNodo(i-1, j) != None and layout[i][j].ButtonText != 'X'):
+                return False
+    return True
+
 #Limpiar botones
 def limpiar_botones(layout):
     for i in range(1 , len(layout)):
@@ -722,8 +753,35 @@ def llenar_articulos(array_articulos):
         articulos.append([i['nombre'] , (i['precio']), i['id'], i['src']])
     return articulos
     
+#Agregar movimiento
+def agregar_movimiento(x,y,nombre,id):
+    try:
+        res = requests.post(f'{base_url}AgregarMovimiento/' + str(x) + '/' + str(y) + '/' + str(nombre) + '/' + str(id))
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        return data
+    except:
+        pass
 
+#Eliminar movimiento
+def eliminar_movimiento(x,y,nombre,id):
+    try:
+        res = requests.put(f'{base_url}AgregarMovimiento/' + str(x) + '/' + str(y) + '/' + str(nombre) + '/' + str(id))
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        return data
+    except:
+        pass
 
+#Obtener movimientos
+def obtener_movimientos(x,y,nombre,id):
+    try:
+        res = requests.get(f'{base_url}AgregarMovimiento/' + str(x) + '/' + str(y) + '/' + str(nombre) + '/' + str(id))
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        return data
+    except:
+        pass
 #Tienda
 def tienda():
         sg.theme('DarkTeal4')
@@ -1196,7 +1254,7 @@ def menuPrincipal():
     window.close()
 
 #login()
-crear_tablero(12)
+#crear_tablero(10)
 #tienda()
-#menuPrincipal()
+menuPrincipal()
 #menu()

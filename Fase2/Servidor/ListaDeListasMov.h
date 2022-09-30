@@ -20,6 +20,8 @@ public:
     void InsertarFinal(ListaMovimientos*lista);
     void Imprimir();
     void CrearGraphviz();
+    ListaMovimientos* Buscar(string nombre);
+    string getMovimientoComoJson();
 };
 #endif /* LISTADELISTAS_H */
     

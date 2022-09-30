@@ -21,7 +21,7 @@ public:
     ListaUsuarios() {
         primero = NULL;
         ultimo = NULL;
-        tamanio = 0;
+        tamanio = 1;
     }
     void InsertarFinal(string nick, string password, int monedas, int edad);
     nodoUsuarios* BuscarUsuario(string nick, string password);

@@ -86,3 +86,35 @@ void ListaDeListas::CrearGraphviz(){
     system("dot -Tpng pila.dot -o pila.png");
 }
 
+ListaMovimientos* ListaDeListas::Buscar(string nombre){
+    nodoListaDeListas*aux;
+    aux = new nodoListaDeListas();
+    aux = primero;
+    while (aux != NULL) {
+        if (aux->lista->nombre == nombre){
+            return aux->lista;
+        }
+        aux = aux->sigNodo;
+    }
+    return NULL;
+}
+
+string ListaDeListas::getMovimientoComoJson(){
+    nodoListaDeListas*aux;
+    aux = new nodoListaDeListas();
+    int i = 0;
+    aux = primero;
+    string json;
+    json = "\"movimientos\": [";
+    while (aux != NULL) {
+        json += aux->lista->getMovimientoComoJson();
+        if (aux->sigNodo != NULL){
+            json += ",";
+        }
+        aux = aux->sigNodo;
+    }
+    //Remover la ultima coma
+    json = json.substr(0, json.size()-1);
+    json += "]";
+    return json;
+}

@@ -626,6 +626,82 @@ public:
 
     }
 
+    void postMovimiento(GloveHttpRequest& request, GloveHttpResponse& response){
+        response.contentType("text/json");
+        if(request.special["id"] != ""){
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+                nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                if(tmpUsuario->lista.Buscar(request.special["nombre"]) != NULL){
+                    tmpUsuario->lista.Buscar(request.special["nombre"])->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
+                }else{
+                    ListaMovimientos *colaMovimientos = new ListaMovimientos();
+                    colaMovimientos->nombre = request.special["nombre"];
+                    colaMovimientos->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
+                    tmpUsuario->lista.InsertarFinal(colaMovimientos);
+                }
+                response << "{"
+                        << jsonkv("status", "ok")   << ","
+                        << jsonkv("nick", tmpUsuario->nick)
+                        << "}";
+                
+            }else{
+                response << "{"
+                        << jsonkv("status", "El usuario no existe")
+                        << "}";
+            }
+        }
+    }
+
+    void getMovimiento(GloveHttpRequest& request, GloveHttpResponse& response){
+        response.contentType("text/json");
+        if(request.special["id"] != ""){
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+                nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                if(tmpUsuario->lista.Buscar(request.special["nombre"]) != NULL){
+                    response << "{"
+                            << jsonkv("status", "ok")   << ","
+                            << jsonkv("nick", tmpUsuario->nick) << ","
+                            << tmpUsuario->lista.getMovimientoComoJson() 
+                            << "}";
+                }else{
+                    response << "{"
+                            << jsonkv("status", "El usuario no tiene movimientos")
+                            << "}";
+                }
+                
+            }else{
+                response << "{"
+                        << jsonkv("status", "El usuario no existe")
+                        << "}";
+            }
+        }
+    }
+    void EliminarMovimiento(GloveHttpRequest &request, GloveHttpResponse &response){
+        response.contentType("text/json");
+        if(request.special["id"] != ""){
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+                nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                if(tmpUsuario->lista.Buscar(request.special["nombre"]) != NULL){
+                    tmpUsuario->lista.Buscar(request.special["nombre"])->EliminarUltimo();
+                    response << "{"
+                            << jsonkv("status", "ok")   << ","
+                            << jsonkv("nick", tmpUsuario->nick) << ","
+                            << tmpUsuario->lista.getMovimientoComoJson() 
+                            << "}";
+                }else{
+                    response << "{"
+                            << jsonkv("status", "El usuario no tiene movimientos")
+                            << "}";
+                }
+                
+            }else{
+                response << "{"
+                        << jsonkv("status", "El usuario no existe")
+                        << "}";
+            }
+        }
+    }
+
 private:
     ListaUsuarios serverUsuarios;
     ListaArticulos serverArticulos;
@@ -935,6 +1011,11 @@ int main(int argc, char **argv)
     serv.addRest("/Comprar/$nick/$password/$id/$cantidad/$total", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postCompra, &API, ph::_1, ph::_2));
+    serv.addRest("/AgregarMovimiento/$x/$y/$nombre/$id", 3,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::getMovimiento, &API, ph::_1, ph::_2),
+                std::bind(&Servidor::postMovimiento, &API, ph::_1, ph::_2),
+                std::bind(&Servidor::EliminarMovimiento, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
     while (1)
     {

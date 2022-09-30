@@ -23,6 +23,8 @@ public:
     }
     void InsertarFinal(int x, int y);
     void Imprimir();
+    string getMovimientoComoJson();
+    void EliminarUltimo();
 private:
 };
 
