@@ -18,6 +18,7 @@ public:
     void InsertarFinal(int x, int y);
     void Imprimir();
     void CrearGraphviz();
+    string getTutorialComoJson();
 private:
 };
 

@@ -702,6 +702,13 @@ public:
         }
     }
 
+    void getTutorial(GloveHttpRequest &request, GloveHttpResponse &response){
+        response.contentType("text/json");
+        response << "{"
+                << jsonkv("status", "ok")   << ","
+                << serverTutorial.getTutorialComoJson(); 
+    }
+
 private:
     ListaUsuarios serverUsuarios;
     ListaArticulos serverArticulos;
@@ -1016,6 +1023,9 @@ int main(int argc, char **argv)
                 std::bind(&Servidor::getMovimiento, &API, ph::_1, ph::_2),
                 std::bind(&Servidor::postMovimiento, &API, ph::_1, ph::_2),
                 std::bind(&Servidor::EliminarMovimiento, &API, ph::_1, ph::_2));
+    serv.addRest("/ObtenerTutorial/", 0,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::getTutorial, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
     while (1)
     {

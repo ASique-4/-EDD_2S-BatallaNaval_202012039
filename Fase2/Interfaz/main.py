@@ -821,7 +821,265 @@ def tienda():
                     print(articulos[values['tabla'][0]])
                     comprar_articulo(articulos[values['tabla'][0]])
                     window.un_hide()
+
+#Ver tutorial
+def ver_tutorial():
+    data = obtener_tutorial()
+    sg.theme('DarkTeal4')
+    tamanio = data['ancho']
+    llenado = False
+    repetir = True
+    monedasTutorial = 100
+    #Si el ancho y alto es mayor a 10
+    if(tamanio >= 10):
+        layout = []
+        botones = []
+        #Numero de barcos
+        constante = int(((tamanio - 1)/10)+1)
+        Portaaviones = 1*constante
+        Submarino = 2*constante
+        Destructor = 3*constante
+        Buque = 4*constante
+        vidas = 3
+        layout.append(
+            [
+            sg.Text('Vidas',text_color='#FFABE1',font='Futura 15'),sg.Text(vidas,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(monedasTutorial,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Button('Colocar minas',button_color=('black','#FFABE1'),font='Futura 10'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Button('Retroceder un movimiento',button_color=('black','#FFABE1'),font='Futura 10'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Button('Siguiente Paso',button_color=('black','#FFABE1'),font='Futura 10')
+            ]
+            )
+        matriz = MatrizDispersa()
+        for i in range(0, (tamanio) + 1):
+            #Si los botones no están vacios los limpia
+            if(len(botones) > 0):
+                layout.append(botones)
+                botones = []
+                
+            for j in range(0, (tamanio)):
+                boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold")
+                botones.append(boton)
+        
+        nombreJuego = 'Juego' + str(usuario_global['juegos'])
+        usuario_global['juegos'] = str(int(usuario_global['juegos']) + 1)
+        #Colocar barcos
+        window =  sg.Window('Menu', layout, element_justification='c')
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Salir':
+                break
+            elif(event == 'Retroceder un movimiento'):
+                sg.popup_error('No se puede retroceder un movimiento durante el tutorial', title='Error')
+            elif(event == 'Colocar minas'):
+                if (llenado == False):
+                    i = 1
+                    print(len(layout))
+                    print("Portaaviones")
+                    while i <= (Portaaviones):
+                        x1 = random.randint(1, len(layout) - 1)
+                        y1 = random.randint(0, len(layout[1])-1)
+                        x2 = x1
+                        y2 = y1
+                        caso = random.randint(0, 3)
+                        if caso == 0:
+                            x2 = x1+3
+                            if(x2 <= len(layout)-1) :
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                        elif caso == 1:
+                            x2 = x1 - 3
+                            if(x2 >= 1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                        elif caso == 2:
+                            y2 = y1 + 3
+                            if(y2 <= len(layout[1])-1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                        elif caso == 3:
+                            y2 = y1 - 3
+                            if(y2 >= 0):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(portaavionesNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_portaavion(x1, y1, x2, y2, matriz, layout)
+                                    Portaaviones -= 1
+                            else:
+                                continue
+                    i = 1
+                    print("Submarino")
+                    while i <= (Submarino):
+                        x1 = random.randint(1, len(layout)-1)
+                        y1 = random.randint(0, len(layout[1])-1)
+                        x2 = x1
+                        y2 = y1
+                        caso = random.randint(0, 3)
+                        if caso == 0:
+                            x2 = x1+2
+                            if(x2 <= len(layout)-1) :
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                        elif caso == 1:
+                            x2 = x1 - 2
+                            if(x2 >= 1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                        elif caso == 2:
+                            y2 = y1 + 2
+                            if(y2 <= len(layout[1])-1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                        elif caso == 3:
+                            y2 = y1 - 2
+                            if(y2 >= 0):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(submarinoNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_submarino(x1, y1, x2, y2, matriz, layout)
+                                    Submarino -= 1
+                            else:
+                                continue
+                    i = 1
+                    print("Destructor")
+                    while i <= (Destructor):
+                        x1 = random.randint(1, len(layout)-1)
+                        y1 = random.randint(0, len(layout[1])-1)
+                        x2 = x1
+                        y2 = y1
+                        caso = random.randint(0, 3)
+                        if caso == 0:
+                            x2 = x1+1
+                            if(x2 <= len(layout)-1) :
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
+                        elif caso == 1:
+                            x2 = x1 - 1
+                            if(x2 >= 1):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
+                        elif caso == 2:
+                            y2 = y1 + 1
+                            if(y2 <= len(layout[0])):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
+                        elif caso == 3:
+                            y2 = y1 - 1
+                            if(y2 >= 0):
+                                print(caso)
+                                print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                                if(destructorNoPintado(x1, y1, x2, y2, matriz)):
+                                    pintar_destructor(x1, y1, x2, y2, matriz, layout)
+                                    Destructor -= 1
+                            else:
+                                continue
                     
+                    i = 1
+                    print("Buque")
+                    while i <= (Buque):
+                        x1 = random.randint(1, len(layout)-1)
+                        y1 = random.randint(0, len(layout[1])-1)
+                        x2 = x1
+                        y2 = y1
+                        if(matriz.getNodo(x1-1, y1) == None):
+                            print("x1: " + str(x1-1) + " y1: " + str(y1) + " x2: " + str(x2-1) + " y2: " + str(y2))
+                            pintar_buque(x1, y1, x2, y2, matriz, layout)
+                            Buque -= 1
+                    llenado = True
+                
+                    matriz.graficarNeato('Tutorial')
+            elif(event == 'Siguiente Paso'):
+                print(data['movimientos'][0] )
+                if(vidas > 0 and revisar_tablero(matriz,layout) == False):
+                    for k in range(1 , len(layout)):
+                        for l in range(len(layout) - 1):
+                            if(layout[k][l].ButtonText == (str(data['movimientos'][0]['x']) + ',' + str(data['movimientos'][0]['y'])) ):
+                                if(pintar_disparo(k, l, matriz, layout)):
+                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    monedasTutorial = int(monedasTutorial) + 20
+                                    layout[0][4].update(monedasTutorial)
+                                    data['movimientos'].pop(0)
+                                    sg.popup_ok('Al acertar sumas 20 monedas')
+                                else:
+                                    vidas = vidas - 1
+                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    layout[0][1].update(vidas)
+                                    data['movimientos'].pop(0)
+                                    sg.popup_ok('Al fallar pierdes una vida')
+                                break
+                        else:
+                            continue
+                        break
+                else:
+                    sg.popup('Perdiste')
+                    if(repetir):
+                        sg.popup_ok('Si tienes monedas suficientes puedes volver a jugar')
+                        if((int(monedasTutorial) - 5) >= 0):
+                            try:
+                                movimiento = data['movimientos'][0]
+                                print(movimiento)
+                                layout[movimiento['x'] + 1][movimiento['y']].update(button_color=('black','#FFABE1'))
+                                data['movimientos'].pop(0)
+                                monedasTutorial = str(int(monedasTutorial) - 5)
+                                sg.popup_ok('Se te descontaran 5 monedas')
+                            except:
+                                sg.popup_error('No hay movimientos que retroceder')
+                        else:
+                            sg.popup_error('No tienes suficientes monedas')
+                        break
+                    break
+                if(revisar_tablero(matriz,layout)):
+                    sg.popup('Ganaste')
+                    break
                     
             
 #Agregar compra
@@ -838,7 +1096,15 @@ def agregar_compra(product_id,cantidad):
         sg.popup('No se pudo realizar la compra', title='Error')
         return 'errror'
             
-
+#Obtener tutorial
+def obtener_tutorial():
+    try:
+        res = requests.get(f'{base_url}ObtenerTutorial/')
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        return data
+    except:
+        pass
 
 #Comprar barcos
 def comprar_articulo(data):
@@ -1256,5 +1522,6 @@ def menuPrincipal():
 #login()
 #crear_tablero(10)
 #tienda()
-menuPrincipal()
+#menuPrincipal()
 #menu()
+ver_tutorial()

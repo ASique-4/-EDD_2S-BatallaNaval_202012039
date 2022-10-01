@@ -74,3 +74,38 @@ void ColaTutorial::CrearGraphviz(){
     archivo.close();
     system("dot -Tpng tutorial.dot -o tutorial.png");
 }
+
+string ColaTutorial::getTutorialComoJson(){
+    nodoTutorial*aux = Ultimo;
+    string json = "";
+    json += "\"ancho\":";
+    json += to_string(Inicio->x);
+    json += ",";
+    json += "\"alto\":";
+    json += to_string(Inicio->y);
+    json += ",";
+    json += "\"movimientos\":[";
+    while(aux != NULL) {
+        if (aux == Inicio){
+            json += "{\"x\":";
+            json += to_string(aux->x);
+            json += ",";
+            json += "\"y\":";
+            json += to_string(aux->y);
+            json += "}";
+            break;
+        }else{
+            json += "{\"x\":";
+            json += to_string(aux->x);
+            json += ",";
+            json += "\"y\":";
+            json += to_string(aux->y);
+            json += "},";
+        }
+        
+        aux = aux->ant;
+    }
+    json += "]";
+    json += "}";
+    return json;
+}
