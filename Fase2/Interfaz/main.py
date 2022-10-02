@@ -1,13 +1,14 @@
 import random
 import string
-from time import sleep
 import webbrowser
-import requests
 import json
+import requests
 import PySimpleGUI as sg
 from MatrizDispersa import MatrizDispersa
 
 
+# Creating a list of lists, where each list contains the name of a user and the number of games they
+# have played.
 base_url = "http://localhost:8080/"
 
 usuario_global = {
@@ -18,14 +19,23 @@ usuario_global = {
     'id': '',
     'juegos': '0'
 }
+
 usuarios = [['EDD','0']]
 
 
 
 #Crear tablero
 def crear_tablero(tamanio :int):
+    """
+    This function creates a window with a board of buttons, and then fills the board with ships
+    
+    :param tamanio: The size of the board
+    :type tamanio: int
+    """
     sg.theme('DarkTeal4')
     llenado = False
+    Errores = 0
+    puntos = 0
     #Si el ancho y alto es mayor a 10
     if(tamanio >= 10):
         layout = []
@@ -66,6 +76,9 @@ def crear_tablero(tamanio :int):
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Salir':
+                sg.popup('Gracias por jugar')
+                sg.popup('Sumaste ' + str(puntos) + ' puntos')
+                sg.popup('Tuviste ' + str(Errores) + ' errores')
                 break
             elif(event == 'Retroceder un movimiento'):
                 if((int(usuario_global['monedas']) - 5) >= 0):
@@ -253,10 +266,12 @@ def crear_tablero(tamanio :int):
                                     agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     usuario_global['monedas'] = int(usuario_global['monedas']) + 20
                                     layout[0][4].update(usuario_global['monedas'])
+                                    puntos = puntos + 20
                                 else:
                                     vidas = vidas - 1
                                     agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     layout[0][1].update(vidas)
+                                    Errores += 1
                                 break
                         else:
                             continue
@@ -265,71 +280,8 @@ def crear_tablero(tamanio :int):
                     sg.popup('Perdiste')
                     break
                 if(revisar_tablero(matriz,layout)):
-                    sg.popup_animated('Fase2/Interfaz/trophy.gif')
+                    sg.popup('Ganaste')
                     break
-                # for i in range(1 , len(layout)):
-                #     for j in range(len(layout) - 1):
-                #         if(layout[i][j].ButtonText == event and layout[i][j].ButtonColor[1] == '#6c7b95'):
-                #             if(colorear_botones(values[0], int(i), int(j), matriz, layout)):
-                #                 while True:
-                #                     event2, values = window.read()
-                #                     if event2 == sg.WIN_CLOSED or event2 == 'Salir':
-                #                         break
-                #                     else:
-                #                         for k in range(1 , len(layout)):
-                #                             for l in range(len(layout) - 1):
-                #                                 if(layout[k][l].ButtonText == event2 ):
-                #                                     if(layout[k][l].ButtonColor[1] == '#EEF1FF'):
-                #                                         if values[0] == 'Portaaviones' and Portaaviones > 0:
-                #                                             if(pintar_portaavion(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                #                                                 limpiar_botones(layout)
-                #                                                 Portaaviones -= 1
-                #                                                 layout[0][2].update(Portaaviones)
-                #                                                 break
-                #                                             else:
-                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                #                                                 limpiar_botones(layout)
-                #                                                 break
-                #                                         elif values[0] == 'Submarino' and Submarino > 0:
-                #                                             if(pintar_submarino(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                #                                                 limpiar_botones(layout)
-                #                                                 Submarino -= 1
-                #                                                 layout[0][4].update(Submarino)
-                #                                                 break
-                #                                             else:
-                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                #                                                 limpiar_botones(layout)
-                #                                                 break
-                #                                         elif values[0] == 'Destructor' and Destructor > 0:
-                #                                             if(pintar_destructor(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                #                                                 limpiar_botones(layout)
-                #                                                 Destructor -= 1
-                #                                                 layout[0][6].update(Destructor)
-                #                                                 break
-                #                                             else:
-                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                #                                                 limpiar_botones(layout)
-                #                                                 break
-                #                                         elif values[0] == 'Buque' and Buque > 0:
-                #                                             if(pintar_buque(int(i), int(j), int(k), int(l), matriz, layout) != False):
-                #                                                 limpiar_botones(layout)
-                #                                                 Buque -= 1
-                #                                                 layout[0][8].update(Buque)
-                #                                                 break
-                #                                             else:
-                #                                                 sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                #                                                 limpiar_botones(layout)
-                #                                                 break
-                #                                         else:
-                #                                             sg.popup_error('No quedan ' + values[0], title="Error")
-                #                                             limpiar_botones(layout)
-                #                                     else:
-                #                                         sg.PopupError("No se puede colocar el barco en esa posición", title="Error")
-                #                                         limpiar_botones(layout)
-                #                                         break
-                #                                     break
-                #                         break
-                #             break     
     else:
         sg.PopupError("El alto y ancho debe ser mayor a 10", title="Error")
 
@@ -824,6 +776,9 @@ def tienda():
 
 #Ver tutorial
 def ver_tutorial():
+    """
+    The above function is the tutorial for the game.
+    """
     data = obtener_tutorial()
     sg.theme('DarkTeal4')
     tamanio = data['ancho']
@@ -865,13 +820,17 @@ def ver_tutorial():
                 boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold")
                 botones.append(boton)
         
-        nombreJuego = 'Juego' + str(usuario_global['juegos'])
-        usuario_global['juegos'] = str(int(usuario_global['juegos']) + 1)
         #Colocar barcos
         window =  sg.Window('Menu', layout, element_justification='c')
+        sg.popup('Bienvenido al tutorial', title='Bienvenido')
+        sg.popup('En este tutorial aprenderás a jugar el juego', title='Tutorial')
+        sg.popup('En este juego debes de colocar las minas en el tablero', title='Tutorial')
+        sg.popup('Para colocar una mina debes de dar click en el boton de colocar minas', title='Tutorial')
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Salir':
+                sg.popup('Gracias por jugar', title='Gracias')
+                window.close()
                 break
             elif(event == 'Retroceder un movimiento'):
                 sg.popup_error('No se puede retroceder un movimiento durante el tutorial', title='Error')
@@ -1037,48 +996,67 @@ def ver_tutorial():
                     llenado = True
                 
                     matriz.graficarNeato('Tutorial')
+                    sg.popup_ok('Ya puedes comenzar a jugar', title='Tutorial')
+                    sg.popup_ok('Presiona siguiente paso para seguir con el tutorial', title='Tutorial')
             elif(event == 'Siguiente Paso'):
-                print(data['movimientos'][0] )
+                if(len(data['movimientos']) == 0):
+                    sg.popup_ok('Ya no hay mas movimientos', title='Tutorial')
+                    sg.popup_ok('Tu puntaje es: ' + str(monedasTutorial), title='Tutorial')
+                    window.close()
                 if(vidas > 0 and revisar_tablero(matriz,layout) == False):
+                    print(data['movimientos'][0])
                     for k in range(1 , len(layout)):
                         for l in range(len(layout) - 1):
                             if(layout[k][l].ButtonText == (str(data['movimientos'][0]['x']) + ',' + str(data['movimientos'][0]['y'])) ):
                                 if(pintar_disparo(k, l, matriz, layout)):
-                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     monedasTutorial = int(monedasTutorial) + 20
                                     layout[0][4].update(monedasTutorial)
                                     data['movimientos'].pop(0)
-                                    sg.popup_ok('Al acertar sumas 20 monedas')
+                                    sg.popup_ok('Al acertar sumas 20 monedas', title='Tutorial')
                                 else:
                                     vidas = vidas - 1
-                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     layout[0][1].update(vidas)
                                     data['movimientos'].pop(0)
-                                    sg.popup_ok('Al fallar pierdes una vida')
+                                    sg.popup_ok('Al fallar pierdes una vida', title='Tutorial')
                                 break
                         else:
                             continue
                         break
                 else:
-                    sg.popup('Perdiste')
+                    sg.popup('Perdiste', title='Tutorial')
                     if(repetir):
-                        sg.popup_ok('Si tienes monedas suficientes puedes volver a jugar')
+                        sg.popup_ok('Si tienes monedas suficientes puedes volver a jugar', title='Tutorial')
                         if((int(monedasTutorial) - 5) >= 0):
                             try:
                                 movimiento = data['movimientos'][0]
                                 print(movimiento)
-                                layout[movimiento['x'] + 1][movimiento['y']].update(button_color=('black','#FFABE1'))
+                                for k in range(1 , len(layout)):
+                                    for l in range(len(layout) - 1):
+                                        if(layout[k][l].ButtonText == (str(data['movimientos'][0]['x']) + ',' + str(data['movimientos'][0]['y'])) ):
+                                            if(pintar_disparo(k, l, matriz, layout)):
+                                                monedasTutorial = int(monedasTutorial) + 20
+                                                layout[0][4].update(monedasTutorial)
+                                                data['movimientos'].pop(0)
+                                                sg.popup_ok('Al acertar sumas 20 monedas', title='Tutorial')
+                                            else:
+                                                data['movimientos'].pop(0)
+                                                sg.popup_ok('Al fallar pierdes una vida', title='Tutorial')
+                                            break
+                                    else:
+                                        continue
+                                    break
                                 data['movimientos'].pop(0)
                                 monedasTutorial = str(int(monedasTutorial) - 5)
-                                sg.popup_ok('Se te descontaran 5 monedas')
+                                sg.popup_ok('Se te descontaran 5 monedas por retroceder un movimiento', title='Tutorial')
+                                layout[0][4].update(monedasTutorial)
                             except:
-                                sg.popup_error('No hay movimientos que retroceder')
+                                sg.popup_error('No hay movimientos que retroceder', title='Tutorial')
                         else:
-                            sg.popup_error('No tienes suficientes monedas')
+                            sg.popup_error('No tienes suficientes monedas', title='Tutorial')
+                    else:
                         break
-                    break
                 if(revisar_tablero(matriz,layout)):
-                    sg.popup('Ganaste')
+                    sg.popup('Ganaste', title='Tutorial')
                     break
                     
             
@@ -1098,6 +1076,11 @@ def agregar_compra(product_id,cantidad):
             
 #Obtener tutorial
 def obtener_tutorial():
+    """
+    It makes a GET request to the API endpoint, converts the response to a dictionary, and returns the
+    dictionary
+    :return: A list of dictionaries
+    """
     try:
         res = requests.get(f'{base_url}ObtenerTutorial/')
         data = res.text#convertimos la respuesta en dict
@@ -1308,7 +1291,7 @@ def editar(nick, password, edad):
     try:
         progress_bar()
         if(nick != "" & password == "" & edad == ""):
-            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + nick + '/' + usuario_global['password'] + '/' + usuario_global['edad'] + '/')
+            res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + nick + '/' + usuario_global['password'] + '/' + usuario_global['edad'] + '/',timeout=5)
         elif (nick == "" & password != "" & edad == ""):
             res = requests.get(f'{base_url}ModificarUsuario/' + usuario_global['id'] + '/' + usuario_global['nick'] + '/' + password + '/' + usuario_global['edad'] + '/')
         elif (nick == "" & password == "" & edad != ""):
