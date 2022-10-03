@@ -483,14 +483,19 @@ public:
     {
         response.contentType("text/json");
         if(request.special["nick"] != "" && request.special["password"] != "" && request.special["edad"] != ""){
-            nodoUsuarios *nuevo = new nodoUsuarios();
-            nuevo->nick = request.special["nick"];
-            nuevo->password = encriptarSHA256(request.special["password"]);
-            nuevo->monedas = 0;
-            nuevo->edad = stringtoint(request.special["edad"]);
-            nuevo->id = serverUsuarios.ultimo->id + 1;
+            serverUsuarios.InsertarFinal(request.special["nick"],encriptarSHA256(request.special["password"]),0,stringtoint(request.special["edad"]),serverUsuarios.ultimo->id+1); 
+            serverArbol.raiz = NULL;
+            serverUsuarios.OrdenarPorId();
+            nodoUsuarios*admin = new nodoUsuarios();
+            admin->nick = "EDD";
+            admin->password = encriptarSHA256("edd123");
+            cout << admin->password << endl;
+            admin->edad = 20;
+            admin->monedas = 0;
+            admin->id = 0;
 
-            serverArbol.insertar(nuevo);
+            serverArbol.insertar(admin);
+            serverArbol.agregarTodosLosUsuarios(serverUsuarios);
             //serverUsuarios.InsertarFinal(request.special["nick"],encriptarSHA256(request.special["password"]),0,stringtoint(request.special["edad"]));
             response << "{"
                     << jsonkv("nick", request.special["nick"])
@@ -507,6 +512,15 @@ public:
                 serverUsuarios.EliminarUsuario(serverArbol.buscar(stringtoint(request.special["id"]))->usuario);
                 serverUsuarios.OrdenarPorId();
                 serverArbol.raiz = NULL;
+                nodoUsuarios*admin = new nodoUsuarios();
+                admin->nick = "EDD";
+                admin->password = encriptarSHA256("edd123");
+                cout << admin->password << endl;
+                admin->edad = 20;
+                admin->monedas = 0;
+                admin->id = 0;
+
+                serverArbol.insertar(admin);
                 serverArbol.agregarTodosLosUsuarios(serverUsuarios);
                 
                 response << "{"
@@ -528,6 +542,13 @@ public:
             if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
 
                 nodoUsuarios* aux = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+
+                nodoUsuarios* aux2 = serverUsuarios.BuscarUsuario(aux->nick,aux->password);
+
+                aux2->nick = request.special["newNick"];
+                aux2->password = encriptarSHA256(request.special["newPassword"]);
+                aux2->edad = stringtoint(request.special["newEdad"]);
+
                 aux->nick = request.special["newNick"];
                 aux->password = encriptarSHA256(request.special["newPassword"]);
                 aux->edad = stringtoint(request.special["newEdad"]);
@@ -542,19 +563,6 @@ public:
                         << jsonkv("monedas", to_string(aux->monedas))
                         << "]"
                         << "}";
-
-                // nodoUsuarios *tmpUsuario = serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"]));
-                // tmpUsuario->edad = stringtoint(request.special["newEdad"]);
-                // tmpUsuario->nick = (request.special["newNick"]);
-                // tmpUsuario->password = encriptarSHA256(request.special["newPassword"]);
-                // response << "{"
-                //         << jsonkv("status", "ok")
-                //         << "usuario: ["
-                //         << jsonkv("nick", tmpUsuario->nick) << ","
-                //         << jsonkv("password", encriptarSHA256(tmpUsuario->password)) << ","
-                //         << jsonkv("edad", to_string(tmpUsuario->edad))
-                //         << "]"
-                //         << "}";
             }else{
                 response << "{"
                         << jsonkv("error", "El usuario no existe")
@@ -575,11 +583,13 @@ public:
         if(request.special["nick"] != "" && request.special["password"] != "" && request.special["id"] != ""){
             if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
                 nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
-                nodoArticulos *tmpArticulo = serverArticulos.getArticulo(request.special["id"]);
+                nodoArticulos *tmpArticulo = serverArticulos.getArticulo(request.special["idart"]);
                 if(tmpArticulo != NULL){
                     int tmp = stringtoint(request.special["cantidad"]);
+
                     serverArbol.insertarCompra(tmpUsuario, tmpArticulo, tmp);
                     serverArbol.buscar(stringtoint(request.special["id"]))->usuario->monedas -= tmpArticulo->precio * tmp;
+
                     response << "{"
                             << jsonkv("status", "ok")   << ","
                             << jsonkv("nick", tmpUsuario->nick) << ","
@@ -627,14 +637,18 @@ public:
         response.contentType("text/json");
         if(request.special["id"] != ""){
             if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+
                 nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                nodoUsuarios *aux2 = serverUsuarios.BuscarUsuario(tmpUsuario->nick, tmpUsuario->password);
                 if(tmpUsuario->lista.Buscar(request.special["nombre"]) != NULL){
                     tmpUsuario->lista.Buscar(request.special["nombre"])->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
+                    aux2->lista.Buscar(request.special["nombre"])->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
                 }else{
                     ListaMovimientos *colaMovimientos = new ListaMovimientos();
                     colaMovimientos->nombre = request.special["nombre"];
                     colaMovimientos->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
                     tmpUsuario->lista.InsertarFinal(colaMovimientos);
+                    aux2->lista.InsertarFinal(colaMovimientos);
                 }
                 response << "{"
                         << jsonkv("status", "ok")   << ","
@@ -678,8 +692,10 @@ public:
         if(request.special["id"] != ""){
             if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
                 nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                nodoUsuarios *aux2 = serverUsuarios.BuscarUsuario(tmpUsuario->nick, tmpUsuario->password);
                 if(tmpUsuario->lista.Buscar(request.special["nombre"]) != NULL){
                     tmpUsuario->lista.Buscar(request.special["nombre"])->EliminarUltimo();
+                    aux2->lista.Buscar(request.special["nombre"])->EliminarUltimo();
                     response << "{"
                             << jsonkv("status", "ok")   << ","
                             << jsonkv("nick", tmpUsuario->nick) << ","
@@ -712,6 +728,9 @@ public:
             if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
                 nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
                 tmpUsuario->monedas += stringtoint(request.special["monedas"]);
+
+                nodoUsuarios *aux2 = serverUsuarios.BuscarUsuario(tmpUsuario->nick, tmpUsuario->password);
+                aux2->monedas += stringtoint(request.special["monedas"]);
                 response << "{"
                         << jsonkv("status", "ok")   << ","
                         << jsonkv("nick", tmpUsuario->nick) << ","
@@ -1032,7 +1051,7 @@ int main(int argc, char **argv)
     serv.addRest("/Graficar/$estructura/$id", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getGraficar, &API, ph::_1, ph::_2));
-    serv.addRest("/Comprar/$nick/$password/$id/$cantidad/$total", 1,
+    serv.addRest("/Comprar/$nick/$password/$id/$idart/$cantidad/", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postCompra, &API, ph::_1, ph::_2));
     serv.addRest("/AgregarMovimiento/$x/$y/$nombre/$id", 3,

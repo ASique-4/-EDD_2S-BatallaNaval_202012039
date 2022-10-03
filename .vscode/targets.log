@@ -1,4 +1,6 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+make: *** No rule to make target 'all'.  Stop.
+
 # GNU Make 4.3
 # Built for x86_64-pc-linux-gnu
 # Copyright (C) 1988-2020 Free Software Foundation, Inc.
@@ -6,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Oct  2 15:58:53 2022
+# Make data base, printed on Mon Oct  3 13:09:39 2022
 
 # Variables
 
@@ -73,7 +75,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXXSmHOv/agent.3630
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXX4IKa0E/agent.3624
 # default
 .SHELLFLAGS := -c
 # environment
@@ -89,7 +91,7 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 21927
+VSCODE_PID = 4103
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -181,9 +183,9 @@ SNAP_DATA = /var/snap/code/108
 # environment
 SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 21876
+GIO_LAUNCHED_DESKTOP_FILE_PID = 4053
 # environment
-SSH_AGENT_PID = 3632
+SSH_AGENT_PID = 3625
 # environment
 _ = /snap/code/108/usr/share/code/code
 # environment
@@ -279,9 +281,6 @@ makefile:
 #  Failed to be updated.
 
 # Not a target:
- 
-make: *** No rule to make target 'all'.  Stop.
-
 GNUmakefile:
 #  Implicit rule search has been done.
 #  File does not exist.
@@ -301,7 +300,8 @@ GNUmakefile:
 
 # strcache performance: lookups = 21 / hit rate = 14%
 # hash-table stats:
+ 
 # Load=18/8192=0%, Rehash=0, Collisions=0/21=0%
-# Finished Make data base on Sun Oct  2 15:58:53 2022
+# Finished Make data base on Mon Oct  3 13:09:39 2022
 
  

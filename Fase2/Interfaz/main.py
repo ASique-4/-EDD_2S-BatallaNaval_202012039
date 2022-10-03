@@ -797,6 +797,7 @@ def tienda():
                     #print(articulos)
                     print(articulos[values['tabla'][0]])
                     comprar_articulo(articulos[values['tabla'][0]])
+                    layout[1][0].update('Monedas: ' + str(usuario_global['monedas']))
                     window.un_hide()
 
 #Ver tutorial
@@ -1088,8 +1089,10 @@ def ver_tutorial():
 #Agregar compra
 def agregar_compra(product_id,cantidad):
     try:
+        print(f'{base_url}Comprar/' + usuario_global['nick'] + '/' + usuario_global['password'] + '/' + str(product_id) + '/' + str(cantidad) + '/' )
         progress_bar()
-        res = requests.get(f'{base_url}Comprar/' + usuario_global['nick'] + '/' + usuario_global['password'] + '/' + product_id + '/' + cantidad + '/' + cantidad + '/')
+        
+        res = requests.get(f'{base_url}Comprar/' + usuario_global['nick'] + '/' + usuario_global['password'] + '/' + usuario_global['id'] + '/' + str(product_id) + '/' + str(cantidad) + '/' )
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
         print(data)
@@ -1193,6 +1196,7 @@ def menu():
                 [sg.Button('Eliminar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Juego', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Tienda', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Reportes', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
     window = sg.Window('Menu', layout, size=(300, 400), element_justification='c')
     while True:
@@ -1218,6 +1222,10 @@ def menu():
         if event == 'Tienda':
             window.hide()
             tienda()
+            window.un_hide()
+        if event == 'Reportes':
+            window.hide()
+            menu_reportes()
             window.un_hide()
     window.close()
     return event
@@ -1248,6 +1256,7 @@ def registrar_usuario():
         if event == sg.WIN_CLOSED or event == 'Salir':
             break
         if event == 'Registrar':
+            print(values)
             registrar(values[0], values[1], values[2])
     window.close()
     return event
@@ -1273,7 +1282,9 @@ def registrar(nick, password, edad):
             res = requests.get(f'{base_url}CrearUsuario/' + nick + '/' + password + '/' + edad + '/')
             data = res.text#convertimos la respuesta en dict
             data = json.loads(data)
-            usuarios.append([nick, usuarios[-1][1] + 1])
+            print(data)
+            usuarios.append([nick, str(int(usuarios[-1][1]) + 1)])
+            print(usuarios)
             return (data['status'])
     except:
         return "error"
