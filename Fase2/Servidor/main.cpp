@@ -300,7 +300,7 @@ void cargarArchivos(string archivo, ListaUsuarios usuarios, ListaArticulos artic
         if (usuarios.BuscarNick(usuariosJson[i]["nick"].asString()) == false)
         {
             usuarios.InsertarFinal(usuariosJson[i]["nick"].asString(), encriptarSHA256(usuariosJson[i]["password"].asString()),
-                                    stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
+                                    stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()), stringtoint(usuariosJson[i]["id"].asString()));
         }
     }
     ifstream ifs2(archivo);
@@ -379,19 +379,13 @@ public:
                 if (serverUsuarios.BuscarNick(usuariosJson[i]["nick"].asString()) == false)
                 {
                     serverUsuarios.InsertarFinal(usuariosJson[i]["nick"].asString(), encriptarSHA256(usuariosJson[i]["password"].asString()),
-                                            stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
-                    nodoUsuarios *aux = new nodoUsuarios();
-                    aux->nick = usuariosJson[i]["nick"].asString();
-                    aux->password = encriptarSHA256(usuariosJson[i]["password"].asString());
-                    aux->monedas = stringtoint(usuariosJson[i]["monedas"].asString());
-                    aux->edad = stringtoint(usuariosJson[i]["edad"].asString());
-                    // cout << "----------------------------------------------------------------" << endl;
-                    // cout << aux->nick << " " << aux->password << " " << endl;
-                    // cout << "nick: " << usuariosJson[i]["nick"].asString() << "pass:" << usuariosJson[i]["password"].asString() << endl;
-                    // cout << "----------------------------------------------------------------" << endl;
-                    serverArbol.insertar(aux);
+                                            stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()), stringtoint(usuariosJson[i]["id"].asString()));
+                    
                 }
             }
+            serverUsuarios.OrdenarPorId();
+            serverUsuarios.Imprimir();
+            serverArbol.agregarTodosLosUsuarios(serverUsuarios);
 
             
 
@@ -494,6 +488,7 @@ public:
             nuevo->password = encriptarSHA256(request.special["password"]);
             nuevo->monedas = 0;
             nuevo->edad = stringtoint(request.special["edad"]);
+            nuevo->id = serverUsuarios.ultimo->id + 1;
 
             serverArbol.insertar(nuevo);
             //serverUsuarios.InsertarFinal(request.special["nick"],encriptarSHA256(request.special["password"]),0,stringtoint(request.special["edad"]));
@@ -509,8 +504,10 @@ public:
         response.contentType("text/json");
         if(request.special["id"] != ""){
             if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
-                serverArbol.eliminar(stringtoint(request.special["id"]));
-                //serverUsuarios.EliminarUsuario(serverUsuarios.BuscarUsuario(request.special["nick"],(request.special["password"])));
+                serverUsuarios.EliminarUsuario(serverArbol.buscar(stringtoint(request.special["id"]))->usuario);
+                serverUsuarios.OrdenarPorId();
+                serverArbol.raiz = NULL;
+                serverArbol.agregarTodosLosUsuarios(serverUsuarios);
                 
                 response << "{"
                         << jsonkv("nick", request.special["nick"])
@@ -708,6 +705,25 @@ public:
                 << jsonkv("status", "ok")   << ","
                 << serverTutorial.getTutorialComoJson(); 
     }
+    
+    void postMonedas(GloveHttpRequest &request, GloveHttpResponse &response){
+        response.contentType("text/json");
+        if(request.special["id"] != ""){
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+                nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                tmpUsuario->monedas += stringtoint(request.special["monedas"]);
+                response << "{"
+                        << jsonkv("status", "ok")   << ","
+                        << jsonkv("nick", tmpUsuario->nick) << ","
+                        << jsonkv("monedas", to_string(tmpUsuario->monedas))
+                        << "}";
+            }else{
+                response << "{"
+                        << jsonkv("status", "El usuario no existe")
+                        << "}";
+            }
+        }
+    }
 
 private:
     ListaUsuarios serverUsuarios;
@@ -761,7 +777,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                     if (usuarios.BuscarNick(usuariosJson[i]["nick"].asString()) == false)
                     {
                         usuarios.InsertarFinal(usuariosJson[i]["nick"].asString(), encriptarSHA256(usuariosJson[i]["password"].asString()),
-                                               stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()));
+                                               stringtoint(usuariosJson[i]["monedas"].asString()), stringtoint(usuariosJson[i]["edad"].asString()), stringtoint(usuariosJson[i]["id"].asString()));
                     }
                 }
 
@@ -830,7 +846,7 @@ void menu(ListaUsuarios usuarios, ListaArticulos articulos, ColaTutorial tutoria
                 cin >> edad;
                 if (usuarios.BuscarNick(nick) == false)
                 {
-                    usuarios.InsertarFinal(nick, encriptarSHA256(password), 0, edad);
+                    usuarios.InsertarFinal(nick, encriptarSHA256(password), 0, edad,4);
                     cout << "Usuario registrado" << endl;
                 }else{
                     cout << "Ya existe un usuario con este nick" << endl;
@@ -986,6 +1002,7 @@ int main(int argc, char **argv)
     cout << admin->password << endl;
     admin->edad = 20;
     admin->monedas = 0;
+    admin->id = 0;
 
     arbol.insertar(admin);
 
@@ -1026,6 +1043,9 @@ int main(int argc, char **argv)
     serv.addRest("/ObtenerTutorial/", 0,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getTutorial, &API, ph::_1, ph::_2));
+    serv.addRest("/Monedas/$monedas/$id", 1,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::postMonedas, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
     while (1)
     {

@@ -66,7 +66,7 @@ def crear_tablero(tamanio :int):
                 botones = []
                 
             for j in range(0, (tamanio)):
-                boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold")
+                boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",expand_x=True, expand_y=True,border_width="0")
                 botones.append(boton)
         
         nombreJuego = 'Juego' + str(usuario_global['juegos'])
@@ -76,9 +76,15 @@ def crear_tablero(tamanio :int):
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Salir':
-                sg.popup('Gracias por jugar')
-                sg.popup('Sumaste ' + str(puntos) + ' puntos')
-                sg.popup('Tuviste ' + str(Errores) + ' errores')
+                
+                if(sg.popup_yes_no('¿Deseas regresar al menú?')):
+                    sg.popup('Gracias por jugar')
+                    sg.popup('Sumaste ' + str(puntos) + ' puntos')
+                    sg.popup('Tuviste ' + str(Errores) + ' errores')
+                    window.close()
+                    break
+                else:
+                    sg.popup('El juego continuará')
                 break
             elif(event == 'Retroceder un movimiento'):
                 if((int(usuario_global['monedas']) - 5) >= 0):
@@ -88,9 +94,12 @@ def crear_tablero(tamanio :int):
                         for i in movimientos['movimientos']:
                             movimiento = i
                         print(movimiento)
-                        layout[movimiento['x'] + 1][movimiento['y']].update(button_color=('black','#FFABE1'))
                         eliminar_movimiento(movimiento['x'],movimiento['y'],nombreJuego,usuario_global['id'])
+                        layout[movimiento['x'] + 1][movimiento['y']].update(button_color=('white','#6c7b95'))
+                        layout[movimiento['x'] + 1][movimiento['y']].update(str(movimiento['x'] + 1) + ',' + str(movimiento['y']))
+                        
                         usuario_global['monedas'] = str(int(usuario_global['monedas']) - 5)
+                        actualizar_monedas(-5)
                     except:
                         sg.popup_error('No hay movimientos que retroceder')
                 else:
@@ -266,6 +275,7 @@ def crear_tablero(tamanio :int):
                                     agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     usuario_global['monedas'] = int(usuario_global['monedas']) + 20
                                     layout[0][4].update(usuario_global['monedas'])
+                                    actualizar_monedas(+20)
                                     puntos = puntos + 20
                                 else:
                                     vidas = vidas - 1
@@ -277,10 +287,15 @@ def crear_tablero(tamanio :int):
                             continue
                         break
                 else:
-                    sg.popup('Perdiste')
+                    for i in range(3000):
+                        sg.PopupAnimated('Fase2/Interfaz/lose2.gif', background_color='#000000', time_between_frames=200)
+                    sg.PopupAnimated(None) # stop animation
                     break
                 if(revisar_tablero(matriz,layout)):
-                    sg.popup('Ganaste')
+                    
+                    for i in range(3000):
+                        sg.PopupAnimated('Fase2/Interfaz/trophy.gif', background_color='#f4db40', time_between_frames=100)
+                    sg.PopupAnimated(None) # stop animation
                     break
     else:
         sg.PopupError("El alto y ancho debe ser mayor a 10", title="Error")
@@ -522,6 +537,16 @@ def limpiar_botones(layout):
             if(layout[i][j].ButtonColor[1] == '#EEF1FF'):
                 layout[i][j].update(button_color=('#FFFFFF', '#6c7b95'))
 
+#Actualizar monedas
+def actualizar_monedas(monedas :int):
+    try:
+        res = requests.get(f'{base_url}/Monedas/' + str(monedas) + '/' + usuario_global['id'])
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        print(data)
+    except:
+        print("Error al actualizar monedas")
+
 #No está pintado
 def no_pintado(x1 :int, y1 :int, x2 :int, y2 :int, layout):
         if(x1 == x2):
@@ -687,7 +712,7 @@ def iniciar_juego():
             [sg.Button('Crear Tablero',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
     ]
-    window = sg.Window('Iniciar juego', layout, size=(300, 250), element_justification='center')
+    window = sg.Window('Iniciar juego', layout, size=(300, 200), element_justification='center')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Regresar al menu':
@@ -1096,7 +1121,6 @@ def comprar_articulo(data):
             [sg.Text('Nombre: ' + data[0], font="Arial 15 bold",justification='center')],
             [sg.Text('Precio: ' + str(data[1]), font="Arial 15 bold",justification='center')],
             [sg.Text('Id: ' + str(data[2]), font="Arial 15 bold",justification='center')],
-            [sg.Text('Imagen: ',size = (20,1), font="Arial 15 bold",justification='center')],
             [sg.Image(data[3],background_color='#EEF1FF')],
             [sg.Text('Cantidad' ,size = (10,0), font="Arial 15 bold", justification='center'), sg.InputText(key='cantidad',size = (10,0), font="Arial 15 bold", justification='center')],
             [sg.Button('Comprar',size = (20,1), font="Arial 15 bold")],
@@ -1164,32 +1188,20 @@ def progress_bar():
 #Menu
 def menu():
     layout = [[sg.Text('Menu',size = (10,0), font="Arial 30 bold", justification='center')],
-                [sg.Button('Cargar Datos', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Crear Tablero', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Iniciar Sesion', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Registrar Usuario', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Cerrar Sesion', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Editar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Eliminar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Juego', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Tienda', size = (20,0), font="Arial 15 bold")],
-                [sg.Button('Reportes', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(300, 550), element_justification='c')
+    window = sg.Window('Menu', layout, size=(300, 400), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
             break
-        if event == 'Cargar Datos':
-            window.hide()
-            cargar_datos()
-            window.un_hide()
-        if event == 'Iniciar Sesion':
+        if event == 'Cerrar Sesion':
             window.close()
             login()
-        if event == 'Registrar Usuario':
-            window.hide()
-            registrar_usuario()
-            window.un_hide()
         if event == 'Editar Usuario':
             window.hide()
             editar_usuario()
@@ -1207,8 +1219,6 @@ def menu():
             window.hide()
             tienda()
             window.un_hide()
-        if event == 'Reportes':
-            menu_reportes()
     window.close()
     return event
 
@@ -1505,6 +1515,7 @@ def menuPrincipal():
 #login()
 #crear_tablero(10)
 #tienda()
-#menuPrincipal()
+menuPrincipal()
 #menu()
-ver_tutorial()
+#ver_tutorial()
+

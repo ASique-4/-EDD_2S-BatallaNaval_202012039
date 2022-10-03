@@ -23,7 +23,7 @@ public:
         ultimo = NULL;
         tamanio = 1;
     }
-    void InsertarFinal(string nick, string password, int monedas, int edad);
+    void InsertarFinal(string nick, string password, int monedas, int edad, int id);
     nodoUsuarios* BuscarUsuario(string nick, string password);
     void Imprimir();
     string getDatosComoJson();
@@ -39,6 +39,7 @@ public:
     char* stringtochar(string s);
     void InsertarCompra(nodoUsuarios* usuario, nodoArticulos* articulo, int Cantidad);
     void MostrarCompras(nodoUsuarios* usuario);
+    void OrdenarPorId();
 private:
 };
 

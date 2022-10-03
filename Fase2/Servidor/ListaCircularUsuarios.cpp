@@ -5,13 +5,13 @@
 #include <fstream>
 using namespace std;
 
-void ListaUsuarios::InsertarFinal(string nick, string password, int monedas, int edad) {
+void ListaUsuarios::InsertarFinal(string nick, string password, int monedas, int edad,int id) {
     nodoUsuarios*nuevo = new nodoUsuarios();
     nuevo->nick = nick;
     nuevo->password = password;
     nuevo->monedas = monedas;
     nuevo->edad = edad;
-    nuevo->id = tamanio;
+    nuevo->id = id;
     tamanio++;
     if (primero == NULL) {
         primero = nuevo;
@@ -122,6 +122,22 @@ bool ListaUsuarios::BuscarNick(string nick){
         }
     }
     return false;
+}
+
+void ListaUsuarios::OrdenarPorId(){
+    nodoUsuarios*aux = primero;
+    nodoUsuarios*aux2 = primero->sig;
+    while (aux != ultimo) {
+        while (aux2 != primero) {
+            if (aux->id > aux2->id)
+            {
+                swap(aux, aux2);
+            }
+            aux2 = aux2->sig;
+        }
+        aux = aux->sig;
+        aux2 = aux->sig;
+    }
 }
 
 nodoUsuarios* ListaUsuarios::BuscarUsuario(string nick, string password) {

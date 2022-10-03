@@ -7,7 +7,6 @@
 
 
 void ArbolB::insertar(nodoUsuarios* usuario) {
-    usuario->id = tamanio;
     tamanio++;
     NodoB* nodo = new NodoB(usuario);
     if (raiz == NULL) {
@@ -380,61 +379,54 @@ NodoB * ArbolB::buscar(int id){
 }
 
 void ArbolB::eliminar(int id){
-    NodoB*aux = raiz;
-    NodoB*padre = NULL;
-    while(aux != NULL){
-        if(aux->usuario->id == id){
-            if(aux->izquierda == NULL && aux->derecha == NULL){
-                if(padre == NULL){
-                    raiz = NULL;
-                }else{
-                    if(padre->izquierda == aux){
-                        padre->izquierda = NULL;
-                    }else{
-                        padre->derecha = NULL;
-                    }
-                }
-            }else if(aux->izquierda == NULL && aux->derecha != NULL){
-                if(padre == NULL){
-                    raiz = aux->derecha;
-                }else{
-                    if(padre->izquierda == aux){
-                        padre->izquierda = aux->derecha;
-                    }else{
-                        padre->derecha = aux->derecha;
-                    }
-                }
-            }else if(aux->izquierda != NULL && aux->derecha == NULL){
-                if(padre == NULL){
-                    raiz = aux->izquierda;
-                }else{
-                    if(padre->izquierda == aux){
-                        padre->izquierda = aux->izquierda;
-                    }else{
-                        padre->derecha = aux->izquierda;
-                    }
-                }
-            }else{
-                NodoB*aux2 = aux->izquierda;
-                NodoB*padre2 = aux;
-                while(aux2->derecha != NULL){
-                    padre2 = aux2;
-                    aux2 = aux2->derecha;
-                }
-                aux->usuario = aux2->usuario;
-                if(padre2->izquierda == aux2){
-                    padre2->izquierda = aux2->izquierda;
-                }else{
-                    padre2->derecha = aux2->izquierda;
-                }
+    NodoB*aux = buscar(id);
+    if(aux != NULL){
+        if(aux->izquierda == NULL && aux->derecha == NULL){
+            if(aux->siguiente != NULL){
+                aux->siguiente->anterior = aux->anterior;
             }
-            break;
-        }else if(aux->usuario->id > id){
-            padre = aux;
-            aux = aux->izquierda;
+            if(aux->anterior != NULL){
+                aux->anterior->siguiente = aux->siguiente;
+            }
+            if(aux == raiz){
+                raiz = aux->siguiente;
+            }
+            delete aux;
+        }else if(aux->izquierda == NULL && aux->derecha != NULL){
+            if(aux->siguiente != NULL){
+                aux->siguiente->anterior = aux->anterior;
+            }
+            if(aux->anterior != NULL){
+                aux->anterior->siguiente = aux->siguiente;
+            }
+            if(aux == raiz){
+                raiz = aux->siguiente;
+            }
+            delete aux;
+        }else if(aux->izquierda != NULL && aux->derecha == NULL){
+            if(aux->siguiente != NULL){
+                aux->siguiente->anterior = aux->anterior;
+            }
+            if(aux->anterior != NULL){
+                aux->anterior->siguiente = aux->siguiente;
+            }
+            if(aux == raiz){
+                raiz = aux->siguiente;
+            }
+            delete aux;
         }else{
-            padre = aux;
-            aux = aux->derecha;
+            NodoB*aux2 = aux->siguiente;
+            while(aux2->izquierda != NULL){
+                aux2 = aux2->izquierda;
+            }
+            aux->usuario = aux2->usuario;
+            if(aux2->siguiente != NULL){
+                aux2->siguiente->anterior = aux2->anterior;
+            }
+            if(aux2->anterior != NULL){
+                aux2->anterior->siguiente = aux2->siguiente;
+            }
+            delete aux2;
         }
     }
 }
@@ -445,6 +437,7 @@ void ArbolB::insertarCompra(nodoUsuarios*usuario, nodoArticulos*articulo, int ca
         aux->usuario->compras = insert(aux->usuario->compras, articulo, cantidad);
     }
 }
+
 
 void ArbolB::mostrarVentas(nodoUsuarios*usuario){
     NodoB*aux = buscar(usuario->id);
