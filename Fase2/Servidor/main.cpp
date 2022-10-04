@@ -457,7 +457,6 @@ public:
         response.contentType("text/json");
         if(request.special["nick"] != "" and request.special["password"] != "" and request.special["id"] != ""){
             cout << "nick: " << request.special["nick"] << endl;
-            cout << "password: " << request.special["password"] << endl;
             cout << "id: " << request.special["id"] << endl;
             if(serverArbol.login(request.special["nick"], encriptarSHA256(request.special["password"]), stringtoint(request.special["id"]))){
                 response << "{"
@@ -489,7 +488,6 @@ public:
             nodoUsuarios*admin = new nodoUsuarios();
             admin->nick = "EDD";
             admin->password = encriptarSHA256("edd123");
-            cout << admin->password << endl;
             admin->edad = 20;
             admin->monedas = 0;
             admin->id = 0;
@@ -515,7 +513,6 @@ public:
                 nodoUsuarios*admin = new nodoUsuarios();
                 admin->nick = "EDD";
                 admin->password = encriptarSHA256("edd123");
-                cout << admin->password << endl;
                 admin->edad = 20;
                 admin->monedas = 0;
                 admin->id = 0;
@@ -1035,7 +1032,6 @@ int main(int argc, char **argv)
     nodoUsuarios*admin = new nodoUsuarios();
     admin->nick = "EDD";
     admin->password = encriptarSHA256("edd123");
-    cout << admin->password << endl;
     admin->edad = 20;
     admin->monedas = 0;
     admin->id = 0;

@@ -270,6 +270,7 @@ def crear_tablero(tamanio :int):
                     llenado = True
                 
                     matriz.graficarNeato('Tablero')
+                    webbrowser.open('./matriz_Tablero.pdf')
             else:
                 if(vidas > 0 and revisar_tablero(matriz,layout) == False):
                     for k in range(1 , len(layout)):
@@ -1208,8 +1209,6 @@ def verify_login( nick,  password):
     try:
         progress_bar()
         print(nick)
-        print(password)
-        print(f'{base_url}ObtenerUsuario/' + nick + '/' + password + '/' + regresar_id_usuario(nick) + '/')
         res = requests.get(f'{base_url}ObtenerUsuario/' + nick + '/' + password + '/' + regresar_id_usuario(nick) + '/')
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
@@ -1618,10 +1617,7 @@ def menuPrincipal():
             login()
     window.close()
 
-#login()
-#crear_tablero(10)
-#tienda()
+
 menuPrincipal()
-#menu()
-#ver_tutorial()
+
 

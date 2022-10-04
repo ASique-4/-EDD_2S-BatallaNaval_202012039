@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Oct  3 13:09:39 2022
+# Make data base, printed on Mon Oct  3 21:24:15 2022
 
 # Variables
 
@@ -75,7 +75,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXX4IKa0E/agent.3624
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXlS3Ej3/agent.3627
 # default
 .SHELLFLAGS := -c
 # environment
@@ -91,7 +91,7 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 4103
+VSCODE_PID = 5712
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -99,7 +99,7 @@ XDG_SESSION_TYPE = x11
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/3579,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/3579
+SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/3582,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/3582
 # automatic
 *F = $(notdir $*)
 # environment
@@ -183,9 +183,9 @@ SNAP_DATA = /var/snap/code/108
 # environment
 SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 4053
+GIO_LAUNCHED_DESKTOP_FILE_PID = 5587
 # environment
-SSH_AGENT_PID = 3625
+SSH_AGENT_PID = 3628
 # environment
 _ = /snap/code/108/usr/share/code/code
 # environment
@@ -302,6 +302,6 @@ GNUmakefile:
 # hash-table stats:
  
 # Load=18/8192=0%, Rehash=0, Collisions=0/21=0%
-# Finished Make data base on Mon Oct  3 13:09:39 2022
+# Finished Make data base on Mon Oct  3 21:24:15 2022
 
  
