@@ -466,3 +466,11 @@ string ArbolB::getDatosComoJson(){
     return json;
 
 }
+
+string ArbolB::getSkinsComoJson(nodoUsuarios*usuario){
+    NodoB*aux = buscar(usuario->id);
+    if(aux != NULL){
+        return getSkinsJson(aux->usuario->compras);
+    }
+    return "";
+}

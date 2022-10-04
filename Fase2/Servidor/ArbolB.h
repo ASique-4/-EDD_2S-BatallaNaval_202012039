@@ -33,6 +33,7 @@ public:
     void insertarCompra(nodoUsuarios* usuario, nodoArticulos* articulo, int cantidad);
     void mostrarVentas(nodoUsuarios* usuario);
     string getDatosComoJson();
+    string getSkinsComoJson(nodoUsuarios* usuario);
 private:
 
 };

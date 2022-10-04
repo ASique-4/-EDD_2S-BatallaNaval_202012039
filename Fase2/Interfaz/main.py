@@ -1,8 +1,10 @@
+import io
 import random
 import string
 import webbrowser
 import json
 import requests
+from PIL import Image
 import PySimpleGUI as sg
 from MatrizDispersa import MatrizDispersa
 
@@ -99,6 +101,8 @@ def crear_tablero(tamanio :int):
                         layout[movimiento['x'] + 1][movimiento['y']].update(str(movimiento['x'] + 1) + ',' + str(movimiento['y']))
                         
                         usuario_global['monedas'] = str(int(usuario_global['monedas']) - 5)
+                        vidas += 1
+                        layout[0][1].update(vidas)
                         actualizar_monedas(-5)
                     except:
                         sg.popup_error('No hay movimientos que retroceder')
@@ -287,15 +291,11 @@ def crear_tablero(tamanio :int):
                             continue
                         break
                 else:
-                    for i in range(3000):
-                        sg.PopupAnimated('Fase2/Interfaz/lose2.gif', background_color='#000000', time_between_frames=200)
-                    sg.PopupAnimated(None) # stop animation
-                    break
+                    sg.popup_ok('Perdiste')
+
                 if(revisar_tablero(matriz,layout)):
                     
-                    for i in range(3000):
-                        sg.PopupAnimated('Fase2/Interfaz/trophy.gif', background_color='#f4db40', time_between_frames=100)
-                    sg.PopupAnimated(None) # stop animation
+                    sg.popup('Ganaste')
                     break
     else:
         sg.PopupError("El alto y ancho debe ser mayor a 10", title="Error")
@@ -710,6 +710,7 @@ def colorear_botones(barco :string, x :int, y :int, matriz :MatrizDispersa, layo
 def iniciar_juego():
     layout = [[sg.Text('Iniciar Juego',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Crear Tablero',size = (20,1), font="Arial 15 bold")],
+            [sg.Button('Elegir skin',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
     ]
     window = sg.Window('Iniciar juego', layout, size=(300, 200), element_justification='center')
@@ -722,6 +723,43 @@ def iniciar_juego():
             window.close()
             crear_tablero(int(sg.popup_get_text('Ingrese el tamaño de la tablero', title='Crear Tablero', size=(5, 1))))
             break
+        elif event == 'Elegir skin':
+            window.close()
+            elegir_skin()
+            break
+
+#Elegir skin
+def elegir_skin():
+    try:
+        res = requests.get(f'{base_url}ObtenerSkins/' + usuario_global['id'])
+        skins = res.text
+        skins = json.loads(skins)
+        skins = skins['skins']
+        layout = [[sg.Text('Elegir skin',size = (20,1), font="Arial 15 bold")]]
+        for skin in skins:
+            img = Image.open(skin['src'])    
+            img = img.resize((100, 100), Image.ANTIALIAS)
+            bio = io.BytesIO()
+            img.save(bio, format="PNG")
+            data_png = bio.getvalue()
+            layout.append([sg.Button(skin['nombre'],size = (10,10), font="Arial 15 bold",image_data=data_png)])
+        layout.append([sg.Button('Regresar al menu',size = (20,20), font="Arial 15 bold")])
+        window = sg.Window('Elegir skin', element_justification='center')
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Regresar al menu':
+                window.close()
+                break
+            else:
+                sg.popup('Skin elegida', event)
+                window.close()
+                break
+    except:
+        sg.popup('Error al obtener skins')
+        window.close()
+        
+
+
 
 #Llenar lista de articulos
 def llenar_articulos(array_articulos):
@@ -753,6 +791,7 @@ def eliminar_movimiento(x,y,nombre,id):
 #Obtener movimientos
 def obtener_movimientos(x,y,nombre,id):
     try:
+        print(f'{base_url}AgregarMovimiento/' + str(x) + '/' + str(y) + '/' + str(nombre) + '/' + str(id))
         res = requests.get(f'{base_url}AgregarMovimiento/' + str(x) + '/' + str(y) + '/' + str(nombre) + '/' + str(id))
         data = res.text#convertimos la respuesta en dict
         data = json.loads(data)
@@ -1034,14 +1073,17 @@ def ver_tutorial():
                     for k in range(1 , len(layout)):
                         for l in range(len(layout) - 1):
                             if(layout[k][l].ButtonText == (str(data['movimientos'][0]['x']) + ',' + str(data['movimientos'][0]['y'])) ):
+                                ultimotxt = layout[k][l].ButtonText
                                 if(pintar_disparo(k, l, matriz, layout)):
                                     monedasTutorial = int(monedasTutorial) + 20
                                     layout[0][4].update(monedasTutorial)
                                     data['movimientos'].pop(0)
+                                    ultimo = layout[k][l]
                                     sg.popup_ok('Al acertar sumas 20 monedas', title='Tutorial')
                                 else:
                                     vidas = vidas - 1
                                     layout[0][1].update(vidas)
+                                    ultimo = layout[k][l]
                                     data['movimientos'].pop(0)
                                     sg.popup_ok('Al fallar pierdes una vida', title='Tutorial')
                                 break
@@ -1054,18 +1096,21 @@ def ver_tutorial():
                         sg.popup_ok('Si tienes monedas suficientes puedes volver a jugar', title='Tutorial')
                         if((int(monedasTutorial) - 5) >= 0):
                             try:
+                                ultimo.update(ultimotxt)
+                                ultimo.update(button_color=('white','#6c7b95'))
                                 movimiento = data['movimientos'][0]
                                 print(movimiento)
                                 for k in range(1 , len(layout)):
                                     for l in range(len(layout) - 1):
                                         if(layout[k][l].ButtonText == (str(data['movimientos'][0]['x']) + ',' + str(data['movimientos'][0]['y'])) ):
+                                            ultimotxt = layout[k][l].ButtonText
                                             if(pintar_disparo(k, l, matriz, layout)):
                                                 monedasTutorial = int(monedasTutorial) + 20
                                                 layout[0][4].update(monedasTutorial)
-                                                data['movimientos'].pop(0)
+                                                ultimo = layout[k][l]
                                                 sg.popup_ok('Al acertar sumas 20 monedas', title='Tutorial')
                                             else:
-                                                data['movimientos'].pop(0)
+                                                ultimo = layout[k][l]
                                                 sg.popup_ok('Al fallar pierdes una vida', title='Tutorial')
                                             break
                                     else:
@@ -1073,6 +1118,8 @@ def ver_tutorial():
                                     break
                                 data['movimientos'].pop(0)
                                 monedasTutorial = str(int(monedasTutorial) - 5)
+                                vidas += 1
+                                layout[0][1].update(vidas)
                                 sg.popup_ok('Se te descontaran 5 monedas por retroceder un movimiento', title='Tutorial')
                                 layout[0][4].update(monedasTutorial)
                             except:
@@ -1119,12 +1166,17 @@ def obtener_tutorial():
 
 #Comprar barcos
 def comprar_articulo(data):
+    img = Image.open(data[3])    
+    img = img.resize((300, 300), Image.ANTIALIAS)
+    bio = io.BytesIO()
+    img.save(bio, format="PNG")
+    data_png = bio.getvalue()
     layout = [[sg.Text('COMPRAR BARCO',size = (20,1), font="Arial 30 bold",justification='center')],
             [sg.Text('Monedas: ' + str(usuario_global['monedas']),size = (20,1), font="Arial 15 bold",justification='center')],
             [sg.Text('Nombre: ' + data[0], font="Arial 15 bold",justification='center')],
             [sg.Text('Precio: ' + str(data[1]), font="Arial 15 bold",justification='center')],
             [sg.Text('Id: ' + str(data[2]), font="Arial 15 bold",justification='center')],
-            [sg.Image(data[3],background_color='#EEF1FF')],
+            [sg.Image(data=data_png,background_color='#EEF1FF')],
             [sg.Text('Cantidad' ,size = (10,0), font="Arial 15 bold", justification='center'), sg.InputText(key='cantidad',size = (10,0), font="Arial 15 bold", justification='center')],
             [sg.Button('Comprar',size = (20,1), font="Arial 15 bold")],
             [sg.Button('Regresar al menu',size = (20,1), font="Arial 15 bold")]
@@ -1195,10 +1247,11 @@ def menu():
                 [sg.Button('Editar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Eliminar Usuario', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Iniciar Juego', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Iniciar Tutorial', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Tienda', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
-    window = sg.Window('Menu', layout, size=(300, 400), element_justification='c')
+    window = sg.Window('Menu', layout, size=(300, 430), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
@@ -1226,6 +1279,10 @@ def menu():
         if event == 'Reportes':
             window.hide()
             menu_reportes()
+            window.un_hide()
+        if event == 'Iniciar Tutorial':
+            window.hide()
+            ver_tutorial()
             window.un_hide()
     window.close()
     return event
@@ -1432,15 +1489,17 @@ def menu_reportes():
 #Menu Reportes Admin
 def menu_reportes_admin():
     layout = [[sg.Text('Reportes',size = (10,0), font="Arial 30 bold", justification='center')],
+                [sg.Button('Reportes de arbol', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes de usuarios', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes de compras', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Reportes de tutorial', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
     window = sg.Window('Menu', layout, size=(300, 250), element_justification='c')
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED or event == 'Salir':
             break
-        if event == 'Reportes de usuarios':
+        if event == 'Reportes de arbol':
             window.hide()
             mostrar_reportes('arbol')
             window.un_hide()
@@ -1448,8 +1507,44 @@ def menu_reportes_admin():
             window.hide()
             mostrar_reportes('compras')
             window.un_hide()
+        if event == 'Reportes de matriz de tutorial':
+            webbrowser.open('./matriz_Tutorial.pdf')
+        if event == 'Reportes de usuarios':
+            window.hide()
+            tabla_usuarios()
+            window.un_hide()
     window.close()
     return event
+
+#Tabla usuarios
+def tabla_usuarios():
+    try:
+        res = requests.get(f'{base_url}ObtenerUsuarios/')
+        data = res.text#convertimos la respuesta en dict
+        data = json.loads(data)
+        usuarios = []
+        for usuario in data['usuarios']:
+            usuarios.append([int(usuario['edad']),usuario['id'],usuario['nick'],usuario['monedas'],usuario['password']])
+        layout = [
+                [sg.Button('Ordenar de manera ascendente',size=(20,0),font="Arial 15 bold")],
+                [sg.Button('Ordenar de manera descendente',size=(20,0),font="Arial 15 bold")],
+                [sg.Table(values=usuarios, headings=['Edad','ID','Nick','Monedas','Password'], max_col_width=25, auto_size_columns=True, justification='left', num_rows=20, key='-TABLE-')],
+                [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
+        window = sg.Window('Tabla Usuarios', layout, size=(500, 550), element_justification='c')
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED or event == 'Salir':
+                break
+            if event == 'Ordenar de manera ascendente':
+                window['-TABLE-'].update(values=sorted(usuarios, key=lambda x: x[0]))
+            if event == 'Ordenar de manera descendente':
+                window['-TABLE-'].update(values=sorted(usuarios, key=lambda x: x[0], reverse=True))
+        window.close()
+        return event == 'Salir'
+    except:
+        sg.popup('Error al obtener los datos', title='Error')
+
+
 
 #Mostrar reportes
 def mostrar_reportes(reporte):

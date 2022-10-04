@@ -549,10 +549,6 @@ public:
                 aux2->password = encriptarSHA256(request.special["newPassword"]);
                 aux2->edad = stringtoint(request.special["newEdad"]);
 
-                aux->nick = request.special["newNick"];
-                aux->password = encriptarSHA256(request.special["newPassword"]);
-                aux->edad = stringtoint(request.special["newEdad"]);
-
                 response << "{"
                         << jsonkv("status", "ok")
                         << "usuario: ["
@@ -642,13 +638,11 @@ public:
                 nodoUsuarios *aux2 = serverUsuarios.BuscarUsuario(tmpUsuario->nick, tmpUsuario->password);
                 if(tmpUsuario->lista.Buscar(request.special["nombre"]) != NULL){
                     tmpUsuario->lista.Buscar(request.special["nombre"])->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
-                    aux2->lista.Buscar(request.special["nombre"])->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
                 }else{
                     ListaMovimientos *colaMovimientos = new ListaMovimientos();
                     colaMovimientos->nombre = request.special["nombre"];
                     colaMovimientos->InsertarFinal(stringtoint(request.special["x"]), stringtoint(request.special["y"]));
                     tmpUsuario->lista.InsertarFinal(colaMovimientos);
-                    aux2->lista.InsertarFinal(colaMovimientos);
                 }
                 response << "{"
                         << jsonkv("status", "ok")   << ","
@@ -728,9 +722,6 @@ public:
             if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
                 nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
                 tmpUsuario->monedas += stringtoint(request.special["monedas"]);
-
-                nodoUsuarios *aux2 = serverUsuarios.BuscarUsuario(tmpUsuario->nick, tmpUsuario->password);
-                aux2->monedas += stringtoint(request.special["monedas"]);
                 response << "{"
                         << jsonkv("status", "ok")   << ","
                         << jsonkv("nick", tmpUsuario->nick) << ","
@@ -742,6 +733,32 @@ public:
                         << "}";
             }
         }
+    }
+
+    void getSkins(GloveHttpRequest &request, GloveHttpResponse &response){
+        response.contentType("text/json");
+        if(request.special["id"] != ""){
+            if(serverArbol.buscar(stringtoint(request.special["id"])) != NULL){
+                nodoUsuarios *tmpUsuario = serverArbol.buscar(stringtoint(request.special["id"]))->usuario;
+                response << "{"
+                        << jsonkv("status", "ok")   << ","
+                        << jsonkv("nick", tmpUsuario->nick) << ","
+                        << serverArbol.getSkinsComoJson(tmpUsuario)
+                        << "}";
+            }else{
+                response << "{"
+                        << jsonkv("status", "El usuario no existe")
+                        << "}";
+            }
+        }
+    }
+
+    void getUsuariosJson(GloveHttpRequest &request, GloveHttpResponse &response){
+        response.contentType("text/json");
+        response << "{"
+                << jsonkv("status", "ok")   << ","
+                << serverUsuarios.getDatosComoJson()
+                << "}";
     }
 
 private:
@@ -1033,6 +1050,9 @@ int main(int argc, char **argv)
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getUsuarios, &API, ph::_1, ph::_2),
                 std::bind(&Servidor::postRuta, &API, ph::_1, ph::_2));
+    serv.addRest("/ObtenerUsuarios/", 0,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::getUsuariosJson, &API, ph::_1, ph::_2));
     serv.addRest("/ObtenerUsuario/$nick/$password/$id", 3,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::getUsuario, &API, ph::_1, ph::_2));  
@@ -1065,6 +1085,9 @@ int main(int argc, char **argv)
     serv.addRest("/Monedas/$monedas/$id", 1,
                 GloveHttpServer::jsonApiErrorCall,
                 std::bind(&Servidor::postMonedas, &API, ph::_1, ph::_2));
+    serv.addRest("/ObtenerSkins/$id", 1,
+                GloveHttpServer::jsonApiErrorCall,
+                std::bind(&Servidor::getSkins, &API, ph::_1, ph::_2));
     std::cout << "Servidor en Ejecucion" << std::endl;
     while (1)
     {

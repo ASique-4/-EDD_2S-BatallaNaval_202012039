@@ -1,11 +1,4 @@
-/**
- * \file
- * \brief A simple tree implementation using nodes
- *
- * \todo update code to use C++ STL library features and OO structure
- * \warning This program is a poor implementation and does not utilize any of
- * the C++ STL features.
- */
+
 #include <algorithm>
 #include <iostream>
 #include <queue>
@@ -170,6 +163,31 @@ void printTree(node *root, int space) {
     //------->generar pdf
     system("dot -Tpdf Compras.dot -o Compras.pdf");
 }
+
+string getSkinsJson(node *root){
+    string json = " \"skins\": [";
+    if (root == NULL)
+        return "";
+    std::queue<node *> q;
+    q.push(root);
+    while (!q.empty()) {
+        root = q.front();
+        q.pop();
+        if (root->left) {
+            q.push(root->left);
+            json += "{\"id\":\"" + root->data->id + "\",\"nombre\":\"" + root->data->nombre + "\",\"precio\":\"" + to_string(root->data->precio) + "\",\"cantidad\":\"" + to_string(root->cantidad) + "\",\"src\":\"" + root->data->src + "\"},";
+        }
+        if (root->right) {
+            q.push(root->right);
+            json += "{\"id\":\"" + root->data->id + "\",\"nombre\":\"" + root->data->nombre + "\",\"precio\":\"" + to_string(root->data->precio) + "\",\"cantidad\":\"" + to_string(root->cantidad) + "\",\"src\":\"" + root->data->src + "\"},";
+        }
+    }
+    // Eliminar la ultima coma
+    json = json.substr(0, json.size()-1);
+    json += "]";
+    return json;
+}
+
 
 
 // int main(int argc, char const *argv[])
