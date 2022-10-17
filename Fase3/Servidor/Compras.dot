@@ -1,0 +1,21 @@
+digraph G {"e3c27368-74e4-4344-a7ae-625c3b58cb45"[label=" ID: e3c27368-74e4-4344-a7ae-625c3b58cb45
+Nombre: Phascogale calura
+Cantidad: 3"]"64a56050-da18-4f4b-97f9-18fcc56814c8"[label=" ID: 64a56050-da18-4f4b-97f9-18fcc56814c8
+Nombre: Passer domesticus
+Cantidad: 20 "]"e3c27368-74e4-4344-a7ae-625c3b58cb45"->"64a56050-da18-4f4b-97f9-18fcc56814c8";"e3c27368-74e4-4344-a7ae-625c3b58cb45"[label=" ID: e3c27368-74e4-4344-a7ae-625c3b58cb45
+Nombre: Phascogale calura
+Cantidad: 3"]"78a36512-a405-4db2-a3af-3febb986a7fb"[label=" ID: 78a36512-a405-4db2-a3af-3febb986a7fb
+Nombre: Heloderma horridum
+Cantidad: 1"]"e3c27368-74e4-4344-a7ae-625c3b58cb45"->"78a36512-a405-4db2-a3af-3febb986a7fb";"64a56050-da18-4f4b-97f9-18fcc56814c8"[label=" ID: 64a56050-da18-4f4b-97f9-18fcc56814c8
+Nombre: Passer domesticus
+Cantidad: 20"]"9f4821c6-bb7e-4a07-a16a-ba962797171b"[label=" ID: 9f4821c6-bb7e-4a07-a16a-ba962797171b
+Nombre: Varanus sp.
+Cantidad: 10 "]"64a56050-da18-4f4b-97f9-18fcc56814c8"->"9f4821c6-bb7e-4a07-a16a-ba962797171b";"64a56050-da18-4f4b-97f9-18fcc56814c8"[label=" ID: 64a56050-da18-4f4b-97f9-18fcc56814c8
+Nombre: Passer domesticus
+Cantidad: 20"]"ff6d2ffd-474b-4977-adb5-ed3291448ba6"[label=" ID: ff6d2ffd-474b-4977-adb5-ed3291448ba6
+Nombre: Lepus townsendii
+Cantidad: 3"]"64a56050-da18-4f4b-97f9-18fcc56814c8"->"ff6d2ffd-474b-4977-adb5-ed3291448ba6";"78a36512-a405-4db2-a3af-3febb986a7fb"[label=" ID: 78a36512-a405-4db2-a3af-3febb986a7fb
+Nombre: Heloderma horridum
+Cantidad: 1"]"cef2de7d-a442-4b72-9cd9-b0c12990d8ca"[label=" ID: cef2de7d-a442-4b72-9cd9-b0c12990d8ca
+Nombre: Gazella thompsonii
+Cantidad: 2"]"78a36512-a405-4db2-a3af-3febb986a7fb"->"cef2de7d-a442-4b72-9cd9-b0c12990d8ca";}

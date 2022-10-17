@@ -1,0 +1,24 @@
+digraph G {
+graph [rankdir = TB ]
+node [shape = box]
+bgcolor="lavender"
+node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]
+"Kev3"[label="Nick: 'Kev3'
+Password4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+Edad: 12
+Monedas: 400"];
+Kev3->Kev2[color = limegreen];
+"Kev2" [label="Nick: 'Kev2'
+Passwordd4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+Edad: 11
+Monedas: 200"];
+"Kev2"->"Kev1"[color = limegreen];
+"Kev2"->"Kev3"[color = indianred1];
+"Kev1"[label="Nick: 'Kev1'
+Password: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+Edad: 10
+Monedas: 400"];
+"Kev1"->"Kev2"[color = indianred1];
+"Kev1":e->"Kev3":e[color = limegreen];
+"Kev3":w->"Kev1":w[color = indianred1];
+}

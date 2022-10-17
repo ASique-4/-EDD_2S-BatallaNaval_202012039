@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon Oct  3 21:24:15 2022
+# Make data base, printed on Sun Oct 16 23:04:17 2022
 
 # Variables
 
@@ -35,7 +35,7 @@ QT_ACCESSIBILITY = 1
 # environment
 SNAP_INSTANCE_NAME = code
 # environment
-GDK_PIXBUF_MODULEDIR = /snap/code/108/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
+GDK_PIXBUF_MODULEDIR = /snap/code/111/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -51,7 +51,7 @@ XDG_DATA_DIRS = /usr/share/xfce4:/home/angel/.local/share/flatpak/exports/share:
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/angel/.config/Code/CachedData/74b1f979648cc44d385a2286793c226e611f59e7
+VSCODE_CODE_CACHE_PATH = /home/angel/.config/Code/CachedData/d045a5eda657f4d7b676dedbfa7aab8207f8a075
 # environment
 XDG_SESSION_PATH = /org/freedesktop/DisplayManager/Session0
 # environment
@@ -75,7 +75,7 @@ WALLABY_PRODUCTION = true
 # environment
 MFLAGS = -pqrR
 # environment
-SSH_AUTH_SOCK = /tmp/ssh-XXXXXXlS3Ej3/agent.3627
+SSH_AUTH_SOCK = /tmp/ssh-XXXXXXQdcKGL/agent.3864
 # default
 .SHELLFLAGS := -c
 # environment
@@ -91,7 +91,7 @@ SNAP_REEXEC =
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 5712
+VSCODE_PID = 6667
 # environment
 XDG_SESSION_TYPE = x11
 # automatic
@@ -99,7 +99,7 @@ XDG_SESSION_TYPE = x11
 # environment
 BAMF_DESKTOP_FILE_HINT = /var/lib/snapd/desktop/applications/code_code.desktop
 # environment
-SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/3582,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/3582
+SESSION_MANAGER = local/angel-VivoBook-ASUSLaptop-X513EP-K513EP:@/tmp/.ICE-unix/3816,unix/angel-VivoBook-ASUSLaptop-X513EP-K513EP:/tmp/.ICE-unix/3816
 # automatic
 *F = $(notdir $*)
 # environment
@@ -111,7 +111,7 @@ DBUS_SESSION_BUS_ADDRESS = unix:path=/run/user/1000/bus
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
-VSCODE_NLS_CONFIG = {"locale":"es","availableLanguages":{"*":"es"},"_languagePackId":"48c0cb88c5de364e79f72fefeace3f1a.es","_translationsConfigFile":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es/tcf.json","_cacheRoot":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es","_resolvedLanguagePackCoreLocation":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es/74b1f979648cc44d385a2286793c226e611f59e7","_corruptedFile":"/home/angel/.config/Code/clp/48c0cb88c5de364e79f72fefeace3f1a.es/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"es","availableLanguages":{"*":"es"},"_languagePackId":"e1f6bd2457d0fbae55a03b6afb2397bb.es","_translationsConfigFile":"/home/angel/.config/Code/clp/e1f6bd2457d0fbae55a03b6afb2397bb.es/tcf.json","_cacheRoot":"/home/angel/.config/Code/clp/e1f6bd2457d0fbae55a03b6afb2397bb.es","_resolvedLanguagePackCoreLocation":"/home/angel/.config/Code/clp/e1f6bd2457d0fbae55a03b6afb2397bb.es/d045a5eda657f4d7b676dedbfa7aab8207f8a075","_corruptedFile":"/home/angel/.config/Code/clp/e1f6bd2457d0fbae55a03b6afb2397bb.es/corrupted.info","_languagePackSupport":true}
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # makefile
@@ -137,9 +137,9 @@ LANGUAGE = es_GT:es
 # environment
 SNAP_USER_COMMON = /home/angel/snap/code/common
 # environment
-SNAP = /snap/code/108
+SNAP = /snap/code/111
 # environment
-SNAP_REVISION = 108
+SNAP_REVISION = 111
 # environment
 SNAP_REAL_HOME = /home/angel
 # automatic
@@ -179,15 +179,15 @@ DEFAULTS_PATH = /usr/share/gconf/xfce.default.path
 # default
 MAKE_VERSION := 4.3
 # environment
-SNAP_DATA = /var/snap/code/108
+SNAP_DATA = /var/snap/code/111
 # environment
 SNAP_CONTEXT = 98DMYdqIH5Iumx5C0WHgzu90rX8iUujQ-eU_8ZvMSA3JXTkwBcV1
 # environment
-GIO_LAUNCHED_DESKTOP_FILE_PID = 5587
+GIO_LAUNCHED_DESKTOP_FILE_PID = 6619
 # environment
-SSH_AGENT_PID = 3628
+SSH_AGENT_PID = 3865
 # environment
-_ = /snap/code/108/usr/share/code/code
+_ = /snap/code/111/usr/share/code/code
 # environment
 XDG_RUNTIME_DIR = /run/user/1000
 # environment
@@ -201,11 +201,11 @@ HOME = /home/angel
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-f80804e1-1.71.2-main.sock
+VSCODE_IPC_HOOK = /run/user/1000/vscode-f80804e1-1.72.2-main.sock
 # environment
 SNAP_NAME = code
 # environment
-GSETTINGS_SCHEMA_DIR = /snap/code/108/usr/share/glib-2.0/schemas
+GSETTINGS_SCHEMA_DIR = /snap/code/111/usr/share/glib-2.0/schemas
 # environment
 XDG_SESSION_ID = c1
 # default
@@ -213,7 +213,7 @@ XDG_SESSION_ID = c1
 # automatic
 <F = $(notdir $<)
 # environment
-SNAP_VERSION = 74b1f979
+SNAP_VERSION = d045a5ed
 # default
 SUFFIXES := 
 # environment
@@ -227,7 +227,7 @@ XDG_GREETER_DATA_DIR = /var/lib/lightdm-data/angel
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink load
 # environment
-SNAP_USER_DATA = /home/angel/snap/code/108
+SNAP_USER_DATA = /home/angel/snap/code/111
 # environment
 XDG_MENU_PREFIX = xfce-
 # environment
@@ -243,9 +243,9 @@ SNAP_LIBRARY_PATH = /var/lib/snapd/lib/gl:/var/lib/snapd/lib/gl32:/var/lib/snapd
 
 # Directories
 
-# . (device 66312, inode 191357): 10 files, no impossibilities.
+# . (device 66312, inode 191357): 8 files, no impossibilities.
 
-# 10 files, no impossibilities in 1 directories.
+# 8 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -293,15 +293,15 @@ GNUmakefile:
 
 # No 'vpath' search paths.
 
+ 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 18 / storage = 185 B / avg = 10 B
-# current buf: size = 8162 B / used = 185 B / count = 18 / avg = 10 B
+# strcache buffers: 1 (0) / strings = 16 / storage = 130 B / avg = 8 B
+# current buf: size = 8162 B / used = 130 B / count = 16 / avg = 8 B
 
-# strcache performance: lookups = 21 / hit rate = 14%
+# strcache performance: lookups = 19 / hit rate = 15%
 # hash-table stats:
- 
-# Load=18/8192=0%, Rehash=0, Collisions=0/21=0%
-# Finished Make data base on Mon Oct  3 21:24:15 2022
+# Load=16/8192=0%, Rehash=0, Collisions=0/19=0%
+# Finished Make data base on Sun Oct 16 23:04:17 2022
 
  
