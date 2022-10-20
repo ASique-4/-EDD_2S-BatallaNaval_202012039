@@ -55,8 +55,6 @@ def tablero_1vs1(tamanio :int):
             ]
             )
         matriz = MatrizDispersa()
-        jugador1 = []
-        jugador2 = []
         for i in range(0, (tamanio) + 1):
             #Si los botones no están vacios los limpia
             if(len(botones) > 0):
