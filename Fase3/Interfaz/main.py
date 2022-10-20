@@ -24,10 +24,295 @@ usuario_global = {
 
 usuarios = [['EDD','0']]
 
+def tablero_1vs1(tamanio :int):
+    sg.theme('DarkTeal4')   # Add a touch of color
+    if(tamanio >= 10):
+        layout = []
+        botones = []
+        #Numero de barcos
+        constante = int(((tamanio - 1)/10)+1)
+        Portaaviones = 1*constante
+        Submarino = 2*constante
+        Destructor = 3*constante
+        Buque = 4*constante
+        vidas = 3
+        layout.append(
+            [
+            sg.OptionMenu(('Portaaviones', 'Submarino', 'Destructor', 'Buque'),'Portaaviones',key='barco'),
+            sg.Text('Vidas',text_color='#FFABE1',font='Futura 15'),sg.Text(vidas,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(usuario_global['monedas'],text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Portaaviones',text_color='#FFABE1',font='Futura 15'),sg.Text(Portaaviones,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Submarino',text_color='#FFABE1',font='Futura 15'),sg.Text(Submarino,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Destructor',text_color='#FFABE1',font='Futura 15'),sg.Text(Destructor,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Buque',text_color='#FFABE1',font='Futura 15'),sg.Text(Buque,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Button('Retroceder un movimiento',button_color=('black','#FFABE1'),font='Futura 10'),
+            ]
+            )
+        matriz = MatrizDispersa()
+        jugador1 = []
+        jugador2 = []
+        for i in range(0, (tamanio) + 1):
+            #Si los botones no están vacios los limpia
+            if(len(botones) > 0):
+                layout.append(botones)
+                botones = []
+                
+            for j in range(0, (tamanio)):
+                boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",border_width="0")
+                botones.append(boton)
+        
+        window =  sg.Window('Menu', layout, element_justification='c')
+        sg.popup_ok('Colque sus barcos en el tablero')
+        while True:
+            event, values = window.read()
+            if event == sg.WIN_CLOSED:
+                try:
+                    matriz.graficarNeato('1vs1')
+                except:
+                    pass
+                tablero_jugador2(matriz, tamanio)
+                break
+            elif event == 'Retroceder un movimiento':
+                print('Retroceder un movimiento')
+            else:
+                for k in range(1 , len(layout)):
+                    for l in range(len(layout) - 1):
+                        if(layout[k][l].ButtonText == event and layout[k][l].ButtonColor[1] == '#6c7b95'):
+                            print(values['barco'])
+                            if(colorear_botones(values['barco'],k,l,matriz,layout)):
+                                while True:
+                                    event2, values2 = window.read()
+                                    if event2 == sg.WIN_CLOSED:
+                                        break
+                                    else:
+                                        for k2 in range(1 , len(layout)):
+                                            for l2 in range(len(layout) - 1):
+                                                if(layout[k2][l2].ButtonText == event2 and layout[k2][l2].ButtonColor[1] == '#EEF1FF'):
+                                                    if(values['barco'] == 'Portaaviones' and portaavionesNoPintado(k,l,k2,l2,matriz)):
+                                                        if(Portaaviones > 0):
+                                                            print(k2,l2)
+                                                            pintar_portaavion_1vs1(k,l,k2,l2,matriz,layout)
+                                                            limpiar_botones(layout)
+                                                            Portaaviones -= 1
+                                                            layout[0][8].update(Portaaviones)
+                                                            break
+                                                    elif(values['barco'] == 'Submarino' and submarinoNoPintado(k,l,k2,l2,matriz)):
+                                                        if(Submarino > 0):
+                                                            print(k2,l2)
+                                                            pintar_submarino_1vs1(k,l,k2,l2,matriz,layout)
+                                                            limpiar_botones(layout)
+                                                            Submarino -= 1
+                                                            layout[0][11].update(Submarino)
+                                                            break
+                                                    elif(values['barco'] == 'Destructor' and destructorNoPintado(k,l,k2,l2,matriz)):
+                                                        if(Destructor > 0):
+                                                            print(k2,l2)
+                                                            pintar_destructor_1vs1(k,l,k2,l2,matriz,layout)
+                                                            limpiar_botones(layout)
+                                                            Destructor -= 1
+                                                            layout[0][14].update(Destructor)
+                                                            break
+                                                    elif(values['barco'] == 'Buque'):
+                                                        if(Buque > 0):
+                                                            print(k2,l2)
+                                                            pintar_buque_1vs1(k,l,k2,l2,matriz,layout)
+                                                            limpiar_botones(layout)
+                                                            Buque -= 1
+                                                            layout[0][17].update(Buque)
+                                                            break
+                                                    limpiar_botones(layout)
+                                    break
+                                break
+                        
+                    
+#Tablero jugador 2
+def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
+    sg.theme('DarkTeal4')
+    vidas = 3
+    Errores = 0
+    puntos = 0
+    botones = []
+    layout = []
+    layout.append(
+            [
+            sg.Text('Vidas',text_color='#FFABE1',font='Futura 15'),sg.Text(vidas,text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(usuario_global['monedas'],text_color='#FFABE1',font='Futura 15'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Button('Retroceder un movimiento',button_color=('black','#FFABE1'),font='Futura 10'),
+            ]
+            )
+    nombreJuego = 'Juego' + str(usuario_global['juegos'])
+    usuario_global['juegos'] = str(int(usuario_global['juegos']) + 1)
+    for i in range(0, (tamanio) + 1):
+        #Si los botones no están vacios los limpia
+        if(len(botones) > 0):
+            layout.append(botones)
+            botones = []
+            
+        for j in range(0, (tamanio)):
+            boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",border_width="0")
+            botones.append(boton)
+    tmplayout = layout.copy()
+    window =  sg.Window('Jugador 1', layout, element_justification='c')
+    sg.popup_ok('Es turno del jugador 2 de atacar')
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            try:
+                matriz.graficarNeato('1vs1')
+            except:
+                pass
+            break
+        else:
+            if(vidas > 0 and revisar_tablero(matriz,layout) == False):
+                    for k in range(1 , len(layout)):
+                        for l in range(len(layout) - 1):
+                            if(layout[k][l].ButtonText == event ):
+                                if(pintar_disparo(k, l, matriz, layout)):
+                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    usuario_global['monedas'] = int(usuario_global['monedas']) + 20
+                                    layout[0][4].update(usuario_global['monedas'])
+                                    #actualizar_monedas(+20)
+                                    puntos = puntos + 20
+                                else:
+                                    vidas = vidas - 1
+                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    layout[0][1].update(vidas)
+                                    Errores += 1
+                                break
+                        else:
+                            continue
+                        break
+            else:
+                sg.popup_ok('Perdiste')
 
+            if(revisar_tablero(matriz,layout)):
+                
+                sg.popup('Ganaste')
+                break
+            window.hide()
+            sg.popup_ok('Turno de colocar barcos del jugador 2')
+            crear_tablero(tamanio,matriz,window,layout)
+            break
+
+
+
+    
+                                                        
+
+
+#Opciones de pintado para colocar barcos
+def pintar_portaavion_1vs1(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
+    #Abajo
+    if(x2 == x1+3):
+        j = x1
+        for i in range(x1, x2 + 1):
+            matriz.insertar(j-1, y1, "P")
+            layout[j][y1].update(button_color=('black', '#C98474'))
+            j += 1
+    #Arriba
+    elif(x2 == x1-3):
+        j = x1
+        for i in range(x2, x1 + 1):
+            matriz.insertar(j-1, y1, "P")
+            layout[j][y1].update(button_color=('black', '#C98474'))
+            j -= 1
+    #Derecha
+    elif(y2 == y1+3):
+        j = y1
+        for i in range(y1, y2 + 1):
+            matriz.insertar(x1-1, j, "P")
+            layout[x1][j].update(button_color=('black', '#C98474'))
+            j += 1
+    #Izquierda
+    elif(y2 == y1-3):
+        j = y1
+        for i in range(y2, y1 + 1):
+            matriz.insertar(x1-1, j, "P")
+            layout[x1][j].update(button_color=('black', '#C98474'))
+            j -= 1
+    else:
+        return False
+
+def pintar_submarino_1vs1(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
+    #Abajo
+    if(x2 == x1 + 2):
+        j = x1
+        for i in range(x1, x2 + 1):
+            matriz.insertar(j-1, y1, "S")
+            layout[j][y1].update(button_color=('black', '#25316D'))
+            j += 1
+    #Arriba
+    elif(x2 == x1 - 2):
+        j = x1
+        for i in range(x2, x1 + 1):
+            matriz.insertar(j-1, y1, "S")
+            layout[j][y1].update(button_color=('black', '#25316D'))
+            j -= 1
+    #Derecha
+    elif(y2 == y1 + 2):
+        j = y1
+        for i in range(y1, y2 + 1):
+            matriz.insertar(x1-1, j, "S")
+            layout[x1][j].update(button_color=('black', '#25316D'))
+            j += 1
+    #Izquierda
+    elif(y2 == y1 - 2):
+        j = y1
+        for i in range(y2, y1 + 1):
+            matriz.insertar(x1-1, j, "S")
+            layout[x1][j].update(button_color=('black', '#25316D'))
+            j -= 1
+    else:
+        return False
+
+def pintar_destructor_1vs1(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
+    #Abajo
+    if(x2 == x1 + 1):
+        j = x1
+        for i in range(x1, x2 + 1):
+            matriz.insertar(j-1, y1, "D")
+            layout[j][y1].update(button_color=('black', '#A2B5BB'))
+            j += 1
+    #Arriba
+    elif(x2 == x1 - 1):
+        j = x1
+        for i in range(x2, x1 + 1):
+            matriz.insertar(j-1, y1, "D")
+            layout[j][y1].update(button_color=('black', '#A2B5BB'))
+            j -= 1
+    #Derecha
+    elif(y2 == y1 + 1):
+        j = y1
+        for i in range(y1, y2 + 1):
+            matriz.insertar(x1-1, j, "D")
+            layout[x1][j].update(button_color=('black', '#A2B5BB'))
+            j += 1
+    #Izquierda
+    elif(y2 == y1 - 1):
+        j = y1
+        for i in range(y2, y1 + 1):
+            matriz.insertar(x1-1, j, "D")
+            layout[x1][j].update(button_color=('black', '#A2B5BB'))
+            j -= 1
+    else:
+        return False
+
+def pintar_buque_1vs1(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa, layout):
+    if(x1 == x2 and y1 == y2):
+        matriz.insertar(x1-1, y1, "B")
+        layout[x1][y1].update(button_color=('black', '#6FEDD6'))
+    
 
 #Crear tablero
-def crear_tablero(tamanio :int):
+def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
     """
     This function creates a window with a board of buttons, and then fills the board with ships
     
@@ -51,13 +336,10 @@ def crear_tablero(tamanio :int):
         vidas = 3
         layout.append(
             [
-            sg.Text('Vidas',text_color='#FFABE1',font='Futura 15'),sg.Text(vidas,text_color='#FFABE1',font='Futura 15'),
-            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
             sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(usuario_global['monedas'],text_color='#FFABE1',font='Futura 15'),
             sg.Text('|',text_color='#FFABE1',font='Futura 15'),
             sg.Button('Colocar minas',button_color=('black','#FFABE1'),font='Futura 10'),
-            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
-            sg.Button('Retroceder un movimiento',button_color=('black','#FFABE1'),font='Futura 10'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15')
             ]
             )
         matriz = MatrizDispersa()
@@ -71,10 +353,10 @@ def crear_tablero(tamanio :int):
                 boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",expand_x=True, expand_y=True,border_width="0")
                 botones.append(boton)
         
-        nombreJuego = 'Juego' + str(usuario_global['juegos'])
-        usuario_global['juegos'] = str(int(usuario_global['juegos']) + 1)
         #Colocar barcos
-        window =  sg.Window('Menu', layout, element_justification='c')
+        tmplayout = layout.copy()
+        window =  sg.Window('Jugador 2', layout, element_justification='c')
+        
         while True:
             event, values = window.read()
             if event == sg.WIN_CLOSED or event == 'Salir':
@@ -88,26 +370,6 @@ def crear_tablero(tamanio :int):
                 else:
                     sg.popup('El juego continuará')
                 break
-            elif(event == 'Retroceder un movimiento'):
-                if((int(usuario_global['monedas']) - 5) >= 0):
-                    try:
-                        movimientos = obtener_movimientos(0,0,nombreJuego,usuario_global['id'])
-                        print(movimientos)
-                        for i in movimientos['movimientos']:
-                            movimiento = i
-                        print(movimiento)
-                        eliminar_movimiento(movimiento['x'],movimiento['y'],nombreJuego,usuario_global['id'])
-                        layout[movimiento['x'] + 1][movimiento['y']].update(button_color=('white','#6c7b95'))
-                        layout[movimiento['x'] + 1][movimiento['y']].update(str(movimiento['x'] + 1) + ',' + str(movimiento['y']))
-                        
-                        usuario_global['monedas'] = str(int(usuario_global['monedas']) - 5)
-                        vidas += 1
-                        layout[0][1].update(vidas)
-                        actualizar_monedas(-5)
-                    except:
-                        sg.popup_error('No hay movimientos que retroceder')
-                else:
-                    sg.popup_error('No tienes suficientes monedas')
             elif(event == 'Colocar minas'):
                 if (llenado == False):
                     i = 1
@@ -270,36 +532,77 @@ def crear_tablero(tamanio :int):
                     llenado = True
                 
                     matriz.graficarNeato('Tablero')
+                    sg.popup_ok('Barcos colocados correctamente')
+                    sg.popup_ok('Es su turno de atacar')
                     webbrowser.open('./matriz_Tablero.pdf')
             else:
-                if(vidas > 0 and revisar_tablero(matriz,layout) == False):
+                
+                for k in range(1 , len(layout)):
+                    for l in range(len(layout) - 1):
+                        if(layout[k][l].ButtonText == event ):
+                            if(pintar_disparo(k, l, matriz, layout)):
+                                puntos = puntos + 20
+                            else:
+                                Errores += 1
+                            break
+                    else:
+                        continue
+                    break
+
+                sg.popup_ok('Turno del jugador 2')
+                window.hide()
+                crear_tablero_con_matriz(matriz2, window2,layout2,matriz,window,layout)
+                break
+
+
+    else:
+        sg.PopupError("El alto y ancho debe ser mayor a 10", title="Error")
+
+def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, matriz2 :MatrizDispersa, window2 :sg.Window, layout2):
+    window.un_hide()
+    vidas = 3
+    Errores = 0
+    puntos = 0
+    while True:
+        event, values = window.read()
+        if event == sg.WIN_CLOSED:
+            try:
+                matriz.graficarNeato('1vs1')
+            except:
+                pass
+            break
+        else:
+            if(vidas > 0 and revisar_tablero(matriz,layout) == False):
                     for k in range(1 , len(layout)):
                         for l in range(len(layout) - 1):
                             if(layout[k][l].ButtonText == event ):
                                 if(pintar_disparo(k, l, matriz, layout)):
-                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     usuario_global['monedas'] = int(usuario_global['monedas']) + 20
                                     layout[0][4].update(usuario_global['monedas'])
                                     actualizar_monedas(+20)
                                     puntos = puntos + 20
                                 else:
                                     vidas = vidas - 1
-                                    agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     layout[0][1].update(vidas)
                                     Errores += 1
                                 break
                         else:
                             continue
                         break
-                else:
-                    sg.popup_ok('Perdiste')
+            else:
+                sg.popup_ok('Perdiste')
 
-                if(revisar_tablero(matriz,layout)):
-                    
-                    sg.popup('Ganaste')
-                    break
-    else:
-        sg.PopupError("El alto y ancho debe ser mayor a 10", title="Error")
+            if(revisar_tablero(matriz,layout)):
+                
+                sg.popup('Ganaste')
+                break
+            
+            sg.popup_ok('Turno del ' + window.Title)
+            window.hide()
+            crear_tablero_con_matriz(matriz2, window2, layout2,matriz,window,layout)
+            window.un_hide()
 
 #Portaaviones no pintado
 def portaavionesNoPintado(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa):
@@ -1618,6 +1921,7 @@ def menuPrincipal():
     window.close()
 
 
-menuPrincipal()
+#menuPrincipal()
+tablero_1vs1(10)
 
 
