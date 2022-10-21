@@ -7,7 +7,9 @@ import requests
 from PIL import Image
 import PySimpleGUI as sg
 from MatrizDispersa import MatrizDispersa
+from ListaDG import ListaDG
 
+disparos = ListaDG()
 
 # Creating a list of lists, where each list contains the name of a user and the number of games they
 # have played.
@@ -148,6 +150,9 @@ def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
             )
     nombreJuego = 'Juego' + str(usuario_global['juegos'])
     usuario_global['juegos'] = str(int(usuario_global['juegos']) + 1)
+    disparos.crear(tamanio)
+    for i in range(0, (tamanio) + 1):
+        disparos.insertar(i,i)
     for i in range(0, (tamanio) + 1):
         #Si los botones no están vacios los limpia
         if(len(botones) > 0):
@@ -157,7 +162,6 @@ def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
         for j in range(0, (tamanio)):
             boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",border_width="0")
             botones.append(boton)
-    tmplayout = layout.copy()
     window =  sg.Window('Jugador 1', layout, element_justification='c')
     sg.popup_ok('Es turno del jugador 2 de atacar')
     while True:
@@ -199,11 +203,6 @@ def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
             sg.popup_ok('Turno de colocar barcos del jugador 2')
             crear_tablero(tamanio,matriz,window,layout)
             break
-
-
-
-    
-                                                        
 
 
 #Opciones de pintado para colocar barcos
@@ -341,6 +340,7 @@ def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
             ]
             )
         matriz = MatrizDispersa()
+        matriz.nombre = '2'
         for i in range(0, (tamanio) + 1):
             #Si los botones no están vacios los limpia
             if(len(botones) > 0):
@@ -352,7 +352,6 @@ def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
                 botones.append(boton)
         
         #Colocar barcos
-        tmplayout = layout.copy()
         window =  sg.Window('Jugador 2', layout, element_justification='c')
         
         while True:
@@ -531,13 +530,14 @@ def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
                 
                     matriz.graficarNeato('Tablero')
                     sg.popup_ok('Barcos colocados correctamente')
-                    sg.popup_ok('Es su turno de atacar')
+                    sg.popup_ok('Es turno de atacar del jugador 1')
                     webbrowser.open('./matriz_Tablero.pdf')
             else:
                 
                 for k in range(1 , len(layout)):
                     for l in range(len(layout) - 1):
                         if(layout[k][l].ButtonText == event ):
+                            disparos.conexion(k-1,l)
                             if(pintar_disparo(k, l, matriz, layout)):
                                 puntos = puntos + 20
                             else:
@@ -574,6 +574,9 @@ def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, 
                     for k in range(1 , len(layout)):
                         for l in range(len(layout) - 1):
                             if(layout[k][l].ButtonText == event ):
+                                if window.Title == "Jugador 2":
+                                    print(str(k-1) + "-" + str(l))
+                                    disparos.conexion(k-1,l)
                                 if(pintar_disparo(k, l, matriz, layout)):
                                     #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
                                     usuario_global['monedas'] = int(usuario_global['monedas']) + 20
@@ -599,6 +602,8 @@ def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, 
             
             sg.popup_ok('Turno del ' + window.Title)
             window.hide()
+            if(window.Title == 'Jugador 2'):
+                matriz.graficarNeato('Tablero')
             crear_tablero_con_matriz(matriz2, window2, layout2,matriz,window,layout)
             window.un_hide()
 
@@ -806,22 +811,27 @@ def pintar_disparo(x :int, y :int, matriz :MatrizDispersa, layout):
     if(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "B"):
         layout[x][y].update(button_color=('black', '#6FEDD6'))
         layout[x][y].update('X')
+        matriz.getNodo(x-1, y).caracter = "XB"
         return True
     elif(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "D"):
         layout[x][y].update(button_color=('black', '#A2B5BB'))
         layout[x][y].update('X')
+        matriz.getNodo(x-1, y).caracter = "XD"
         return True
     elif(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "S"):
         layout[x][y].update(button_color=('black', '#25316D'))
         layout[x][y].update('X')
+        matriz.getNodo(x-1, y).caracter = "XS"
         return True
     elif(matriz.getNodo(x-1, y) != None and matriz.getNodo(x-1, y).caracter == "P"):
         layout[x][y].update(button_color=('black', '#C98474'))
         layout[x][y].update('X')
+        matriz.getNodo(x-1, y).caracter = "XP"
         return True
     else:
         layout[x][y].update(button_color=('white', '#FF1E1E'))
         layout[x][y].update('X')
+        matriz.insertar(x-1, y, "X")
         return False
 
 #Revisar tablero
@@ -1921,5 +1931,5 @@ def menuPrincipal():
 
 #menuPrincipal()
 tablero_1vs1(10)
-
-
+disparos.imprimir()
+disparos.imprimirGraphviz()

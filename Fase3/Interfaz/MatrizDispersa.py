@@ -53,6 +53,7 @@ class MatrizDispersa():
         self.capa = 0
         self.filas = Lista_Cabecera('fila')
         self.columnas = Lista_Cabecera('columna')
+        self.nombre = None
 
     # (filas = x, columnas = y)
     def insertar(self, pos_x, pos_y, caracter):
@@ -244,6 +245,26 @@ class MatrizDispersa():
                 elif pivote_celda.caracter == 'B':
                     contenido += '\n\tnode[label="({},{})B" fillcolor="#6FEDD6" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
                         pivote_celda.coordenadaX, pivote_celda.coordenadaY,posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'XB':
+                    contenido += '\n\tnode[label="X" fillcolor="#6FEDD6" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    ) 
+                elif pivote_celda.caracter == 'XS':
+                    contenido += '\n\tnode[label="X" fillcolor="#25316D" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'XD':
+                    contenido += '\n\tnode[label="X" fillcolor="#A2B5BB" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'XP':
+                    contenido += '\n\tnode[label="X" fillcolor="#C98474" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
+                    )
+                elif pivote_celda.caracter == 'X':
+                    contenido += '\n\tnode[label="X" fillcolor="#CF0A0A" pos="{},-{}!" shape=box]i{}_{}'.format( #pos="{},-{}!"
+                        posy_celda, posx, pivote_celda.coordenadaX, pivote_celda.coordenadaY
                     )
                 else:
                     contenido += '\n\tnode[label=" " fillcolor="white" pos="{},-{}!" shape=box]i{}_{}'.format( # pos="{},-{}!"
