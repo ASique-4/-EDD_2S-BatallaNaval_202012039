@@ -1,3 +1,4 @@
+from itertools import count
 import os
 
 
@@ -18,6 +19,13 @@ class VNodo():
 
     
     def insertar(self, index):
+        """
+        It creates a new node, and if the list is empty, it makes the new node the first node in the
+        list. Otherwise, it finds the last node in the list and makes the new node the last node in the
+        list
+        
+        :param index: The index of the node to be inserted
+        """
         nuevo = ENodo(index)
         if self.inicio == None:
             self.inicio = nuevo
@@ -46,6 +54,12 @@ class ListaDG():
             self.v[i] = VNodo()
     
     def insertar(self,dato,pos):
+        """
+        It inserts a node at a given position in a linked list
+        
+        :param dato: the data to be inserted
+        :param pos: position of the element to be inserted
+        """
         if pos >= 0 and pos < len(self.v):
             self.v[pos].dato = dato
             self.v[pos].inicio = None
@@ -73,5 +87,43 @@ class ListaDG():
         f.write('}')
         f.close()
         os.system('dot -Tpng grafo.dot -o grafo.png')
+    
+    def imprimirLista(self):
+        f = open('lista.dot','w')
+        f.write('digraph G {\n')
+        f.write('graph [rankdir = LR ]\n')
+        f.write('node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]\n')
+        rank = '{rank = same; '
+        label = ''
+        apuntador = ''
+        for i in self.v:
+            rank += "\"" + "i" + str(i.dato) + "\" "
+            label += "\"" + "i" + str(i.dato) + "\" " + "[label = \"" + str(i.dato) + "\"]\n"
+            apuntador += "\"" + "i" + str(i.dato) + "\" " + "->"
+        f.write(rank + '};\n')
+        f.write(label + '\n')
+        apuntador = apuntador[:-2]
+        f.write(apuntador + '\n')
+        for i in self.v:
+            aux = i.inicio
+            apuntador = ''
+            count = 0
+            while aux != None:
+                f.write('i' + str(i.dato) + str(self.v[aux.index].dato) + ' [label = \"' + str(self.v[aux.index].dato) + '\", fillcolor="lightblue:lightblue1"];\n')
+                apuntador += 'i' + str(i.dato) + str(self.v[aux.index].dato) + '->'
+                aux = aux.siguiente
+                count += 1
+            
+            if count > 0:
+                apuntador = apuntador[:-2]
+                f.write( 'i' + str(i.dato) + '->' + apuntador + '\n')
+           
+            
+        f.write('}')
+        f.close()
+        os.system('dot -Tpng lista.dot -o lista.png')
+
+
+
 
 

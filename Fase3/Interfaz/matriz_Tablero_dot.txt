@@ -7,15 +7,16 @@ fontsize="25pt"
 
                     
 
-	node[label = "F1" fillcolor="azure3" pos="-1,-0!" shape=box]x1
-	node[label = "F2" fillcolor="azure3" pos="-1,-1!" shape=box]x2
-	node[label = "F3" fillcolor="azure3" pos="-1,-2!" shape=box]x3
-	node[label = "F4" fillcolor="azure3" pos="-1,-3!" shape=box]x4
-	node[label = "F5" fillcolor="azure3" pos="-1,-4!" shape=box]x5
-	node[label = "F6" fillcolor="azure3" pos="-1,-5!" shape=box]x6
-	node[label = "F7" fillcolor="azure3" pos="-1,-6!" shape=box]x7
-	node[label = "F8" fillcolor="azure3" pos="-1,-7!" shape=box]x8
-	node[label = "F9" fillcolor="azure3" pos="-1,-8!" shape=box]x9
+	node[label = "F0" fillcolor="azure3" pos="-1,-0!" shape=box]x0
+	node[label = "F1" fillcolor="azure3" pos="-1,-1!" shape=box]x1
+	node[label = "F2" fillcolor="azure3" pos="-1,-2!" shape=box]x2
+	node[label = "F3" fillcolor="azure3" pos="-1,-3!" shape=box]x3
+	node[label = "F4" fillcolor="azure3" pos="-1,-4!" shape=box]x4
+	node[label = "F5" fillcolor="azure3" pos="-1,-5!" shape=box]x5
+	node[label = "F6" fillcolor="azure3" pos="-1,-6!" shape=box]x6
+	node[label = "F7" fillcolor="azure3" pos="-1,-7!" shape=box]x7
+	x0->x1
+	x0->x1[dir=back]
 	x1->x2
 	x1->x2[dir=back]
 	x2->x3
@@ -28,23 +29,16 @@ fontsize="25pt"
 	x5->x6[dir=back]
 	x6->x7
 	x6->x7[dir=back]
-	x7->x8
-	x7->x8[dir=back]
-	x8->x9
-	x8->x9[dir=back]
-	raiz->x1
-	node[label = "C0" fillcolor="azure3" pos = "0,1!" shape=box]y0
-	node[label = "C1" fillcolor="azure3" pos = "1,1!" shape=box]y1
-	node[label = "C2" fillcolor="azure3" pos = "2,1!" shape=box]y2
-	node[label = "C3" fillcolor="azure3" pos = "3,1!" shape=box]y3
-	node[label = "C4" fillcolor="azure3" pos = "4,1!" shape=box]y4
-	node[label = "C5" fillcolor="azure3" pos = "5,1!" shape=box]y5
-	node[label = "C6" fillcolor="azure3" pos = "6,1!" shape=box]y6
-	node[label = "C7" fillcolor="azure3" pos = "7,1!" shape=box]y7
-	node[label = "C8" fillcolor="azure3" pos = "8,1!" shape=box]y8
-	node[label = "C9" fillcolor="azure3" pos = "9,1!" shape=box]y9
-	y0->y1
-	y0->y1[dir=back]
+	raiz->x0
+	node[label = "C1" fillcolor="azure3" pos = "0,1!" shape=box]y1
+	node[label = "C2" fillcolor="azure3" pos = "1,1!" shape=box]y2
+	node[label = "C3" fillcolor="azure3" pos = "2,1!" shape=box]y3
+	node[label = "C4" fillcolor="azure3" pos = "3,1!" shape=box]y4
+	node[label = "C5" fillcolor="azure3" pos = "4,1!" shape=box]y5
+	node[label = "C6" fillcolor="azure3" pos = "5,1!" shape=box]y6
+	node[label = "C7" fillcolor="azure3" pos = "6,1!" shape=box]y7
+	node[label = "C8" fillcolor="azure3" pos = "7,1!" shape=box]y8
+	node[label = "C9" fillcolor="azure3" pos = "8,1!" shape=box]y9
 	y1->y2
 	y1->y2[dir=back]
 	y2->y3
@@ -61,145 +55,120 @@ fontsize="25pt"
 	y7->y8[dir=back]
 	y8->y9
 	y8->y9[dir=back]
-	raiz->y0
-	node[label="(1,2)D" fillcolor="#A2B5BB" pos="2,-0!" shape=box]i1_2
-	node[label="(1,3)D" fillcolor="#A2B5BB" pos="3,-0!" shape=box]i1_3
-	i1_2->i1_3
-	i1_2->i1_3[dir=back]
-	x1->i1_2
-	x1->i1_2[dir=back]
-	node[label="X" fillcolor="#C98474" pos="1,-1!" shape=box]i2_1
-	node[label="(2,3)D" fillcolor="#A2B5BB" pos="3,-1!" shape=box]i2_3
-	node[label="X" fillcolor="#CF0A0A" pos="4,-1!" shape=box]i2_4
-	node[label="X" fillcolor="#CF0A0A" pos="5,-1!" shape=box]i2_5
-	i2_1->i2_3
-	i2_1->i2_3[dir=back]
-	i2_3->i2_4
-	i2_3->i2_4[dir=back]
-	i2_4->i2_5
-	i2_4->i2_5[dir=back]
-	x2->i2_1
-	x2->i2_1[dir=back]
-	node[label="X" fillcolor="#C98474" pos="1,-2!" shape=box]i3_1
-	node[label="X" fillcolor="#CF0A0A" pos="2,-2!" shape=box]i3_2
-	node[label="(3,3)D" fillcolor="#A2B5BB" pos="3,-2!" shape=box]i3_3
-	node[label="(3,9)B" fillcolor="#6FEDD6" pos="9,-2!" shape=box]i3_9
-	i3_1->i3_2
-	i3_1->i3_2[dir=back]
-	i3_2->i3_3
-	i3_2->i3_3[dir=back]
-	i3_3->i3_9
-	i3_3->i3_9[dir=back]
+	raiz->y1
+	node[label="X" fillcolor="#CF0A0A" pos="2,-0!" shape=box]i0_3
+	node[label="X" fillcolor="#CF0A0A" pos="6,-0!" shape=box]i0_7
+	i0_3->i0_7
+	i0_3->i0_7[dir=back]
+	x0->i0_3
+	x0->i0_3[dir=back]
+	node[label="X" fillcolor="#CF0A0A" pos="3,-1!" shape=box]i1_4
+	node[label="X" fillcolor="#C98474" pos="4,-1!" shape=box]i1_5
+	node[label="X" fillcolor="#C98474" pos="5,-1!" shape=box]i1_6
+	node[label="X" fillcolor="#C98474" pos="6,-1!" shape=box]i1_7
+	node[label="X" fillcolor="#C98474" pos="7,-1!" shape=box]i1_8
+	i1_4->i1_5
+	i1_4->i1_5[dir=back]
+	i1_5->i1_6
+	i1_5->i1_6[dir=back]
+	i1_6->i1_7
+	i1_6->i1_7[dir=back]
+	i1_7->i1_8
+	i1_7->i1_8[dir=back]
+	x1->i1_4
+	x1->i1_4[dir=back]
+	node[label="X" fillcolor="#CF0A0A" pos="1,-2!" shape=box]i2_2
+	node[label="X" fillcolor="#CF0A0A" pos="3,-2!" shape=box]i2_4
+	i2_2->i2_4
+	i2_2->i2_4[dir=back]
+	x2->i2_2
+	x2->i2_2[dir=back]
+	node[label="X" fillcolor="#CF0A0A" pos="0,-3!" shape=box]i3_1
+	node[label="X" fillcolor="#CF0A0A" pos="2,-3!" shape=box]i3_3
+	node[label="X" fillcolor="#CF0A0A" pos="4,-3!" shape=box]i3_5
+	node[label="X" fillcolor="#CF0A0A" pos="5,-3!" shape=box]i3_6
+	node[label="X" fillcolor="#CF0A0A" pos="7,-3!" shape=box]i3_8
+	i3_1->i3_3
+	i3_1->i3_3[dir=back]
+	i3_3->i3_5
+	i3_3->i3_5[dir=back]
+	i3_5->i3_6
+	i3_5->i3_6[dir=back]
+	i3_6->i3_8
+	i3_6->i3_8[dir=back]
 	x3->i3_1
 	x3->i3_1[dir=back]
-	node[label="X" fillcolor="#C98474" pos="1,-3!" shape=box]i4_1
-	node[label="X" fillcolor="#CF0A0A" pos="7,-3!" shape=box]i4_7
-	i4_1->i4_7
-	i4_1->i4_7[dir=back]
-	x4->i4_1
-	x4->i4_1[dir=back]
-	node[label="X" fillcolor="#C98474" pos="1,-4!" shape=box]i5_1
-	node[label="X" fillcolor="#CF0A0A" pos="3,-4!" shape=box]i5_3
-	i5_1->i5_3
-	i5_1->i5_3[dir=back]
-	x5->i5_1
-	x5->i5_1[dir=back]
-	node[label="X" fillcolor="#CF0A0A" pos="1,-5!" shape=box]i6_1
-	node[label="(6,7)D" fillcolor="#A2B5BB" pos="7,-5!" shape=box]i6_7
-	i6_1->i6_7
-	i6_1->i6_7[dir=back]
-	x6->i6_1
-	x6->i6_1[dir=back]
-	node[label="(7,2)B" fillcolor="#6FEDD6" pos="2,-6!" shape=box]i7_2
-	node[label="X" fillcolor="#CF0A0A" pos="3,-6!" shape=box]i7_3
-	node[label="X" fillcolor="#25316D" pos="4,-6!" shape=box]i7_4
-	node[label="X" fillcolor="#25316D" pos="5,-6!" shape=box]i7_5
-	node[label="X" fillcolor="#25316D" pos="6,-6!" shape=box]i7_6
-	node[label="(7,7)D" fillcolor="#A2B5BB" pos="7,-6!" shape=box]i7_7
-	node[label="(7,8)B" fillcolor="#6FEDD6" pos="8,-6!" shape=box]i7_8
-	i7_2->i7_3
-	i7_2->i7_3[dir=back]
-	i7_3->i7_4
-	i7_3->i7_4[dir=back]
-	i7_4->i7_5
-	i7_4->i7_5[dir=back]
+	node[label="X" fillcolor="#CF0A0A" pos="3,-4!" shape=box]i4_4
+	x4->i4_4
+	x4->i4_4[dir=back]
+	node[label="X" fillcolor="#CF0A0A" pos="5,-5!" shape=box]i5_6
+	x5->i5_6
+	x5->i5_6[dir=back]
+	node[label="X" fillcolor="#CF0A0A" pos="1,-6!" shape=box]i6_2
+	node[label="X" fillcolor="#CF0A0A" pos="3,-6!" shape=box]i6_4
+	node[label="X" fillcolor="#CF0A0A" pos="6,-6!" shape=box]i6_7
+	node[label="X" fillcolor="#CF0A0A" pos="8,-6!" shape=box]i6_9
+	i6_2->i6_4
+	i6_2->i6_4[dir=back]
+	i6_4->i6_7
+	i6_4->i6_7[dir=back]
+	i6_7->i6_9
+	i6_7->i6_9[dir=back]
+	x6->i6_2
+	x6->i6_2[dir=back]
+	node[label="X" fillcolor="#CF0A0A" pos="2,-7!" shape=box]i7_3
+	node[label="X" fillcolor="#CF0A0A" pos="4,-7!" shape=box]i7_5
+	node[label="X" fillcolor="#CF0A0A" pos="5,-7!" shape=box]i7_6
+	i7_3->i7_5
+	i7_3->i7_5[dir=back]
 	i7_5->i7_6
 	i7_5->i7_6[dir=back]
-	i7_6->i7_7
-	i7_6->i7_7[dir=back]
-	i7_7->i7_8
-	i7_7->i7_8[dir=back]
-	x7->i7_2
-	x7->i7_2[dir=back]
-	node[label="(8,0)S" fillcolor="#25316D" pos="0,-7!" shape=box]i8_0
-	node[label="(8,1)S" fillcolor="#25316D" pos="1,-7!" shape=box]i8_1
-	node[label="(8,2)S" fillcolor="#25316D" pos="2,-7!" shape=box]i8_2
-	node[label="(8,6)B" fillcolor="#6FEDD6" pos="6,-7!" shape=box]i8_6
-	i8_0->i8_1
-	i8_0->i8_1[dir=back]
-	i8_1->i8_2
-	i8_1->i8_2[dir=back]
-	i8_2->i8_6
-	i8_2->i8_6[dir=back]
-	x8->i8_0
-	x8->i8_0[dir=back]
-	node[label="X" fillcolor="#CF0A0A" pos="6,-8!" shape=box]i9_6
-	x9->i9_6
-	x9->i9_6[dir=back]
-	y0->i8_0
-	y0->i8_0[dir=back]
-	i2_1->i3_1
-	i2_1->i3_1[dir=back]
-	i3_1->i4_1
-	i3_1->i4_1[dir=back]
-	i4_1->i5_1
-	i4_1->i5_1[dir=back]
-	i5_1->i6_1
-	i5_1->i6_1[dir=back]
-	i6_1->i8_1
-	i6_1->i8_1[dir=back]
-	y1->i2_1
-	y1->i2_1[dir=back]
-	i1_2->i3_2
-	i1_2->i3_2[dir=back]
-	i3_2->i7_2
-	i3_2->i7_2[dir=back]
-	i7_2->i8_2
-	i7_2->i8_2[dir=back]
-	y2->i1_2
-	y2->i1_2[dir=back]
-	i1_3->i2_3
-	i1_3->i2_3[dir=back]
-	i2_3->i3_3
-	i2_3->i3_3[dir=back]
-	i3_3->i5_3
-	i3_3->i5_3[dir=back]
-	i5_3->i7_3
-	i5_3->i7_3[dir=back]
-	y3->i1_3
-	y3->i1_3[dir=back]
-	i2_4->i7_4
-	i2_4->i7_4[dir=back]
-	y4->i2_4
-	y4->i2_4[dir=back]
-	i2_5->i7_5
-	i2_5->i7_5[dir=back]
-	y5->i2_5
-	y5->i2_5[dir=back]
-	i7_6->i8_6
-	i7_6->i8_6[dir=back]
-	i8_6->i9_6
-	i8_6->i9_6[dir=back]
-	y6->i7_6
-	y6->i7_6[dir=back]
-	i4_7->i6_7
-	i4_7->i6_7[dir=back]
-	i6_7->i7_7
-	i6_7->i7_7[dir=back]
-	y7->i4_7
-	y7->i4_7[dir=back]
-	y8->i7_8
-	y8->i7_8[dir=back]
-	y9->i3_9
-	y9->i3_9[dir=back]
+	x7->i7_3
+	x7->i7_3[dir=back]
+	y1->i3_1
+	y1->i3_1[dir=back]
+	i2_2->i6_2
+	i2_2->i6_2[dir=back]
+	y2->i2_2
+	y2->i2_2[dir=back]
+	i0_3->i3_3
+	i0_3->i3_3[dir=back]
+	i3_3->i7_3
+	i3_3->i7_3[dir=back]
+	y3->i0_3
+	y3->i0_3[dir=back]
+	i1_4->i2_4
+	i1_4->i2_4[dir=back]
+	i2_4->i4_4
+	i2_4->i4_4[dir=back]
+	i4_4->i6_4
+	i4_4->i6_4[dir=back]
+	y4->i1_4
+	y4->i1_4[dir=back]
+	i1_5->i3_5
+	i1_5->i3_5[dir=back]
+	i3_5->i7_5
+	i3_5->i7_5[dir=back]
+	y5->i1_5
+	y5->i1_5[dir=back]
+	i1_6->i3_6
+	i1_6->i3_6[dir=back]
+	i3_6->i5_6
+	i3_6->i5_6[dir=back]
+	i5_6->i7_6
+	i5_6->i7_6[dir=back]
+	y6->i1_6
+	y6->i1_6[dir=back]
+	i0_7->i1_7
+	i0_7->i1_7[dir=back]
+	i1_7->i6_7
+	i1_7->i6_7[dir=back]
+	y7->i0_7
+	y7->i0_7[dir=back]
+	i1_8->i3_8
+	i1_8->i3_8[dir=back]
+	y8->i1_8
+	y8->i1_8[dir=back]
+	y9->i6_9
+	y9->i6_9[dir=back]
 }

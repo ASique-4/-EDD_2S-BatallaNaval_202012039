@@ -307,4 +307,7 @@ class MatrizDispersa():
             grafo.write(contenido)
         result = "matriz_{}.pdf".format(nombre)
         os.system("neato -Tpdf " + dot + " -o " + result)
+
+        #PNG
+        os.system("neato -Tpng " + dot + " -o " + "matriz_{}.png".format(nombre))
         #webbrowser.open(result)        

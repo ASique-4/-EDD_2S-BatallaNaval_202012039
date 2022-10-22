@@ -57,6 +57,7 @@ def tablero_1vs1(tamanio :int):
             ]
             )
         matriz = MatrizDispersa()
+        matriz.nombre = '1'
         for i in range(0, (tamanio) + 1):
             #Si los botones no están vacios los limpia
             if(len(botones) > 0):
@@ -141,11 +142,11 @@ def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
     layout = []
     layout.append(
             [
-            sg.Text('Vidas',text_color='#FFABE1',font='Futura 15'),sg.Text(vidas,text_color='#FFABE1',font='Futura 15'),
-            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
             sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(usuario_global['monedas'],text_color='#FFABE1',font='Futura 15'),
             sg.Text('|',text_color='#FFABE1',font='Futura 15'),
             sg.Button('Retroceder un movimiento',button_color=('black','#FFABE1'),font='Futura 10'),
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Jugador 2 atacando',text_color='#FFABE1',font='Futura 15')
             ]
             )
     nombreJuego = 'Juego' + str(usuario_global['juegos'])
@@ -162,7 +163,7 @@ def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
         for j in range(0, (tamanio)):
             boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",border_width="0")
             botones.append(boton)
-    window =  sg.Window('Jugador 1', layout, element_justification='c')
+    window =  sg.Window('Jugador 1', layout, element_justification='c',finalize=True)
     sg.popup_ok('Es turno del jugador 2 de atacar')
     while True:
         event, values = window.read()
@@ -173,27 +174,22 @@ def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
                 pass
             break
         else:
-            if(vidas > 0 and revisar_tablero(matriz,layout) == False):
-                    for k in range(1 , len(layout)):
-                        for l in range(len(layout) - 1):
-                            if(layout[k][l].ButtonText == event ):
-                                if(pintar_disparo(k, l, matriz, layout)):
-                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
-                                    usuario_global['monedas'] = int(usuario_global['monedas']) + 20
-                                    layout[0][4].update(usuario_global['monedas'])
-                                    #actualizar_monedas(+20)
-                                    puntos = puntos + 20
-                                else:
-                                    vidas = vidas - 1
-                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
-                                    layout[0][1].update(vidas)
-                                    Errores += 1
-                                break
+            for k in range(1 , len(layout)):
+                for l in range(len(layout) - 1):
+                    if(layout[k][l].ButtonText == event ):
+                        if(pintar_disparo(k, l, matriz, layout)):
+                            #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                            usuario_global['monedas'] = int(usuario_global['monedas']) + 20
+                            layout[0][1].update(usuario_global['monedas'])
+                            #actualizar_monedas(+20)
+                            puntos = puntos + 20
                         else:
-                            continue
+                            #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                            Errores += 1
                         break
-            else:
-                sg.popup_ok('Perdiste')
+                else:
+                    continue
+                break
 
             if(revisar_tablero(matriz,layout)):
                 
@@ -336,7 +332,8 @@ def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
             sg.Text('Puntos',text_color='#FFABE1',font='Futura 15'),sg.Text(usuario_global['monedas'],text_color='#FFABE1',font='Futura 15'),
             sg.Text('|',text_color='#FFABE1',font='Futura 15'),
             sg.Button('Colocar minas',button_color=('black','#FFABE1'),font='Futura 10'),
-            sg.Text('|',text_color='#FFABE1',font='Futura 15')
+            sg.Text('|',text_color='#FFABE1',font='Futura 15'),
+            sg.Text('Jugador 1 atacando',text_color='#FFABE1',font='Futura 15')
             ]
             )
         matriz = MatrizDispersa()
@@ -352,7 +349,7 @@ def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
                 botones.append(boton)
         
         #Colocar barcos
-        window =  sg.Window('Jugador 2', layout, element_justification='c')
+        window =  sg.Window('Jugador 2', layout, element_justification='c',finalize=True)
         
         while True:
             event, values = window.read()
@@ -570,42 +567,81 @@ def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, 
                 pass
             break
         else:
-            if(vidas > 0 and revisar_tablero(matriz,layout) == False):
-                    for k in range(1 , len(layout)):
-                        for l in range(len(layout) - 1):
-                            if(layout[k][l].ButtonText == event ):
-                                if window.Title == "Jugador 2":
-                                    print(str(k-1) + "-" + str(l))
-                                    disparos.conexion(k-1,l)
-                                if(pintar_disparo(k, l, matriz, layout)):
-                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
-                                    usuario_global['monedas'] = int(usuario_global['monedas']) + 20
-                                    layout[0][4].update(usuario_global['monedas'])
-                                    actualizar_monedas(+20)
-                                    puntos = puntos + 20
-                                else:
-                                    vidas = vidas - 1
-                                    #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
-                                    layout[0][1].update(vidas)
-                                    Errores += 1
-                                break
+            for k in range(1 , len(layout)):
+                for l in range(len(layout) - 1):
+                    if(layout[k][l].ButtonText == event ):
+                        if window.Title == "Jugador 2":
+                            print(str(k-1) + "-" + str(l))
+                            disparos.conexion(k-1,l)
+                        if(pintar_disparo(k, l, matriz, layout)):
+                            #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                            usuario_global['monedas'] = int(usuario_global['monedas']) + 20
+                            layout[0][1].update(usuario_global['monedas'])
+                            #actualizar_monedas(+20)
+                            puntos = puntos + 20
                         else:
-                            continue
+                            #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                            Errores += 1
                         break
-            else:
-                sg.popup_ok('Perdiste')
+                else:
+                    continue
+                break
+
 
             if(revisar_tablero(matriz,layout)):
-                
-                sg.popup('Ganaste')
-                break
-            
-            sg.popup_ok('Turno del ' + window.Title)
-            window.hide()
-            if(window.Title == 'Jugador 2'):
+
+                sg.popup('El ganador es' + window2.Title)
+                window.close()
+                window2.close()
+
+                disparos.imprimir()
+                disparos.imprimirGraphviz()
+                disparos.imprimirLista()
+
                 matriz.graficarNeato('Tablero')
-            crear_tablero_con_matriz(matriz2, window2, layout2,matriz,window,layout)
-            window.un_hide()
+                image = Image.open('./matriz_Tablero.png')
+                image = image.resize((500,500),Image.Resampling.LANCZOS)
+
+                bio = io.BytesIO()
+                image.save(bio, format='PNG')
+
+                image2 = Image.open('./grafo.png')
+                image2 = image2.resize((500,500),Image.Resampling.LANCZOS)
+
+                bio2 = io.BytesIO()
+                image2.save(bio2, format='PNG')
+
+                image3 = Image.open('./lista.png')
+                image3 = image3.resize((500,500),Image.Resampling.LANCZOS)
+
+                bio3 = io.BytesIO()
+                image3.save(bio3, format='PNG')
+
+                layout = [
+                            [
+                                sg.Image(data = bio.getvalue(), key='imagen'),
+                                sg.Image(data = bio2.getvalue(), key='imagen2'),
+                                sg.Image(data = bio3.getvalue(), key='imagen3'),
+                            
+                            ]
+                        ]
+
+                window = sg.Window('Tablero', layout, element_justification='c')
+
+                while True:
+                    event, values = window.read()
+                    if event == sg.WIN_CLOSED:
+                        break
+
+                
+                
+            else:
+                sg.popup_ok('Turno del ' + window.Title)
+                window.hide()      
+                crear_tablero_con_matriz(matriz2, window2, layout2,matriz,window,layout)
+                window.un_hide()
+            break
+            
 
 #Portaaviones no pintado
 def portaavionesNoPintado(x1 :int, y1 :int, x2 :int, y2 :int, matriz :MatrizDispersa):
@@ -836,6 +872,7 @@ def pintar_disparo(x :int, y :int, matriz :MatrizDispersa, layout):
 
 #Revisar tablero
 def revisar_tablero(matriz :MatrizDispersa,layout):
+    print(matriz.nombre)
     for i in range(1 , len(layout)):
         for j in range(len(layout[1]) - 1):
             if(matriz.getNodo(i-1, j) != None and layout[i][j].ButtonText != 'X'):
@@ -1931,5 +1968,5 @@ def menuPrincipal():
 
 #menuPrincipal()
 tablero_1vs1(10)
-disparos.imprimir()
-disparos.imprimirGraphviz()
+
+
