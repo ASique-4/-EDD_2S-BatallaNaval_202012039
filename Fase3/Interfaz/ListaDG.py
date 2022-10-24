@@ -79,7 +79,6 @@ class ListaDG():
         f = open('grafo.dot','w')
         f.write('digraph G {\n')
         for i in self.v:
-            f.write(str(i.dato) + ';\n')
             aux = i.inicio
             while aux != None:
                 f.write(str(i.dato) + '->' + str(self.v[aux.index].dato) + ';\n')
@@ -97,9 +96,9 @@ class ListaDG():
         label = ''
         apuntador = ''
         for i in self.v:
-            rank += "\"" + "i" + str(i.dato) + "\" "
-            label += "\"" + "i" + str(i.dato) + "\" " + "[label = \"" + str(i.dato) + "\"]\n"
-            apuntador += "\"" + "i" + str(i.dato) + "\" " + "->"
+            rank += "\"" + "i" + str(i.dato) + "i\" "
+            label += "\"" + "i" + str(i.dato) + "i\" " + "[label = \"" + str(i.dato) + "\"]\n"
+            apuntador += "\"" + "i" + str(i.dato) + "i\" " + "->"
         f.write(rank + '};\n')
         f.write(label + '\n')
         apuntador = apuntador[:-2]
@@ -109,14 +108,14 @@ class ListaDG():
             apuntador = ''
             count = 0
             while aux != None:
-                f.write('i' + str(i.dato) + str(self.v[aux.index].dato) + ' [label = \"' + str(self.v[aux.index].dato) + '\", fillcolor="lightblue:lightblue1"];\n')
-                apuntador += 'i' + str(i.dato) + str(self.v[aux.index].dato) + '->'
+                f.write('i' + str(i.dato) + 'i' + str(self.v[aux.index].dato) + ' [label = \"' + str(self.v[aux.index].dato) + '\", fillcolor="lightblue:lightblue1"];\n')
+                apuntador += 'i' + str(i.dato) + 'i' + str(self.v[aux.index].dato) + '->'
                 aux = aux.siguiente
                 count += 1
             
             if count > 0:
                 apuntador = apuntador[:-2]
-                f.write( 'i' + str(i.dato) + '->' + apuntador + '\n')
+                f.write( 'i' + str(i.dato) + 'i->' + apuntador + '\n')
            
             
         f.write('}')
@@ -126,4 +125,74 @@ class ListaDG():
 
 
 
+# lista = ListaDG()
+# lista.crear(12)
 
+# lista.insertar(0,0)
+# lista.insertar(1,1)
+# lista.insertar(2,2)
+# lista.insertar(3,3)
+# lista.insertar(4,4)
+# lista.insertar(5,5)
+# lista.insertar(6,6)
+# lista.insertar(7,7)
+# lista.insertar(8,8)
+# lista.insertar(9,9)
+# lista.insertar(10,10)
+# lista.insertar(11,11)
+
+# lista.conexion(0,2)
+# lista.conexion(0,3)
+# lista.conexion(0,4)
+# lista.conexion(1,1)
+# lista.conexion(1,2)
+# lista.conexion(1,5)
+# lista.conexion(2,1)
+# lista.conexion(2,2)
+# lista.conexion(2,8)
+# lista.conexion(3,1)
+# lista.conexion(3,2)
+# lista.conexion(3,5)
+# lista.conexion(3,7)
+# lista.conexion(3,8)
+# lista.conexion(4,1)
+# lista.conexion(4,2)
+# lista.conexion(4,3)
+# lista.conexion(4,5)
+# lista.conexion(4,6)
+# lista.conexion(4,8)
+# lista.conexion(4,9)
+# lista.conexion(4,10)
+# lista.conexion(5,1)
+# lista.conexion(5,3)
+# lista.conexion(5,5)
+# lista.conexion(5,7)
+# lista.conexion(5,8)
+# lista.conexion(5,10)
+# lista.conexion(5,11)
+# lista.conexion(6,1)
+# lista.conexion(6,7)
+# lista.conexion(6,8)
+# lista.conexion(6,10)
+# lista.conexion(7,1)
+# lista.conexion(7,7)
+# lista.conexion(7,8)
+# lista.conexion(7,10)
+# lista.conexion(8,1)
+# lista.conexion(8,5)
+# lista.conexion(8,10)
+# lista.conexion(9,1)
+# lista.conexion(9,4)
+# lista.conexion(9,9)
+# lista.conexion(9,10)
+# lista.conexion(9,11)
+# lista.conexion(10,1)
+# lista.conexion(10,7)
+# lista.conexion(10,9)
+# lista.conexion(10,10)
+# lista.conexion(11,7)
+
+
+# lista.imprimir()
+# lista.imprimirGraphviz()
+# lista.imprimirLista()
