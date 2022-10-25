@@ -1,5 +1,7 @@
 digraph G {
 graph [rankdir = LR ]
+nodesep = 0
+bgcolor="#5DA7DB"
 node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]
 {rank = same; "i0i" "i1i" "i2i" "i3i" "i4i" "i5i" "i6i" "i7i" "i8i" "i9i" "i10i" "i11i" };
 "i0i" [label = "0"]
@@ -15,7 +17,7 @@ node [ style=filled,shape = box, fillcolor="lavenderblush:lavenderblush1"]
 "i10i" [label = "10"]
 "i11i" [label = "11"]
 
-"i0i" ->"i1i" ->"i2i" ->"i3i" ->"i4i" ->"i5i" ->"i6i" ->"i7i" ->"i8i" ->"i9i" ->"i10i" ->"i11i" 
+"i0i" ->"i1i" ->"i2i" ->"i3i" ->"i4i" ->"i5i" ->"i6i" ->"i7i" ->"i8i" ->"i9i" ->"i10i" ->"i11i"  [arrowhead = none]
 i0i2 [label = "2", fillcolor="lightblue:lightblue1"];
 i0i3 [label = "3", fillcolor="lightblue:lightblue1"];
 i0i4 [label = "4", fillcolor="lightblue:lightblue1"];
@@ -29,28 +31,14 @@ i2i2 [label = "2", fillcolor="lightblue:lightblue1"];
 i2i8 [label = "8", fillcolor="lightblue:lightblue1"];
 i2i->i2i1->i2i2->i2i8
 i3i1 [label = "1", fillcolor="lightblue:lightblue1"];
-i3i2 [label = "2", fillcolor="lightblue:lightblue1"];
-i3i5 [label = "5", fillcolor="lightblue:lightblue1"];
-i3i7 [label = "7", fillcolor="lightblue:lightblue1"];
-i3i8 [label = "8", fillcolor="lightblue:lightblue1"];
-i3i->i3i1->i3i2->i3i5->i3i7->i3i8
-i4i1 [label = "1", fillcolor="lightblue:lightblue1"];
-i4i2 [label = "2", fillcolor="lightblue:lightblue1"];
-i4i3 [label = "3", fillcolor="lightblue:lightblue1"];
-i4i5 [label = "5", fillcolor="lightblue:lightblue1"];
-i4i6 [label = "6", fillcolor="lightblue:lightblue1"];
-i4i8 [label = "8", fillcolor="lightblue:lightblue1"];
-i4i9 [label = "9", fillcolor="lightblue:lightblue1"];
-i4i10 [label = "10", fillcolor="lightblue:lightblue1"];
-i4i->i4i1->i4i2->i4i3->i4i5->i4i6->i4i8->i4i9->i4i10
-i5i1 [label = "1", fillcolor="lightblue:lightblue1"];
+i3i->i3i1
 i5i3 [label = "3", fillcolor="lightblue:lightblue1"];
 i5i5 [label = "5", fillcolor="lightblue:lightblue1"];
 i5i7 [label = "7", fillcolor="lightblue:lightblue1"];
 i5i8 [label = "8", fillcolor="lightblue:lightblue1"];
 i5i10 [label = "10", fillcolor="lightblue:lightblue1"];
 i5i11 [label = "11", fillcolor="lightblue:lightblue1"];
-i5i->i5i1->i5i3->i5i5->i5i7->i5i8->i5i10->i5i11
+i5i->i5i3->i5i5->i5i7->i5i8->i5i10->i5i11
 i6i1 [label = "1", fillcolor="lightblue:lightblue1"];
 i6i7 [label = "7", fillcolor="lightblue:lightblue1"];
 i6i8 [label = "8", fillcolor="lightblue:lightblue1"];

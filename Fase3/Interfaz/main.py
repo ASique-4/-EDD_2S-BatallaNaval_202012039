@@ -23,7 +23,8 @@ usuario_global = {
     'edad': '',
     'id': '',
     'juegos': '0',
-    'puntos': '0'
+    'puntos': '0',
+    'fallos': '0'
 }
 
 invitado = {
@@ -33,7 +34,8 @@ invitado = {
     'edad': '0',
     'id': '-1',
     'juegos': '0',
-    'puntos': '0'
+    'puntos': '0',
+    'fallos': '0'
 }
 
 usuarios = [['EDD','0']]
@@ -41,6 +43,8 @@ usuarios = [['EDD','0']]
 def tablero_1vs1(tamanio :int):
     usuario_global['puntos'] = usuario_global['monedas']
     invitado['puntos'] = invitado['monedas']
+    usuario_global['fallos'] = '0'
+    invitado['fallos'] = '0'
     sg.theme('DarkTeal4')   # Add a touch of color
     if(tamanio >= 10):
         layout = []
@@ -199,6 +203,7 @@ def tablero_jugador2(matriz :MatrizDispersa, tamanio :int):
                             puntos = puntos + 20
                         else:
                             #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                            invitado['fallo'] = int(invitado['fallos']) + 1
                             Errores += 1
                         break
                 else:
@@ -359,7 +364,7 @@ def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
                 botones = []
                 
             for j in range(0, (tamanio)):
-                boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",expand_x=True, expand_y=True,border_width="0")
+                boton = sg.Button(str(i) + "," + str(j), size = (4,1), font="Arial 8 bold",border_width="0")
                 botones.append(boton)
         
         #Colocar barcos
@@ -554,6 +559,7 @@ def crear_tablero(tamanio :int,matriz2 :MatrizDispersa, window2, layout2):
                                 layout[0][1].update(usuario_global['monedas'])
                                 puntos = puntos + 20
                             else:
+                                usuario_global['fallos'] = int(usuario_global['fallos']) + 1
                                 Errores += 1
                             break
                     else:
@@ -606,6 +612,11 @@ def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, 
                                 layout[0][1].update(invitado['monedas'])
                         else:
                             #agregar_movimiento(k-1,l,nombreJuego,usuario_global['id'])
+                            if(window.Title == "Jugador 2"):
+                                usuario_global['fallos'] = int(usuario_global['fallos']) + 1
+                            else:
+                                invitado['fallos'] = int(invitado['fallos']) + 1
+
                             Errores += 1
                         break
                 else:
@@ -622,8 +633,11 @@ def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, 
                     f.write('digraph G {\n')
                     f.write('rankdir=LR;\n')
                     f.write('node [shape=box];\n')
-                    f.write('a [label="{} ha ganado: {} monedas"];\n'.format(usuario_global['nick'], str(int(usuario_global['monedas']) - int(usuario_global['puntos']))))
-                    f.write('b [label="Jugador 2 ha ganado: {} monedas"];\n'.format(str(int(invitado['monedas']) - int(invitado['puntos']))))
+                    f.write('a [label="{} ha ganado: {} monedas \\n Y tuvo {} fallos"];\n'.format(
+                        usuario_global['nick'], str(int(usuario_global['monedas']) - int(usuario_global['puntos'])),
+                        str(usuario_global['fallos'])))
+                    f.write('b [label="Jugador 2 ha ganado: {} monedas \\n Y tuvo {} fallos"];\n'.format(
+                        str(int(invitado['monedas']) - int(invitado['puntos'])), str(invitado['fallos'])))
 
                     f.write('a;\n')
                     f.write('b;\n')
@@ -632,6 +646,7 @@ def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, 
                     os.system('dot -Tpng resultado.dot -o resultado.png')
                 except:
                     pass
+
                     
 
 
@@ -643,27 +658,30 @@ def crear_tablero_con_matriz(matriz :MatrizDispersa, window :sg.Window, layout, 
                 disparos.imprimirGraphviz()
                 disparos.imprimirLista()
 
-                matriz.graficarNeato('Tablero')
+                if(matriz.nombre == '1'):
+                    matriz.graficarNeato('Tablero')
+                else:
+                    matriz2.graficarNeato('Tablero')
                 image = Image.open('./matriz_Tablero.png')
-                image = image.resize((500,500),Image.Resampling.LANCZOS)
+                image = image.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio = io.BytesIO()
                 image.save(bio, format='PNG')
 
                 image2 = Image.open('./grafo.png')
-                image2 = image2.resize((500,500),Image.Resampling.LANCZOS)
+                image2 = image2.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio2 = io.BytesIO()
                 image2.save(bio2, format='PNG')
 
                 image3 = Image.open('./lista.png')
-                image3 = image3.resize((500,500),Image.Resampling.LANCZOS)
+                image3 = image3.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio3 = io.BytesIO()
                 image3.save(bio3, format='PNG')
 
                 image4 = Image.open('./resultado.png')
-                image4 = image4.resize((500,500),Image.Resampling.LANCZOS)
+                image4 = image4.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio4 = io.BytesIO()
                 image4.save(bio4, format='PNG')
