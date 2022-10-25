@@ -1903,25 +1903,25 @@ def menu_reportes():
         if event == 'Reporte de ultima partida':
             try:
                 image = Image.open('./matriz_Tablero.png')
-                image = image.resize((500,500),Image.Resampling.LANCZOS)
+                image = image.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio = io.BytesIO()
                 image.save(bio, format='PNG')
 
                 image2 = Image.open('./grafo.png')
-                image2 = image2.resize((500,500),Image.Resampling.LANCZOS)
+                image2 = image2.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio2 = io.BytesIO()
                 image2.save(bio2, format='PNG')
 
                 image3 = Image.open('./lista.png')
-                image3 = image3.resize((500,500),Image.Resampling.LANCZOS)
+                image3 = image3.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio3 = io.BytesIO()
                 image3.save(bio3, format='PNG')
 
                 image4 = Image.open('./resultado.png')
-                image4 = image4.resize((500,500),Image.Resampling.LANCZOS)
+                image4 = image4.resize((480,480),Image.Resampling.LANCZOS)
 
                 bio4 = io.BytesIO()
                 image4.save(bio4, format='PNG')
@@ -1954,6 +1954,7 @@ def menu_reportes_admin():
                 [sg.Button('Reportes de usuarios', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes de compras', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Reportes de tutorial', size = (20,0), font="Arial 15 bold")],
+                [sg.Button('Reporte de ultima partida', size = (20,0), font="Arial 15 bold")],
                 [sg.Button('Salir', size = (20,0), font="Arial 15 bold")]]
     window = sg.Window('Menu', layout, size=(300, 250), element_justification='c')
     while True:
@@ -1974,6 +1975,50 @@ def menu_reportes_admin():
             window.hide()
             tabla_usuarios()
             window.un_hide()
+        if event == 'Reporte de ultima partida':
+            try:
+                image = Image.open('./matriz_Tablero.png')
+                image = image.resize((480,480),Image.Resampling.LANCZOS)
+
+                bio = io.BytesIO()
+                image.save(bio, format='PNG')
+
+                image2 = Image.open('./grafo.png')
+                image2 = image2.resize((480,480),Image.Resampling.LANCZOS)
+
+                bio2 = io.BytesIO()
+                image2.save(bio2, format='PNG')
+
+                image3 = Image.open('./lista.png')
+                image3 = image3.resize((480,480),Image.Resampling.LANCZOS)
+
+                bio3 = io.BytesIO()
+                image3.save(bio3, format='PNG')
+
+                image4 = Image.open('./resultado.png')
+                image4 = image4.resize((480,480),Image.Resampling.LANCZOS)
+
+                bio4 = io.BytesIO()
+                image4.save(bio4, format='PNG')
+
+                layout = [
+                            [
+                                [sg.Image(data = bio.getvalue(), key='imagen'),
+                                sg.Image(data = bio2.getvalue(), key='imagen2')],
+                                [sg.Image(data = bio3.getvalue(), key='imagen3'),
+                                sg.Image(data = bio4.getvalue(), key='imagen4')]
+                            
+                            ]
+                        ]
+
+                window3 = sg.Window('Tablero', layout, element_justification='c')
+
+                while True:
+                    event, values = window3.read()
+                    if event == sg.WIN_CLOSED:
+                        break
+            except:
+                sg.popup('No hay partida en curso')
     window.close()
     return event
 
